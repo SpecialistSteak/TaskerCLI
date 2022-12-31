@@ -30,7 +30,7 @@ public class SetCommand implements Runnable {
     private Boolean incompleteAllBoolean;
 
     @CommandLine.Option(names = {"-P", "--print"}, description = "Print list of tasks and exit.")
-    private Boolean printBoolean;
+    private boolean printBoolean;
 
     @CommandLine.Parameters
     private int setIndex;
