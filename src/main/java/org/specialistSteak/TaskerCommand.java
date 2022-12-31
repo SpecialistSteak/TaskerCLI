@@ -3,7 +3,7 @@ package org.specialistSteak;
 import picocli.CommandLine;
 
 @CommandLine.Command(
-        version = "@|orange 1.0|@",
+        version = "3.01",
         mixinStandardHelpOptions = true,
         subcommands = {
                 AddCommand.class,
