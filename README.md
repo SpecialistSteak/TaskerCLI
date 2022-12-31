@@ -13,8 +13,8 @@ Tasker is a command line tool designed for efficient task management. It allows 
 ##### Option 1: Run the jar file
   1. Download the jar file named "_TaskerCLI_-3.01-shaded.jar"
   2. Open your terminal and type ```java -jar /path/to/_TaskerCLI_-3.01-shaded.jar <command> <subcommand>```
-    3a. To make it more convenient, on linux type ```alias tasker="java -jar /path/to/_TaskerCLI_-3.01-shaded.jar"
-    3b. Or take the tasker script provided here, change the /path/to/tasker.jar with your path to it, and move the script to /usr/local/bin  
+  3. To make it more convenient, add the alias to your !/.bash_aliases: ```alias tasker="java -jar /path/to/_TaskerCLI_-3.01-shaded.jar"```
+
 ##### Option 2: Compile the native image
   1. Download it from <a href="https://github.com/SpecialistSteak/TaskerCLI/archive/refs/heads/master.zip">here</a>
   2. Unzip and open with the IDE of your choice
