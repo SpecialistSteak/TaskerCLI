@@ -6,7 +6,7 @@
 <br></br>
 
 ### About
-Tasker is a command line tool designed for efficient task management. It allows users to add, set, print, and delete tasks through the command line. Tasker utilizes picocli for its interface, ensuring that it will have fast performance and adhere to standard git-style terminal command structure for simplicity. Type ```--help or --helpall``` for a list of commands.
+Tasker is a command line tool designed for efficient task management. It allows users to add, set, print, and delete tasks through the command line. Tasker utilizes picocli for its interface, ensuring that it will have fast performance and adhere to standard git-style terminal command structure for simplicity. Type ```--help``` or ```--helpall``` for a list of commands.
 
 ### Installation
 
