@@ -1,5 +1,5 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.specialistSteak</groupId>
@@ -34,6 +34,83 @@
   </dependencies>
 
   <build>
+
+      <plugins>
+
+<!--        <plugin>-->
+<!--          <artifactId>maven-assembly-plugin</artifactId>-->
+<!--          <version>3.4.2</version>-->
+<!--          <configuration>-->
+<!--            <descriptorRefs>-->
+<!--              <descriptorRef>jar-with-dependencies</descriptorRef>-->
+<!--            </descriptorRefs>-->
+<!--          </configuration>-->
+<!--          <executions>-->
+<!--            <execution>-->
+<!--              <id>make-assembly</id> &lt;!&ndash; this is used for inheritance merges &ndash;&gt;-->
+<!--              <phase>package</phase> &lt;!&ndash; bind to the packaging phase &ndash;&gt;-->
+<!--              <goals>-->
+<!--                <goal>single</goal>-->
+<!--              </goals>-->
+<!--            </execution>-->
+<!--          </executions>-->
+<!--        </plugin>-->
+
+<!--        <plugin>-->
+<!--          <artifactId>maven-compiler-plugin</artifactId>-->
+<!--          <version>3.8.1</version>-->
+<!--          <configuration>-->
+<!--            <annotationProcessorPaths>-->
+<!--              <path>-->
+<!--                <groupId>info.picocli</groupId>-->
+<!--                <artifactId>picocli-codegen</artifactId>-->
+<!--                <version>4.5.1</version>-->
+<!--              </path>-->
+<!--            </annotationProcessorPaths>-->
+<!--            <compilerArgs>-->
+<!--              <arg>-Aproject=${project.groupId}/${project.artifactId}</arg>-->
+<!--            </compilerArgs>-->
+<!--          </configuration>-->
+<!--        </plugin>-->
+
+<!--        <plugin>-->
+<!--          <groupId>org.apache.maven.plugins</groupId>-->
+<!--          <artifactId>maven-jar-plugin</artifactId>-->
+<!--          <version>3.3.0</version>-->
+<!--          <configuration>-->
+<!--            <archive>-->
+<!--              <manifest>-->
+<!--                <mainClass>org.specialistSteak.TaskerCommand</mainClass>-->
+<!--              </manifest>-->
+<!--            </archive>-->
+<!--          </configuration>-->
+<!--        </plugin>-->
+
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-shade-plugin</artifactId>
+          <version>3.4.1</version>
+          <executions>
+            <execution>
+              <goals>
+                <goal>shade</goal>
+              </goals>
+              <configuration>
+                <shadedArtifactAttached>true</shadedArtifactAttached>
+                <transformers>
+                  <transformer implementation=
+                                       "org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                    <mainClass>org.specialistSteak.TaskerCommand</mainClass>
+                  </transformer>
+                </transformers>
+              </configuration>
+            </execution>
+          </executions>
+        </plugin>
+
+      </plugins>
+
+
 
   </build>
 
