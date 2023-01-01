@@ -68,10 +68,9 @@ public class Task {
         ArrayList<Task> tempTasks = new ArrayList<>();
 
         // Iterate through the tasks and search for a matching description
-        for (int i = 0; i < tasks.size(); i++) {
-            Task task = tasks.get(i);
+        for (Task task : tasks) {
             if (task.getDescription().contains(searchTerm)) {
-                tasks.add(new Task(task.getDescription(), task.getPriority(), task.isCompleted()));
+                tempTasks.add(new Task(task.getDescription(), task.getPriority(), task.isCompleted()));
             }
         }
 

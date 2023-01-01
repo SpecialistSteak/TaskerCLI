@@ -35,6 +35,7 @@ public class PrintCommand implements Runnable {
             } catch (IOException ex) {
                 System.out.println("Error loading tasks file: " + e.getMessage());
                 System.out.println("The program cannot run properly without the file. Please fix this.");
+                System.out.println((e.getMessage().indexOf("Permission denied")>0) ? "You may need to use sudo privileges to edit the file." : "");
             }
         }
         ArrayList<Task> taskCopy = new ArrayList<Task>(tasks);
