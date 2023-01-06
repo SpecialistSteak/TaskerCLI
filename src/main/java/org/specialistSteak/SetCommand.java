@@ -49,19 +49,26 @@ public class SetCommand implements Runnable {
                 System.out.println((e.getMessage().indexOf("Permission denied")>0) ? "You may need to use sudo privileges to edit the file." : "");
             }
         }
+        //try loading tasks, make file if it fails, if that fails, let user know
 
+        //prelim check
         if(tasks.size() == 0){
             System.out.println("Try adding some tasks first.");
         }
         else {
+            //concise way to check what has been used in command and set it if it's used
             if (descriptionString != null || priorityInteger != null || completeBoolean != null) {
-                tasks.set(setIndex, new Task((descriptionString != null) ? descriptionString : tasks.get(setIndex).getDescription(),
-                        (priorityInteger != null) ? priorityInteger : tasks.get(setIndex).getPriority(),
-                        (completeBoolean != null) ? completeBoolean : tasks.get(setIndex).isCompleted()));
+                tasks.set(setIndex, new Task(
+                        //if below is NOT null      ? set to field      : otherwise keep it the same
+                        (descriptionString != null) ? descriptionString : tasks.get(setIndex).getDescription(),
+                        (priorityInteger   != null) ? priorityInteger   : tasks.get(setIndex).getPriority(),
+                        (completeBoolean   != null) ? completeBoolean   : tasks.get(setIndex).isCompleted()));
                 System.out.printf("Task at index %d has been set to '%s', %d, %b\n", setIndex, (descriptionString != null) ? descriptionString : tasks.get(setIndex).getDescription(),
                         (priorityInteger != null) ? priorityInteger : tasks.get(setIndex).getPriority(),
                         (completeBoolean != null) ? (completeBoolean ? "Yes" : "No") : (tasks.get(setIndex).isCompleted() ? "Yes" : "No"));
             }
+
+            //loop and set all priorities
             if (priorityAllInteger != null) {
                 for (int i = 0; i < tasks.size(); i++) {
                     Task tempTask = tasks.get(i);
@@ -70,6 +77,8 @@ public class SetCommand implements Runnable {
                 }
                 System.out.println("All tasks have been set to a priority of " + priorityAllInteger + ".");
             }
+
+            //loop and set all incomplete
             if (incompleteAllBoolean) {
                 for (int i = 0; i < tasks.size(); i++) {
                     Task tempTask = tasks.get(i);
@@ -78,6 +87,8 @@ public class SetCommand implements Runnable {
                 }
                 System.out.println("All tasks have been set to incomplete.");
             }
+
+            //loop and set all complete
             if (completeAllBoolean) {
                 for (int i = 0; i < tasks.size(); i++) {
                     Task tempTask = tasks.get(i);
@@ -86,12 +97,16 @@ public class SetCommand implements Runnable {
                 }
                 System.out.println("All tasks have been set to complete.");
             }
+
+            //try to save to file, catch error
             try {
                 saveTasks(tasks);
             } catch (IOException e) {
                 System.out.println("Error loading tasks file: " + e.getMessage());
                 System.out.println("The program cannot run properly without the file. Please fix this.");
             }
+
+            //if print is used, print tasks
             if (printBoolean) {
                 Task.printTasks();
             }

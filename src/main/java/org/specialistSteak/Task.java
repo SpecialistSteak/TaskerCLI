@@ -3,17 +3,20 @@ package org.specialistSteak;
 import java.io.*;
 import java.util.ArrayList;
 public class Task {
-    public static ArrayList<Task> tasks = new ArrayList<Task>();
+    //instance variables
+    public static ArrayList<Task> tasks = new ArrayList<>();
     private String description;
     private int priority;
     private boolean isCompleted;
 
+    //constructor
     public Task(String description, int priority, boolean isCompleted) {
         this.description = description;
         this.priority = priority;
         this.isCompleted = isCompleted;
     }
 
+    //getter methods
     public String getDescription() {
         return description;
     }
@@ -24,6 +27,7 @@ public class Task {
         return isCompleted;
     }
 
+    //setter methods
     public void setDescription(String description){
         this.description = description;
     }
@@ -34,8 +38,9 @@ public class Task {
         this.isCompleted = isCompleted;
     }
 
+    //toString method for testing
     public String toString() {
-        return description + " (priority: " + priority + ")";
+        return description + " (priority: " + priority + ") " + isCompleted;
     }
 
     //print tasks given task array
@@ -64,10 +69,9 @@ public class Task {
         }
     }
 
+    //search method to search tasks
     public static ArrayList<Task> searchTasks(ArrayList<Task> tasks, String searchTerm) {
         ArrayList<Task> tempTasks = new ArrayList<>();
-
-        // Iterate through the tasks and search for a matching description
         for (Task task : tasks) {
             if (task.getDescription().contains(searchTerm)) {
                 tempTasks.add(new Task(task.getDescription(), task.getPriority(), task.isCompleted()));
@@ -76,21 +80,26 @@ public class Task {
 
         return tempTasks;
     }
+
+    //save tasks to file
     public static void saveTasks(ArrayList<Task> tasks) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter("tasks.txt"));for (Task task : tasks) {
+        BufferedWriter writer = new BufferedWriter(new FileWriter("tasks.txt"));
+        for (Task task : tasks) {
             String line = String.format("%s|%d|%s", task.getDescription(), task.getPriority(), task.isCompleted());
             writer.write(line);
             writer.newLine();
         }
         writer.close();
     }
+
+    //write tasks to file
     public static void loadTasks() throws IOException {
-        ArrayList<Task> tasks = new ArrayList<Task>();
+        ArrayList<Task> tasks = new ArrayList<>();
 
         BufferedReader reader = new BufferedReader(new FileReader("tasks.txt"));
         String line;
         while ((line = reader.readLine()) != null) {
-            String[] parts = line.split("\\|");
+            String[] parts = line.split("\\|"); //split at | in file
             String description = parts[0];
             int priority = Integer.parseInt(parts[1]);
             boolean isCompleted = Boolean.parseBoolean(parts[2]);

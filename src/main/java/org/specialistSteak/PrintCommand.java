@@ -38,11 +38,16 @@ public class PrintCommand implements Runnable {
                 System.out.println((e.getMessage().indexOf("Permission denied")>0) ? "You may need to use sudo privileges to edit the file." : "");
             }
         }
-        ArrayList<Task> taskCopy = new ArrayList<Task>(tasks);
+        //try loading tasks, make file if it fails, if that fails, let user know
 
+        ArrayList<Task> taskCopy = new ArrayList<Task>(tasks);
+        //make an array for the copy of tasks (to allow for -P option)
+
+        //if search, searchtasks
         if (searchTermString != null) {
             taskCopy = searchTasks(taskCopy, searchTermString);
         }
+        //filter out incomplete to temp List if used
         if (filterBoolean) {
             ArrayList<Task> toRemove = new ArrayList<>();
             for (Task task : taskCopy) {
@@ -52,6 +57,7 @@ public class PrintCommand implements Runnable {
             }
             taskCopy.removeAll(toRemove);
         }
+        //order to temp List if used
         if (orderBoolean) {
             for (int i = 0; i < taskCopy.size() - 1; i++) {
                 for (int j = i + 1; j < taskCopy.size(); j++) {
@@ -63,12 +69,15 @@ public class PrintCommand implements Runnable {
                 }
             }
         }
+
+        //set old task List to new task List
         if (isPermanent) {
             tasks.clear();
             tasks.addAll(taskCopy);
             System.out.println("All changes have been permanently implemented.");
         }
 
+        //try to save tasks, catch error
         try {
             saveTasks(tasks);
         } catch (IOException e) {

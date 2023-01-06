@@ -13,6 +13,7 @@ import picocli.CommandLine;
         }
 )
 public class TaskerCommand implements Runnable {
+    //show all help options
     @CommandLine.Option(names = {"-ha", "--helpall"}, description = "Show help for all commands and exit.")
     private boolean helpAll;
 
