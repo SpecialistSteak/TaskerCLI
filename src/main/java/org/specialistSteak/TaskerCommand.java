@@ -97,7 +97,7 @@ public class TaskerCommand implements Runnable {
                        #    #######       # #  #   #       #   #         #       #        #\s
                        #    #     # #     # #   #  #       #    #        #     # #        #\s
                        #    #     #  #####  #    # ####### #     #        #####  ####### ###
-                    Version: 3.02                                    Author: SpecialistSteak
+                    Version: 3.11                                    Author: SpecialistSteak
                     Welcome to Tasker-CLI!    Type Tasker --help or --helpall to get started
                     """);
         }

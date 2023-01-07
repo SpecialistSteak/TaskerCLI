@@ -1,12 +1,16 @@
 package org.specialistSteak;
 
-import java.io.*;
-
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.BufferedWriter;
+import java.io.BufferedReader;
+import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -65,7 +69,7 @@ public class Task {
         }
     }
 
-    //print tasks based off of 'permanent' array
+    //print tasks based off of 'permanent' ArrayList
     public static void printTasks(){
         // Print the table header
         System.out.println("| Index | Description        | Priority | Completed |");
@@ -89,12 +93,13 @@ public class Task {
         return tempTasks;
     }
 
+    //makes json file and 'maps' tasks to it
     public static void saveTasks(ArrayList<Task> tasks) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
             mapper.writeValue(new File("tasks.json"), tasks);
-        } catch (IOException e) {
+        } catch (IOException e) { //checks to see if the file works
             System.out.println("Error saving/loading tasks file: " + e.getMessage());
             System.out.println("The program cannot run properly without the file.");
             if (e.getMessage().indexOf("Permission denied") > 0){
@@ -103,13 +108,16 @@ public class Task {
         }
     }
 
+    //loads file and sets tasks to proper values
     public static void loadTasks() throws IOException{
         ObjectMapper mapper = new ObjectMapper();
         Task[] tasklist = mapper.readValue(new FileReader("tasks.json"), Task[].class);
         Task.tasks = new ArrayList<>(Arrays.asList(tasklist));
     }
 
-    //Made to l
+    //changed to different save "system" in favor of json
+
+    //Saves file in format String|int|boolean
     @Deprecated
     public static void saveTasksToTxtFile(ArrayList<Task> tasks) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter("tasks.json"));
@@ -121,6 +129,7 @@ public class Task {
         writer.close();
     }
 
+    //Rewrites changes in format String|int|boolean
     @Deprecated
     public static void loadTasksFromTxtFile() throws IOException {
         ArrayList<Task> tasks = new ArrayList<>();
