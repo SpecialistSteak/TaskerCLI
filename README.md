@@ -27,5 +27,6 @@ Tasker is a command line tool designed for efficient task management. It allows 
   3. A more streamlined interface
   4. An executable jar file
   5. A complete restructure to better utilize picocli subcommands
+  6. Support for JSON file format for better readability and future changes
   
 <h2><p align="center"><code>Thanks! Enjoy TaskerCLI!</p></code></h2>
