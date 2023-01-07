@@ -1,7 +1,15 @@
 package org.specialistSteak;
 
 import java.io.*;
+
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Task {
     //instance variables
     public static ArrayList<Task> tasks = new ArrayList<>();
@@ -10,7 +18,8 @@ public class Task {
     private boolean isCompleted;
 
     //constructor
-    public Task(String description, int priority, boolean isCompleted) {
+    @JsonCreator
+    public Task(@JsonProperty("description") String description, @JsonProperty("priority") int priority, @JsonProperty("isCompleted") boolean isCompleted) {
         this.description = description;
         this.priority = priority;
         this.isCompleted = isCompleted;
@@ -77,13 +86,33 @@ public class Task {
                 tempTasks.add(new Task(task.getDescription(), task.getPriority(), task.isCompleted()));
             }
         }
-
         return tempTasks;
     }
 
-    //save tasks to file
-    public static void saveTasks(ArrayList<Task> tasks) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter("tasks.txt"));
+    public static void saveTasks(ArrayList<Task> tasks) {
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.enable(SerializationFeature.INDENT_OUTPUT);
+        try {
+            mapper.writeValue(new File("tasks.json"), tasks);
+        } catch (IOException e) {
+            System.out.println("Error saving/loading tasks file: " + e.getMessage());
+            System.out.println("The program cannot run properly without the file.");
+            if (e.getMessage().indexOf("Permission denied") > 0){
+                System.out.println("You may need to use sudo privileges to edit the file.");
+            }
+        }
+    }
+
+    public static void loadTasks() throws IOException{
+        ObjectMapper mapper = new ObjectMapper();
+        Task[] tasklist = mapper.readValue(new FileReader("tasks.json"), Task[].class);
+        Task.tasks = new ArrayList<>(Arrays.asList(tasklist));
+    }
+
+    //Made to l
+    @Deprecated
+    public static void saveTasksToTxtFile(ArrayList<Task> tasks) throws IOException {
+        BufferedWriter writer = new BufferedWriter(new FileWriter("tasks.json"));
         for (Task task : tasks) {
             String line = String.format("%s|%d|%s", task.getDescription(), task.getPriority(), task.isCompleted());
             writer.write(line);
@@ -92,8 +121,8 @@ public class Task {
         writer.close();
     }
 
-    //write tasks to file
-    public static void loadTasks() throws IOException {
+    @Deprecated
+    public static void loadTasksFromTxtFile() throws IOException {
         ArrayList<Task> tasks = new ArrayList<>();
 
         BufferedReader reader = new BufferedReader(new FileReader("tasks.txt"));

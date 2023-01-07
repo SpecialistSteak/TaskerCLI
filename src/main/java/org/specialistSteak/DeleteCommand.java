@@ -37,13 +37,7 @@ public class DeleteCommand implements Runnable {
             loadTasks();
         }
         catch (IOException e){
-            try {
-                saveTasks(tasks);
-            } catch (IOException ex) {
-                System.out.println("Error loading tasks file: " + e.getMessage());
-                System.out.println("The program cannot run properly without the file. Please fix this.");
-                System.out.println((e.getMessage().indexOf("Permission denied")>0) ? "You may need to use sudo privileges to edit the file." : "");
-            }
+            saveTasks(tasks);
         }
         //Prelim check
         if(tasks.size() == 0){
@@ -89,12 +83,7 @@ public class DeleteCommand implements Runnable {
             }
 
             //Try to save tasks, catch error
-            try {
-                saveTasks(tasks);
-            } catch (IOException e) {
-                System.out.println("Error loading tasks file: " + e.getMessage());
-                System.out.println("The program cannot run properly without the file. Please fix this.");
-            }
+            saveTasks(tasks);
             //print if option is used
             if (printBoolean) {
                 Task.printTasks();

@@ -30,20 +30,14 @@ public class PrintCommand implements Runnable {
         try {
             loadTasks();
         } catch (IOException e) {
-            try {
-                saveTasks(tasks);
-            } catch (IOException ex) {
-                System.out.println("Error loading tasks file: " + e.getMessage());
-                System.out.println("The program cannot run properly without the file. Please fix this.");
-                System.out.println((e.getMessage().indexOf("Permission denied")>0) ? "You may need to use sudo privileges to edit the file." : "");
-            }
+            saveTasks(tasks);
         }
         //try loading tasks, make file if it fails, if that fails, let user know
 
         ArrayList<Task> taskCopy = new ArrayList<Task>(tasks);
         //make an array for the copy of tasks (to allow for -P option)
 
-        //if search, searchtasks
+        //if search was used, search tasks
         if (searchTermString != null) {
             taskCopy = searchTasks(taskCopy, searchTermString);
         }
@@ -78,12 +72,7 @@ public class PrintCommand implements Runnable {
         }
 
         //try to save tasks, catch error
-        try {
-            saveTasks(tasks);
-        } catch (IOException e) {
-            System.out.println("Error loading tasks file: " + e.getMessage());
-            System.out.println("The program cannot run properly without the file. Please fix this.");
-        }
+        saveTasks(tasks);
         printTasks(taskCopy);
     }
 }

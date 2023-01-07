@@ -41,13 +41,7 @@ public class SetCommand implements Runnable {
             loadTasks();
         }
         catch (IOException e){
-            try {
-                saveTasks(tasks);
-            } catch (IOException ex) {
-                System.out.println("Error loading tasks file: " + e.getMessage());
-                System.out.println("The program cannot run properly without the file. Please fix this.");
-                System.out.println((e.getMessage().indexOf("Permission denied")>0) ? "You may need to use sudo privileges to edit the file." : "");
-            }
+            saveTasks(tasks);
         }
         //try loading tasks, make file if it fails, if that fails, let user know
 
@@ -99,12 +93,7 @@ public class SetCommand implements Runnable {
             }
 
             //try to save to file, catch error
-            try {
-                saveTasks(tasks);
-            } catch (IOException e) {
-                System.out.println("Error loading tasks file: " + e.getMessage());
-                System.out.println("The program cannot run properly without the file. Please fix this.");
-            }
+            saveTasks(tasks);
 
             //if print is used, print tasks
             if (printBoolean) {
