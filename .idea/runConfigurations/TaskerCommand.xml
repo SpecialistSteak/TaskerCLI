@@ -2,6 +2,7 @@
   <configuration default="false" name="TaskerCommand" type="Application" factoryName="Application" nameIsGenerated="true">
     <option name="MAIN_CLASS_NAME" value="org.specialistSteak.TaskerCommand" />
     <module name="_TaskerCLI_" />
+    <option name="PROGRAM_PARAMETERS" value="set 0 -d &quot;DO WORK&quot;" />
     <extension name="coverage">
       <pattern>
         <option name="PATTERN" value="org.specialistSteak.*" />
