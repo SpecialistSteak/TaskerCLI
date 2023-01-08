@@ -1,54 +1,77 @@
-<h4>Version 0</h4>
-<ul>
-    <li>Initial release with a basic class and driver class for generating class objects</li>
-</ul>
+# Changelog
+All notable changes to this project will be documented in this file.
 
-<h4>Version 1</h4>
-<ul>
-    <li>Migrated the entire program to a while loop structure</li>
-    <li>Added functionality for setting and printing all tasks</li>
-</ul>
+The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to Semantic Versioning.
 
-<h4>Version 1.5</h4>
-<ul>
-    <li>Improved the formatting of the print method within the while loop</li>
-    <li>Added set, add, delete, and print methods</li>
-    <li>Implemented the ability to save and read from .txt files</li>
-</ul>
+## Upcoming changes:
+#### Added
+- Added support for ANSI colors
+- Added support to streamline GraalVM packaging
+- Added support for communicating with Microsoft To-Do
+- Support for installation
+#### Changed
+- Performance fixes and optimizations changed
+#### Fixed
+- More testing
 
-<h4>Version 2</h4>
-<ul>
-    <li>Converted the project to a picocli structure for better utilization of the picocli library</li>
-    <li>Added a search subcommand for printing tasks</li>
-</ul>
+## 3.12 - 2023-01
+#### Added
+- CHANGELOG.md added
+## 3.11 - 2023-01
+ #### Added
+- Introduced the ability to save date and time information upon creating or editing a task
+#### Changed
+- Edited readme
 
-<h4>Version 3.1</h4>
-<ul>
-    <li>Completely rebuilt the project using the picocli library for improved functionality</li>
-</ul>
+### 3.10 - 2022-12
+#### Added
+- Added the ability to save tasks in json file format
+#### Fixed
+- Fixed a bug where task file would clear when using a command
+- Fixed a bug where the program wouldn't save the file properly
 
-<h4>Version 3.2</h4>
-<ul>
-    <li>Added arguments to the delete subcommand for greater control over task deletion</li>
-</ul>
+### 3.3 - 2022-12
+#### Added
+- Added a save option to the print command to allow for saving the printed task list to a file
 
-<h4>Version 3.3</h4>
-<ul>
-    <li>Added a save option to the print command to allow for saving the printed task list to a file</li>
-</ul>
+### 3.2 - 2022-12
+#### Added
+- Added arguments to the delete subcommand for greater control over task deletion
+#### Fixed
+- Fixed an error where the delete command would crash the program
+- Fixed an error where the delete command wouldn't delete tasks
 
-<h4>Version 3.10</h4>
-<ul>
-    <li>Added support for saving tasks in json file format</li>
-</ul>
+### 3.1 - 2022-12
+#### Added
+- Added readme.md
+#### Changed
+- Completely rebuilt the project using the picocli library for improved functionality
 
-<h4>Version 3.11</h4>
-<ul>
-    <li>Introduced the ability to save date and time information upon creating or editing a task.</li>
-</ul>
+### 2.0 - 2022-12
+#### Added
+- Added a search subcommand for printing tasks
 
-<h4>Version 3.12</h4>
-<ul>
-    <li>Added changelog file.</li>
-    <li>Fixed a bug where task file would clear when using a command</li>
-</ul>
+#### Changed
+- Converted the project to a picocli structure for better utilization of the picocli library
+
+### 1.5 - 2022-11
+#### Added
+- Added set, add, delete, and print methods
+- Implemented the ability to save and read from .txt files
+
+#### Changed
+- Improved the formatting of the print method within the while loop
+
+### 1.0 - 2022-11
+#### Added
+- Added functionality for setting and printing all tasks
+#### Changed
+- Migrated the entire program to a while loop structure
+
+### 0.0 - 2022-09: Initial release
+#### Added
+- Created task class with 
+  - Name
+  - Priority
+  - Completed status
+- Created a driver class to make objects
