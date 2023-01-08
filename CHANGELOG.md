@@ -3,7 +3,8 @@
     <li>Initial release with a basic class and driver class for generating class objects</li>
 </ul>
 
-<h4>Version 1</h4><ul>
+<h4>Version 1</h4>
+<ul>
     <li>Migrated the entire program to a while loop structure</li>
     <li>Added functionality for setting and printing all tasks</li>
 </ul>
