@@ -34,7 +34,7 @@ public class PrintCommand implements Runnable {
         }
         //try loading tasks, make file if it fails, if that fails, let user know
 
-        ArrayList<Task> taskCopy = new ArrayList<Task>(tasks);
+        ArrayList<Task> taskCopy = new ArrayList<>(tasks);
         //make an array for the copy of tasks (to allow for -P option)
 
         //if search was used, search tasks

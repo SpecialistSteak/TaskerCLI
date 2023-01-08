@@ -30,8 +30,7 @@ public class AddCommand implements Runnable {
         //try loading tasks, make file if it fails, if that fails, let user know
         try {
             loadTasks();
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             saveTasks(tasks);
         }
         //add a new task with the user input as the task
@@ -41,7 +40,7 @@ public class AddCommand implements Runnable {
         //Try to save to file, catch error
         saveTasks(tasks);
         //print if option is used
-        if(printBoolean){
+        if (printBoolean) {
             Task.printTasks();
         }
     }

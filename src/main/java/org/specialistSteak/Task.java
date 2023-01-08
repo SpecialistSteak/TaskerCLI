@@ -13,6 +13,7 @@ import java.io.BufferedReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 
 public class Task {
     //instance variables
@@ -21,12 +22,33 @@ public class Task {
     private int priority;
     private boolean isCompleted;
 
+    private String lastEditedDate;
+    private String addedDate;
+
     //constructor
     @JsonCreator
     public Task(@JsonProperty("description") String description, @JsonProperty("priority") int priority, @JsonProperty("isCompleted") boolean isCompleted) {
         this.description = description;
         this.priority = priority;
         this.isCompleted = isCompleted;
+        this.lastEditedDate = new Date().toString();
+        this.addedDate = new Date().toString();
+    }
+
+
+    public void setAddedDate(String addedDate) {
+        this.addedDate = addedDate;
+    }
+
+    public void updateLastEditedDate(){
+        this.lastEditedDate = new Date().toString();
+    }
+
+    public String getLastEditedDate() {
+        return lastEditedDate;
+    }
+    public String getAddedDate() {
+        return addedDate;
     }
 
     //getter methods
@@ -43,12 +65,15 @@ public class Task {
     //setter methods
     public void setDescription(String description){
         this.description = description;
+        this.lastEditedDate = new Date().toString();
     }
     public void setPriority(int priority) {
         this.priority = priority;
+        this.lastEditedDate = new Date().toString();
     }
     public void setCompleted(boolean isCompleted) {
         this.isCompleted = isCompleted;
+        this.lastEditedDate = new Date().toString();
     }
 
     //toString method for testing

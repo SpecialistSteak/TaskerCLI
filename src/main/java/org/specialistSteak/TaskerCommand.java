@@ -3,7 +3,7 @@ package org.specialistSteak;
 import picocli.CommandLine;
 
 @CommandLine.Command(
-        version = "3.11",
+        version = "3.12",
         mixinStandardHelpOptions = true,
         subcommands = {
                 AddCommand.class,
@@ -97,7 +97,7 @@ public class TaskerCommand implements Runnable {
                        #    #######       # #  #   #       #   #         #       #        #\s
                        #    #     # #     # #   #  #       #    #        #     # #        #\s
                        #    #     #  #####  #    # ####### #     #        #####  ####### ###
-                    Version: 3.11                                    Author: SpecialistSteak
+                    Version: 3.12                                    Author: SpecialistSteak
                     Welcome to Tasker-CLI!    Type Tasker --help or --helpall to get started
                     """);
         }
