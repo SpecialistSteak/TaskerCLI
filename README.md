@@ -21,12 +21,4 @@ Tasker is a command line tool designed for efficient task management. It allows 
   2. Unzip and open with the IDE of your choice
   3. Follow these instructions to create the native image for your device: <a href="https://www.javacodegeeks.com/2018/11/picocli-graalvm-fast-command-apps.html">here</a>
 
-#### New Additions:
-  1. A variety of bugfixes to previous versions
-  2. New support for commands and subcommands
-  3. A more streamlined interface
-  4. An executable jar file
-  5. A complete restructure to better utilize picocli subcommands
-  6. Support for JSON file format for better readability and future changes
-  
 <h2><p align="center"><code>Thanks! Enjoy TaskerCLI!</p></code></h2>
