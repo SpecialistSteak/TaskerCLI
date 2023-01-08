@@ -5,7 +5,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Upcoming changes:
 #### Added
-- Added support for ANSI colors
 - Added support to streamline GraalVM packaging
 - Added support for communicating with Microsoft To-Do
 - Support for installation
@@ -16,8 +15,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## 3.12 - 2023-01
 #### Added
+- Added support for ANSI colors in main command
+
+### 3.12 - 2023-01
+#### Added
 - CHANGELOG.md added
-## 3.11 - 2023-01
+
+### 3.11 - 2023-01
  #### Added
 - Introduced the ability to save date and time information upon creating or editing a task
 #### Changed
