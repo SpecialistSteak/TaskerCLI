@@ -4,7 +4,7 @@
   <groupId>org.specialistSteak</groupId>
   <artifactId>_TaskerCLI_</artifactId>
   <name>_TaskerCLI_</name>
-  <version>3.12</version>
+  <version>3.20</version>
   <url>http://maven.apache.org</url>
   <build>
     <plugins>
@@ -30,6 +30,12 @@
     </plugins>
   </build>
   <dependencies>
+    <dependency>
+      <groupId>info.picocli</groupId>
+      <artifactId>picocli-codegen</artifactId>
+      <version>4.7.0</version>
+      <scope>provided</scope>
+    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

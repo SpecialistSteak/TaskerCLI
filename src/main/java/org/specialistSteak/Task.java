@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
+import picocli.CommandLine;
 
 import java.io.File;
 import java.io.FileReader;
@@ -15,6 +16,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
+import static org.specialistSteak.AnsiColor.ansiEscape;
+
 public class Task {
     //instance variables
     public static ArrayList<Task> tasks = new ArrayList<>();
@@ -24,17 +27,17 @@ public class Task {
 
     private String lastEditedDate;
     private String addedDate;
-
+    private AnsiColor ansiColor;
     //constructor
     @JsonCreator
-    public Task(@JsonProperty("description") String description, @JsonProperty("priority") int priority, @JsonProperty("isCompleted") boolean isCompleted) {
+    public Task(@JsonProperty("description") String description, @JsonProperty("priority") int priority, @JsonProperty("isCompleted") boolean isCompleted, @JsonProperty("ansiColor") AnsiColor ansiColor) {
         this.description = description;
         this.priority = priority;
         this.isCompleted = isCompleted;
+        this.ansiColor = ansiColor;
         this.lastEditedDate = new Date().toString();
         this.addedDate = new Date().toString();
     }
-
 
     public void setAddedDate(String addedDate) {
         this.addedDate = addedDate;
@@ -61,6 +64,9 @@ public class Task {
     public boolean isCompleted() {
         return isCompleted;
     }
+    public AnsiColor getAnsiColor() {
+        return ansiColor;
+    }
 
     //setter methods
     public void setDescription(String description){
@@ -73,6 +79,10 @@ public class Task {
     }
     public void setCompleted(boolean isCompleted) {
         this.isCompleted = isCompleted;
+        this.lastEditedDate = new Date().toString();
+    }
+    public void setAnsiColor(AnsiColor ansiColor) {
+        this.ansiColor = ansiColor;
         this.lastEditedDate = new Date().toString();
     }
 
@@ -90,7 +100,17 @@ public class Task {
         // Print the tasks
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.get(i);
-            System.out.printf("| %-5d | %-18s | %-8d | %-9s |\n", i, task.getDescription(), task.getPriority(), task.isCompleted() ? "Yes" : "No");
+            if(!(tasks.get(i).getAnsiColor() == AnsiColor.DEFAULT)){
+                System.out.printf(
+                        "| %-5d | %-18s | %-8s | %-9s |\n",
+                        i,
+                        CommandLine.Help.Ansi.AUTO.string(ansiEscape(task , task.getDescription())),
+                        CommandLine.Help.Ansi.AUTO.string(ansiEscape(task, task.getPriority())),
+                        CommandLine.Help.Ansi.AUTO.string(ansiEscape(task, task.isCompleted() ? "Yes" : "No"))
+                );
+            } else {
+                System.out.printf("| %-5d | %-18s | %-8d | %-9s |\n", i, task.getDescription(), task.getPriority(), task.isCompleted() ? "Yes" : "No");
+            }
         }
     }
 
@@ -103,7 +123,17 @@ public class Task {
         // Print the tasks
         for (int i = 0; i < Task.tasks.size(); i++) {
             Task task = Task.tasks.get(i);
-            System.out.printf("| %-5d | %-18s | %-8d | %-9s |\n", i, task.getDescription(), task.getPriority(), task.isCompleted() ? "Yes" : "No");
+            if(!(Task.tasks.get(i).getAnsiColor() == AnsiColor.DEFAULT)){
+                System.out.printf(
+                    "| %-5d | %-18s | %-8s | %-9s |\n",
+                    i,
+                    CommandLine.Help.Ansi.AUTO.string(ansiEscape(task , task.getDescription())),
+                    CommandLine.Help.Ansi.AUTO.string(ansiEscape(task, task.getPriority())),
+                    CommandLine.Help.Ansi.AUTO.string(ansiEscape(task, task.isCompleted() ? "Yes" : "No"))
+                );
+            } else {
+                System.out.printf("| %-5d | %-18s | %-8d | %-9s |\n", i, task.getDescription(), task.getPriority(), task.isCompleted() ? "Yes" : "No");
+            }
         }
     }
 
@@ -112,7 +142,7 @@ public class Task {
         ArrayList<Task> tempTasks = new ArrayList<>();
         for (Task task : tasks) {
             if (task.getDescription().contains(searchTerm)) {
-                tempTasks.add(new Task(task.getDescription(), task.getPriority(), task.isCompleted()));
+                tempTasks.add(new Task(task.getDescription(), task.getPriority(), task.isCompleted(), task.getAnsiColor()));
             }
         }
         return tempTasks;
@@ -142,19 +172,19 @@ public class Task {
 
     //changed to different save "system" in favor of json
 
-    //Saves file in format String|int|boolean
+    //Saves file in format String|int|boolean|AnsiColor
     @Deprecated
     public static void saveTasksToTxtFile(ArrayList<Task> tasks) throws IOException {
         BufferedWriter writer = new BufferedWriter(new FileWriter("tasks.json"));
         for (Task task : tasks) {
-            String line = String.format("%s|%d|%s", task.getDescription(), task.getPriority(), task.isCompleted());
+            String line = String.format("%s|%d|%s|%s", task.getDescription(), task.getPriority(), task.isCompleted(), task.getAnsiColor());
             writer.write(line);
             writer.newLine();
         }
         writer.close();
     }
 
-    //Rewrites changes in format String|int|boolean
+    //Rewrites changes in format String|int|boolean|AnsiColor
     @Deprecated
     public static void loadTasksFromTxtFile() throws IOException {
         ArrayList<Task> tasks = new ArrayList<>();
@@ -166,7 +196,8 @@ public class Task {
             String description = parts[0];
             int priority = Integer.parseInt(parts[1]);
             boolean isCompleted = Boolean.parseBoolean(parts[2]);
-            tasks.add(new Task(description, priority, isCompleted));
+            AnsiColor ansiColor = AnsiColor.valueOf(parts[3]);
+            tasks.add(new Task(description, priority, isCompleted, ansiColor));
         }
         reader.close();
 

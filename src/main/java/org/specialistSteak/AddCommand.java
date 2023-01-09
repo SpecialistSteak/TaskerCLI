@@ -22,6 +22,9 @@ public class AddCommand implements Runnable {
     @CommandLine.Option(names = {"-P", "--print"}, description = "Print list of tasks and exit.")
     private boolean printBoolean;
 
+    @CommandLine.Option(names = {"-a", "--ansi"}, description = "Set new custom ansi color and exit. Supported values: RED, YELLOW, GREEN, BLUE, WHITE, BLACK", defaultValue = "DEFAULT")
+    private AnsiColor ansicolor;
+
     @CommandLine.Parameters
     private String taskDescriptionString;
 
@@ -33,8 +36,11 @@ public class AddCommand implements Runnable {
         } catch (IOException e) {
             saveTasks(tasks);
         }
+        if(ansicolor == null) {
+            ansicolor = AnsiColor.DEFAULT;
+        }
         //add a new task with the user input as the task
-        tasks.add(new Task(taskDescriptionString, (priorityInteger != null) ? priorityInteger : 0, completeBoolean));
+        tasks.add(new Task(taskDescriptionString, (priorityInteger != null) ? priorityInteger : 0, completeBoolean, ansicolor));
         System.out.println("Task added successfully.");
 
         //Try to save to file, catch error

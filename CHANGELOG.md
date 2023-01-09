@@ -13,6 +13,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 #### Fixed
 - More testing
 
+## 3.2.0 - 2023-01
+#### Added
+- Added ANSI enum with colors and styles
+- Added support for ANSI colored tasks
+
 ## 3.12 - 2023-01
 #### Added
 - Added support for ANSI colors in main command

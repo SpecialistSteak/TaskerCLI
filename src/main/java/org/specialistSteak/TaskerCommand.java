@@ -4,14 +4,14 @@ import picocli.CommandLine.Help.Ansi;
 import picocli.CommandLine;
 
 @CommandLine.Command(
-        version = "3.13",
-        mixinStandardHelpOptions = true,
-        subcommands = {
-                AddCommand.class,
-                SetCommand.class,
-                PrintCommand.class,
-                DeleteCommand.class
-        }
+    version = "3.20",
+    mixinStandardHelpOptions = true,
+    subcommands = {
+            AddCommand.class,
+            SetCommand.class,
+            PrintCommand.class,
+            DeleteCommand.class,
+    }
 )
 public class TaskerCommand implements Runnable {
     //show all help options
@@ -40,7 +40,11 @@ public class TaskerCommand implements Runnable {
             """ +
             Ansi.AUTO.string("@|bold,green,underline ADD (SUBCOMMAND)|@") +
             """
-            \nUsage: <main class> add [-chPV] [-p=<priorityInteger>] <TaskDescriptionString>
+            \nUsage: <main class> add [-chPV] [-a=<ansicolor>] [-p=<priorityInteger>]
+                                      <taskDescriptionString>
+                    <taskDescriptionString>                                                               \s
+              -a, --ansi=<ansicolor> Set new custom ansi color and exit. Supported
+                                       values: RED, YELLOW, GREEN, BLUE, WHITE, BLACK
               -c, --complete    Set new task to complete and exit.
               -h, --help        Show this help message and exit.
               -p, --priority=<priorityInteger>
@@ -52,6 +56,11 @@ public class TaskerCommand implements Runnable {
             Ansi.AUTO.string("@|bold,green,underline SET (SUBCOMMAND)|@") + """
             \nUsage: <main class> set [-chPV] [-CA] [-PA] [-d=<descriptionString>]
                                       [-p=<priorityInteger>]
+              -a, --ansi=<ansicolor> Set new custom ansi color and exit. Supported
+                                       values: RED, YELLOW, GREEN, BLUE, WHITE, BLACK
+                  -aa, --ansiall=<ansiAllColor>
+                                     Set all tasks to ansi color and exit. Supported
+                                       values: RED, YELLOW, GREEN, BLUE, WHITE, BLACK
               -c, --complete    Set task to complete and exit.
               -CA, --completeall      \s
                                 Set all tasks to complete and exit.
@@ -94,16 +103,16 @@ public class TaskerCommand implements Runnable {
             """);
         }
         else {
-            System.out.println(Ansi.AUTO.string((
-            "@|yellow #######    #     #####  #    # ####### ######         #####  #       ###|@\n" +
-            "@|yellow    #      # #   #     # #   #  #       #     #       #     # #        #|@\n" +
-            "@|yellow    #     #   #  #       #  #   #       #     #       #       #        #|@\n" +
-            "@|yellow    #    #     #  #####  ###    #####   ######  ##### #       #        #|@\n" +
-            "@|yellow    #    #######       # #  #   #       #   #         #       #        #|@\n" +
-            "@|yellow    #    #     # #     # #   #  #       #    #        #     # #        #|@\n" +
-            "@|yellow    #    #     #  #####  #    # ####### #     #        #####  ####### ###|@\n" +
-                    "Version: 3.13                                    Author: SpecialistSteak\n" +
-                    "Welcome to Tasker-CLI!    Type Tasker --help or --helpall to get started")));
+            System.out.println(Ansi.AUTO.string(("""
+            @|yellow #######    #     #####  #    # ####### ######         #####  #       ###|@
+            @|yellow    #      # #   #     # #   #  #       #     #       #     # #        #|@
+            @|yellow    #     #   #  #       #  #   #       #     #       #       #        #|@
+            @|yellow    #    #     #  #####  ###    #####   ######  ##### #       #        #|@
+            @|yellow    #    #######       # #  #   #       #   #         #       #        #|@
+            @|yellow    #    #     # #     # #   #  #       #    #        #     # #        #|@
+            @|yellow    #    #     #  #####  #    # ####### #     #        #####  ####### ###|@
+            Version: 3.20                                    Author: SpecialistSteak
+            Welcome to Tasker-CLI!    Type Tasker --help or --helpall to get started""")));
         }
     }
 }
