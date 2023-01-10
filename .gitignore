@@ -1,10 +1,12 @@
 # Project exclude paths
 /target/
-/src/test
-TODO
-config.xml
-tasks.json
-dependency-reduced-pom.xml\
 .idea
+/src/test
+config.xml
+dependency-reduced-pom.xml\
 src/main/resources/lastUserData.json
 src/main/resources/userData.json
+src/main/resources/tasks.json
+userData.json
+lastUserData.json
+tasks.json
