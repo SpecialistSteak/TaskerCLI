@@ -18,6 +18,8 @@ import java.util.Date;
 
 import static org.specialistSteak.AnsiColor.ansiEscape;
 
+//TODO:
+// - Make it so that a user can have multiple taskboard objects (aka multiple files each with their own tasks)
 public class Task {
     //instance variables
     public static ArrayList<Task> tasks = new ArrayList<>();
@@ -153,7 +155,7 @@ public class Task {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
-            mapper.writeValue(new File("tasks.json"), tasks);
+            mapper.writeValue(new File("src/main/resources/tasks.json"), tasks);
         } catch (IOException e) { //checks to see if the file works
             System.out.println("Error saving/loading tasks file: " + e.getMessage());
             System.out.println("The program cannot run properly without the file.");
@@ -166,7 +168,7 @@ public class Task {
     //loads file and sets tasks to proper values
     public static void loadTasks() throws IOException{
         ObjectMapper mapper = new ObjectMapper();
-        Task[] tasklist = mapper.readValue(new FileReader("tasks.json"), Task[].class);
+        Task[] tasklist = mapper.readValue(new FileReader("src/main/resources/tasks.json"), Task[].class);
         Task.tasks = new ArrayList<>(Arrays.asList(tasklist));
     }
 
@@ -175,7 +177,7 @@ public class Task {
     //Saves file in format String|int|boolean|AnsiColor
     @Deprecated
     public static void saveTasksToTxtFile(ArrayList<Task> tasks) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter("tasks.json"));
+        BufferedWriter writer = new BufferedWriter(new FileWriter("src/main/resources/tasks.txt"));
         for (Task task : tasks) {
             String line = String.format("%s|%d|%s|%s", task.getDescription(), task.getPriority(), task.isCompleted(), task.getAnsiColor());
             writer.write(line);
@@ -189,7 +191,7 @@ public class Task {
     public static void loadTasksFromTxtFile() throws IOException {
         ArrayList<Task> tasks = new ArrayList<>();
 
-        BufferedReader reader = new BufferedReader(new FileReader("tasks.txt"));
+        BufferedReader reader = new BufferedReader(new FileReader("src/main/resources/tasks.txt"));
         String line;
         while ((line = reader.readLine()) != null) {
             String[] parts = line.split("\\|"); //split at | in file

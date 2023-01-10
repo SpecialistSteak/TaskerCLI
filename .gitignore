@@ -6,4 +6,5 @@ config.xml
 tasks.json
 dependency-reduced-pom.xml\
 .idea
-src/main/resources
+src/main/resources/lastUserData.json
+src/main/resources/userData.json

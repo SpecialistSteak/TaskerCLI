@@ -3,6 +3,10 @@ package org.specialistSteak;
 import picocli.CommandLine.Help.Ansi;
 import picocli.CommandLine;
 
+import java.io.IOException;
+
+import static org.specialistSteak.UserData.*;
+
 @CommandLine.Command(
     version = "3.20",
     mixinStandardHelpOptions = true,
@@ -113,6 +117,16 @@ public class TaskerCommand implements Runnable {
             @|yellow    #    #     #  #####  #    # ####### #     #        #####  ####### ###|@
             Version: 3.20                                    Author: SpecialistSteak
             Welcome to Tasker-CLI!    Type Tasker --help or --helpall to get started""")));
+            try {
+                loadAllUserData();
+            } catch (IOException e) {
+                fileGen();
+            }
+            printUserList();
+//            UserData userData = new UserData("31234", "luke");
+//            addUserData(userData);
+//            saveUserData(UserData.userData.toArray(UserData[]::new));
+//            printUserList();
         }
     }
 }
