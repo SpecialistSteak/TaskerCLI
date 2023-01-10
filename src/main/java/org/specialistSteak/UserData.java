@@ -58,10 +58,10 @@ public class UserData {
         isLastUsed = lastUsed;
     }
 
-    static Object login(String username){ //not finished
+    static Object login(String username){
         for(UserData userDatum : userData){
             if(userDatum.getUsername().equals(username)) {
-                System.out.println("Enter the password: ");
+                System.out.println("Enter the password: (press 'enter' if no password was set)");
                 Scanner sc = new Scanner(System.in);
                 String password = sc.nextLine();
                 if(password.equals(userDatum.password)){

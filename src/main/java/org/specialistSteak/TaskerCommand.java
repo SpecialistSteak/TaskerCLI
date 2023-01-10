@@ -8,7 +8,7 @@ import java.io.IOException;
 import static org.specialistSteak.UserData.*;
 
 @CommandLine.Command(
-    version = "3.20",
+    version = "3.21",
     mixinStandardHelpOptions = true,
     subcommands = {
             AddCommand.class,
@@ -115,18 +115,8 @@ public class TaskerCommand implements Runnable {
             @|yellow    #    #######       # #  #   #       #   #         #       #        #|@
             @|yellow    #    #     # #     # #   #  #       #    #        #     # #        #|@
             @|yellow    #    #     #  #####  #    # ####### #     #        #####  ####### ###|@
-            Version: 3.20                                    Author: SpecialistSteak
+            Version: 3.21                                    Author: SpecialistSteak
             Welcome to Tasker-CLI!    Type Tasker --help or --helpall to get started""")));
-            try {
-                loadAllUserData();
-            } catch (IOException e) {
-                fileGen();
-            }
-            printUserList();
-//            UserData userData = new UserData("31234", "luke");
-//            addUserData(userData);
-//            saveUserData(UserData.userData.toArray(UserData[]::new));
-//            printUserList();
         }
     }
 }

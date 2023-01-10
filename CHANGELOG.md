@@ -5,20 +5,29 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Upcoming changes:
 #### Added
-- Added support to streamline GraalVM packaging
+- Added support for multiple tasklists
 - Added support for communicating with Microsoft To-Do
+- Added support to streamline GraalVM packaging
 - Support for installation
 #### Changed
 - Performance fixes and optimizations changed
 #### Fixed
 - More testing
 
-## 3.2.0 - 2023-01
+## 3.21 - 2023-01
+#### Added
+- Added UserData class to hold user data
+- Added fields to store relevant user data for Microsoft To-Do
+- Added framework to support multiple task-lists
+- Adeed @incomplete annotation to mark incomplete methods
+###### Note: Jar has not been updated to support this version as it is not completely integrated yet
+
+### 3.20 - 2023-01
 #### Added
 - Added ANSI enum with colors and styles
 - Added support for ANSI colored tasks
 
-## 3.12 - 2023-01
+### 3.12 - 2023-01
 #### Added
 - Added support for ANSI colors in main command
 
