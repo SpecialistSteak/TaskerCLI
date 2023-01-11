@@ -20,13 +20,15 @@ public class UserData {
     private boolean isLastUsed;
     private String password;
 
-    //TODO: private File tasklistAdress
-        //This will be so that each client has their own task file
+    private File tasklistAddress;
     static ArrayList <UserData> userData = new ArrayList<>();
     static UserData lastUserData;
 
+    //constructor
     @JsonCreator
-    public UserData(@JsonProperty("APIKey") String APIKey, @JsonProperty("username") String username, @JsonProperty("password") String password) {
+    public UserData(@JsonProperty("APIKey") String APIKey, @JsonProperty("username") String username,
+                    @JsonProperty("password") String pword, @JsonProperty("isLastUsed") boolean isLastUsed) {
+        this.password = pword;
         this.APIKey = APIKey;
         this.username = username;
         for(UserData userDatum : userData) {
@@ -34,10 +36,11 @@ public class UserData {
                 throw new Error("Username already exists.");
             }
         }
-        this.password = password;
-        this.isLastUsed = false;
+        this.isLastUsed = isLastUsed;
+        this.tasklistAddress = new File("src/main/resources/" + username + "_tasks.json");
     }
 
+    //getters
     public String getAPIKey() {
         return APIKey;
     }
@@ -47,7 +50,14 @@ public class UserData {
     public boolean isLastUsed() {
         return isLastUsed;
     }
+    public String getPassword() {
+        return password;
+    }
+    public File getTasklistAddress() {
+        return tasklistAddress;
+    }
 
+    //setters
     public void setAPIKey(String APIKey) {
         this.APIKey = APIKey;
     }
@@ -57,33 +67,47 @@ public class UserData {
     public void setLastUsed(boolean lastUsed) {
         isLastUsed = lastUsed;
     }
+    public void setPassword(String password) {
+        this.password = password;
+    }
+    public void setTasklistAddress(File tasklistAddress) {
+        this.tasklistAddress = tasklistAddress;
+    }
 
-    static Object login(String username){
-        for(UserData userDatum : userData){
-            if(userDatum.getUsername().equals(username)) {
-                System.out.println("Enter the password: (press 'enter' if no password was set)");
-                Scanner sc = new Scanner(System.in);
-                String password = sc.nextLine();
-                if(password.equals(userDatum.password)){
+    //takes in the username, and asks for password
+    //if the password is correct returns an uname_bool object
+    //if the password is incorrect, throws an error
+    //if the username is not found, throws an error
+    static void login(String username) throws IOException {
+        for (int i = 0; i < userData.size(); i++) {
+            if (userData.get(i).getUsername().equals(username)) {
+                System.out.println("Enter password: ");
+                Scanner scanner = new Scanner(System.in);
+                String password = scanner.nextLine();
+                if (userData.get(i).password.equals(password)) {
                     System.out.println("Login successful.");
-                    userDatum.setLastUsed(true);
-                    lastUserData = userDatum;
-                    return new uname_bool(username, true);
+                    lastUsed(i);
+                    saveLastUserData(userData.get(i));
                 } else {
-                    System.out.println("Incorrect password.");
+                    throw new Error("Incorrect password.");
                 }
-            } else {
-                System.out.println("Username does not exist.");
             }
         }
-        throw new Error("Login failed.");
+        throw new Error("Username not found.");
     }
-    static void lastUsed(int index){
+
+    //sets all other users to not last used, and the new user to last used
+    static void lastUsed(int index) throws IOException {
+        if(lastUserData == null){
+            loadLastUserData();
+        }
         lastUserData = userData.get(index);
         for(int i = 0; i < userData.size(); i++){
             userData.get(i).setLastUsed(i == index);
         }
     }
+
+    //returns the last user's data
     static UserData getLastUsed(){
         for(UserData userDatum : userData) {
             if (userDatum.isLastUsed()) {
@@ -95,9 +119,12 @@ public class UserData {
         }
         return lastUserData;
     }
+
     public static void addUserData(UserData userData) {
         UserData.userData.add(userData);
     }
+
+    //generates necessary files
     @SuppressWarnings("ResultOfMethodCallIgnored")
     static void fileGen(){
         try{
@@ -115,6 +142,7 @@ public class UserData {
         }
     }
 
+    //saves all user data to a file
     public static void saveUserData(UserData[] userData) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
@@ -125,6 +153,7 @@ public class UserData {
         }
     }
 
+    //saves the last user data to a file
     public static void saveLastUserData(UserData userData) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
@@ -135,20 +164,34 @@ public class UserData {
         }
     }
 
+    //loads all user data
     public static void loadAllUserData() throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         UserData[] udataArray = mapper.readValue(new File("src/main/resources/userData.json"), UserData[].class);
         userData = new ArrayList<>(Arrays.asList(udataArray));
         lastUserData = mapper.readValue(new File("src/main/resources/lastUserData.json"), UserData.class);
     }
+    public static void loadLastUserData() throws IOException {
+        try{
+            ObjectMapper mapper = new ObjectMapper();
+            lastUserData = mapper.readValue(new File("src/main/resources/lastUserData.json"), UserData.class);
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        if(lastUserData == null){
+            throw new Error("No user has recently logged in. Run the program with the -l flag to login.");
+        }
+    }
 
+    //prints list of users
     public static void printUserList(){
         for(int i = 0; i < userData.size(); i++){
             System.out.println(i + ": " + userData.get(i).getUsername());
         }
     }
 
-    @Deprecated
+    @Deprecated //not the best way to do this
     public static Object loadUserDataFromName(String uname) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         UserData[] udataArray = mapper.readValue(new File("src/main/resources/userData.json"), UserData[].class);
@@ -165,28 +208,19 @@ public class UserData {
         throw new Error("User not found");
     }
 
-    @Deprecated
-    public static Object loadLastUserData() throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        UserData[] udataArray = mapper.readValue(new File("src/main/resources/userData.json"), UserData[].class);
-        userData = new ArrayList<>(Arrays.asList(udataArray));
-        UserData udata;
-        for(UserData u : udataArray){
-            if(u.isLastUsed()){
-                udata = u;
-                return udata;
-            }
-        }
-        return new Error("No user data found");
-    }
-}
-class uname_bool{
-    String uname;
-    boolean bool;
-    public uname_bool(String uname, boolean bool){
-        this.uname = uname;
-        this.bool = bool;
-    }
+//    public static UserData loadLastUserData() throws IOException {
+//        ObjectMapper mapper = new ObjectMapper();
+//        UserData[] udataArray = mapper.readValue(new File("src/main/resources/userData.json"), UserData[].class);
+//        userData = new ArrayList<>(Arrays.asList(udataArray));
+//        UserData udata;
+//        for(UserData u : udataArray){
+//            if(u.isLastUsed()){
+//                udata = u;
+//                return udata;
+//            }
+//        }
+//        throw new Error("No user data found");
+//    }
 }
 @Retention(java.lang.annotation.RetentionPolicy.SOURCE)
 @Target(ElementType.METHOD)

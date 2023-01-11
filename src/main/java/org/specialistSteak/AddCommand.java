@@ -34,17 +34,29 @@ public class AddCommand implements Runnable {
         try {
             loadTasks();
         } catch (IOException e) {
-            saveTasks(tasks);
+            try {
+                saveTasks(tasks);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
         if(ansicolor == null) {
             ansicolor = AnsiColor.DEFAULT;
         }
         //add a new task with the user input as the task
-        tasks.add(new Task(taskDescriptionString, (priorityInteger != null) ? priorityInteger : 0, completeBoolean, ansicolor));
+        try {
+            tasks.add(new Task(taskDescriptionString, (priorityInteger != null) ? priorityInteger : 0, completeBoolean, ansicolor));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         System.out.println("Task added successfully.");
 
         //Try to save to file, catch error
-        saveTasks(tasks);
+        try {
+            saveTasks(tasks);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         //print if option is used
         if (printBoolean) {
             Task.printTasks();

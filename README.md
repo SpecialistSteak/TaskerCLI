@@ -11,9 +11,9 @@ Tasker is a command line tool designed for efficient task management. It allows 
 ### Installation
 
 ##### Option 1: Run the jar file
-  1. Download the jar file named "TaskerCLI.jar"
-  2. Open your terminal and type ```java -jar /path/to/TaskerCLI.jar <command> <subcommand>```
-  3. To make it more convenient, add the alias to your !/.bash_aliases: ```alias tasker="java -jar /path/to/TaskerCLI.jar"```
+  1. Download the jar file named "TaskerCLI_3.22.jar"
+  2. Open your terminal and type ```java -jar /path/to/TaskerCLI_3.22.jar <command> <subcommand>```
+  3. To make it more convenient, add the alias to your !/.bash_aliases: ```alias tasker="java -jar /path/to/TaskerCLI_3.22.jar"```
   - Note that this is only a temporary solution and will eventually be replaced when TaskerCLI is further developed, as it is slow and inconvenient
 
 ##### Option 2: Compile the native image

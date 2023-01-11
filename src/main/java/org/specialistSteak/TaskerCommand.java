@@ -4,29 +4,46 @@ import picocli.CommandLine.Help.Ansi;
 import picocli.CommandLine;
 
 import java.io.IOException;
+import java.util.Scanner;
 
 import static org.specialistSteak.UserData.*;
 
 @CommandLine.Command(
-    version = "3.21",
+    version = "3.22",
     mixinStandardHelpOptions = true,
     subcommands = {
             AddCommand.class,
             SetCommand.class,
             PrintCommand.class,
             DeleteCommand.class,
+            UserCommand.class
     }
 )
 public class TaskerCommand implements Runnable {
     //show all help options
     @CommandLine.Option(names = {"-ha", "--helpall"}, description = "Show help for all commands and exit.")
     private boolean helpAll;
+
+    @CommandLine.Option(names = {"-l", "--login"}, description = "Login to a user.")
+    private boolean login;
+
     public static void main(String[] args) {
         new CommandLine(new TaskerCommand()).execute(args);
     }
 
     @Override
     public void run() {
+        String uname = "";
+        if(login) {
+            System.out.println("Enter username: ");
+            Scanner scan = new Scanner(System.in);
+            uname = scan.nextLine();
+            try {
+                login(uname);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
         if(helpAll){
             System.out.println(
             Ansi.AUTO.string("@|bold,green,underline TASKER (MAIN COMMAND)|@") +
@@ -115,7 +132,7 @@ public class TaskerCommand implements Runnable {
             @|yellow    #    #######       # #  #   #       #   #         #       #        #|@
             @|yellow    #    #     # #     # #   #  #       #    #        #     # #        #|@
             @|yellow    #    #     #  #####  #    # ####### #     #        #####  ####### ###|@
-            Version: 3.21                                    Author: SpecialistSteak
+            Version: 3.22                                    Author: SpecialistSteak
             Welcome to Tasker-CLI!    Type Tasker --help or --helpall to get started""")));
         }
     }

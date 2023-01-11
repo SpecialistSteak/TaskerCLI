@@ -30,7 +30,11 @@ public class PrintCommand implements Runnable {
         try {
             loadTasks();
         } catch (IOException e) {
-            saveTasks(tasks);
+            try {
+                saveTasks(tasks);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
         //try loading tasks, make file if it fails, if that fails, let user know
 
@@ -39,7 +43,11 @@ public class PrintCommand implements Runnable {
 
         //if search was used, search tasks
         if (searchTermString != null) {
-            taskCopy = searchTasks(taskCopy, searchTermString);
+            try {
+                taskCopy = searchTasks(taskCopy, searchTermString);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
         //filter out incomplete to temp List if used
         if (filterBoolean) {
@@ -72,7 +80,11 @@ public class PrintCommand implements Runnable {
         }
 
         //try to save tasks, catch error
-        saveTasks(tasks);
+        try {
+            saveTasks(tasks);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         printTasks(taskCopy);
     }
 }

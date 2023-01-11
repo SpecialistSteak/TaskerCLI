@@ -42,7 +42,11 @@ public class SetCommand implements Runnable {
             loadTasks();
         }
         catch (IOException e){
-            saveTasks(tasks);
+            try {
+                saveTasks(tasks);
+            } catch (IOException ex) {
+                throw new RuntimeException(ex);
+            }
         }
         //try loading tasks, make file if it fails, if that fails, let user know
 
@@ -111,7 +115,11 @@ public class SetCommand implements Runnable {
         }
 
         //try to save to file
-        saveTasks(tasks);
+        try {
+            saveTasks(tasks);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         //if print is used, print tasks
         if (printBoolean) {

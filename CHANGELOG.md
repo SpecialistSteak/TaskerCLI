@@ -5,22 +5,33 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## Upcoming changes:
 #### Added
-- Added support for multiple tasklists
 - Added support for communicating with Microsoft To-Do
 - Added support to streamline GraalVM packaging
 - Support for installation
 #### Changed
-- Performance fixes and optimizations changed
+- Update readme.md
+- Performance fixes and optimizations
 #### Fixed
-- More testing
+- Additional testing and bugfixes
 
-## 3.21 - 2023-01
+## 3.22 - 2023-01
+#### Added
+- Added proper support for multiple users using UserData class
+- Support for multiple different task-lists
+- Added additional information to Task class
+- Added @Incomplete annotation as custom interface
+- Added "--login" option to main command
+#### Removed
+- Removed tasks.json
+
+### 3.21 - 2023-01
 #### Added
 - Added UserData class to hold user data
 - Added fields to store relevant user data for Microsoft To-Do
 - Added framework to support multiple task-lists
-- Adeed @incomplete annotation to mark incomplete methods
-###### Note: Jar has not been updated to support this version as it is not completely integrated yet
+- Added @incomplete annotation to mark incomplete methods
+#### Changed
+- Moved all storage (.json) files to /src/main/resources
 
 ### 3.20 - 2023-01
 #### Added

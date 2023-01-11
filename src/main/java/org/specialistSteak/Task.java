@@ -17,28 +17,31 @@ import java.util.Arrays;
 import java.util.Date;
 
 import static org.specialistSteak.AnsiColor.ansiEscape;
+import static org.specialistSteak.UserData.lastUserData;
+import static org.specialistSteak.UserData.loadLastUserData;
 
-//TODO:
-// - Make it so that a user can have multiple taskboard objects (aka multiple files each with their own tasks)
 public class Task {
     //instance variables
     public static ArrayList<Task> tasks = new ArrayList<>();
     private String description;
     private int priority;
     private boolean isCompleted;
-
+    private String owner;
     private String lastEditedDate;
     private String addedDate;
     private AnsiColor ansiColor;
     //constructor
     @JsonCreator
-    public Task(@JsonProperty("description") String description, @JsonProperty("priority") int priority, @JsonProperty("isCompleted") boolean isCompleted, @JsonProperty("ansiColor") AnsiColor ansiColor) {
+    public Task(@JsonProperty("description") String description, @JsonProperty("priority") int priority,
+                @JsonProperty("isCompleted") boolean isCompleted, @JsonProperty("ansiColor") AnsiColor ansiColor) throws IOException {
         this.description = description;
         this.priority = priority;
         this.isCompleted = isCompleted;
         this.ansiColor = ansiColor;
         this.lastEditedDate = new Date().toString();
         this.addedDate = new Date().toString();
+        loadLastUserData();
+        this.owner = lastUserData.getUsername();
     }
 
     public void setAddedDate(String addedDate) {
@@ -49,6 +52,12 @@ public class Task {
         this.lastEditedDate = new Date().toString();
     }
 
+    public void setLastEditedDate(String lastEditedDate) {
+        this.lastEditedDate = lastEditedDate;
+    }
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
     public String getLastEditedDate() {
         return lastEditedDate;
     }
@@ -69,6 +78,10 @@ public class Task {
     public AnsiColor getAnsiColor() {
         return ansiColor;
     }
+    public String getOwner() {
+        return owner;
+    }
+
 
     //setter methods
     public void setDescription(String description){
@@ -140,7 +153,7 @@ public class Task {
     }
 
     //search method to search tasks
-    public static ArrayList<Task> searchTasks(ArrayList<Task> tasks, String searchTerm) {
+    public static ArrayList<Task> searchTasks(ArrayList<Task> tasks, String searchTerm) throws IOException {
         ArrayList<Task> tempTasks = new ArrayList<>();
         for (Task task : tasks) {
             if (task.getDescription().contains(searchTerm)) {
@@ -151,11 +164,12 @@ public class Task {
     }
 
     //makes json file and 'maps' tasks to it
-    public static void saveTasks(ArrayList<Task> tasks) {
+    public static void saveTasks(ArrayList<Task> tasks) throws IOException {
+        loadLastUserData();
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
-            mapper.writeValue(new File("src/main/resources/tasks.json"), tasks);
+            mapper.writeValue(lastUserData.getTasklistAddress(), tasks);
         } catch (IOException e) { //checks to see if the file works
             System.out.println("Error saving/loading tasks file: " + e.getMessage());
             System.out.println("The program cannot run properly without the file.");
@@ -167,8 +181,9 @@ public class Task {
 
     //loads file and sets tasks to proper values
     public static void loadTasks() throws IOException{
+        loadLastUserData();
         ObjectMapper mapper = new ObjectMapper();
-        Task[] tasklist = mapper.readValue(new FileReader("src/main/resources/tasks.json"), Task[].class);
+        Task[] tasklist = mapper.readValue(new FileReader(lastUserData.getTasklistAddress()), Task[].class);
         Task.tasks = new ArrayList<>(Arrays.asList(tasklist));
     }
 
