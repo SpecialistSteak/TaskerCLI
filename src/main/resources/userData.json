@@ -1,1 +1,11 @@
-[ ]
+[ {
+  "username" : "Example",
+  "password" : "examplepassword",
+  "lastUsed" : false,
+  "apikey" : "ff24fu243hu2us"
+}, {
+  "username" : "shouldbecorrect",
+  "password" : "password",
+  "lastUsed" : true,
+  "apikey" : "n2j42uf0n33dds"
+} ]
