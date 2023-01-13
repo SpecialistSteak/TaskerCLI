@@ -1,6 +1,8 @@
 {
-  "username" : "shouldbecorrect",
-  "password" : "password",
+  "username" : "Jeff",
+  "password" : null,
+  "dateCreated" : "Fri Jan 13 17:53:31 UTC 2023",
+  "tasklistAddress" : "C:\\Users\\Luke\\Documents\\Code\\_TaskerCLI_\\src\\main\\resources\\Jeff_tasks.json",
   "lastUsed" : true,
-  "apikey" : "n2j42uf0n33dds"
+  "apikey" : "24ri923fi2"
 }
