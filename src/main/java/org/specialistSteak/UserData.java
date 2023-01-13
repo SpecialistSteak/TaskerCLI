@@ -12,14 +12,19 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.Scanner;
+
+//TODO: Rewrite the methods for consistency (i.e. make sure they all either do or do not ask for user input, either run that here or in the
+// UserCommand class, etc.)(check as well for making sure that the right method (eg. setting someone as the last user boolean
+// or setting the last user to the current user) is being called in the right place and when it should be in the driver class)
 
 public class UserData {
     private String APIKey;
     private String username;
     private boolean isLastUsed;
     private String password;
-
+    private String dateCreated;
     private File tasklistAddress;
     static ArrayList <UserData> userData = new ArrayList<>();
     static UserData lastUserData;
@@ -31,13 +36,23 @@ public class UserData {
         this.password = pword;
         this.APIKey = APIKey;
         this.username = username;
-        for(UserData userDatum : userData) {
-            if(userDatum.getUsername().equals(username)) {
-                throw new Error("Username already exists.");
-            }
-        }
         this.isLastUsed = isLastUsed;
         this.tasklistAddress = new File("src/main/resources/" + username + "_tasks.json");
+        Scanner scanner = new Scanner(System.in);
+        while(checkUserExist(this.username)) {
+            System.out.println("User already exists. Please enter a new username: ");
+            this.username = scanner.nextLine();
+        }
+        this.dateCreated = new Date().toString();
+    }
+
+    static boolean checkUserExist(String username) {
+        for (UserData userDatum : userData) {
+            if (userDatum.getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     //getters
@@ -56,6 +71,9 @@ public class UserData {
     public File getTasklistAddress() {
         return tasklistAddress;
     }
+    public String getDateCreated(){
+        return dateCreated;
+    }
 
     //setters
     public void setAPIKey(String APIKey) {
@@ -73,37 +91,60 @@ public class UserData {
     public void setTasklistAddress(File tasklistAddress) {
         this.tasklistAddress = tasklistAddress;
     }
+    public void setDateCreated(String dateCreated) {
+        this.dateCreated = dateCreated;
+    }
 
-    //takes in the username, and asks for password
-    //if the password is correct returns an uname_bool object
-    //if the password is incorrect, throws an error
-    //if the username is not found, throws an error
     static void login(String username) throws IOException {
         for (int i = 0; i < userData.size(); i++) {
             if (userData.get(i).getUsername().equals(username)) {
-                System.out.println("Enter password: ");
-                Scanner scanner = new Scanner(System.in);
-                String password = scanner.nextLine();
-                if (userData.get(i).password.equals(password)) {
+                if(!(userData.get(i).password == null)) {
+                    System.out.println("Enter password: ");
+                    Scanner scanner = new Scanner(System.in);
+                    String password = scanner.nextLine();
+                    if (userData.get(i).password.equals(password)) {
+                        System.out.println("Login successful.");
+                        lastUsed(i);
+                        saveLastUserData(userData.get(i));
+                        return;
+                    } else {
+                        throw new IllegalArgumentException("Incorrect password.");
+                    }
+                } else {
                     System.out.println("Login successful.");
                     lastUsed(i);
                     saveLastUserData(userData.get(i));
-                } else {
-                    throw new Error("Incorrect password.");
+                    return;
                 }
             }
         }
-        throw new Error("Username not found.");
+        throw new IllegalArgumentException("Username not found.");
+    }
+
+    static void logout() throws IOException {
+        File file = new File("src/main/resources/lastUserData.json");
+        if (file.delete()) {
+            System.out.println("File deleted successfully.");
+        } else {
+            System.out.println("Failed to delete the file.");
+        }
+        if(file.createNewFile()) {
+            System.out.println("File created successfully.");
+        }
+        lastUserData = null;
     }
 
     //sets all other users to not last used, and the new user to last used
     static void lastUsed(int index) throws IOException {
-        if(lastUserData == null){
-            loadLastUserData();
-        }
         lastUserData = userData.get(index);
         for(int i = 0; i < userData.size(); i++){
             userData.get(i).setLastUsed(i == index);
+        }
+    }
+
+    static void noLastUsed() throws IOException{
+        for(int i = 0; i < userData.size(); i++){
+            userData.get(i).setLastUsed(false);
         }
     }
 
@@ -115,7 +156,7 @@ public class UserData {
             }
         }
         if(lastUserData == null){
-            throw new Error("No user has recently logged in.");
+            return null;
         }
         return lastUserData;
     }
@@ -125,17 +166,24 @@ public class UserData {
     }
 
     //generates necessary files
-    @SuppressWarnings("ResultOfMethodCallIgnored")
     static void fileGen(){
         try{
             ObjectMapper mapper = new ObjectMapper();
             File file = new File("src/main/resources/userData.json");
             File file2 = new File("src/main/resources/lastUserData.json");
             if(!file.exists()){
-                file.createNewFile();
+                if(file.createNewFile()){
+                    System.out.println("File created successfully.");
+                } else {
+                    System.out.println("Failed to create file.");
+                }
             }
             if(!file2.exists()){
-                file2.createNewFile();
+                if(file2.createNewFile()){
+                    System.out.println("File created successfully.");
+                } else {
+                    System.out.println("Failed to create file.");
+                }
             }
         } catch(Exception e){
             e.printStackTrace();
@@ -166,23 +214,21 @@ public class UserData {
 
     //loads all user data
     public static void loadAllUserData() throws IOException {
+        loadLastUserData(); //it won't work properly without this being called separately
         ObjectMapper mapper = new ObjectMapper();
         UserData[] udataArray = mapper.readValue(new File("src/main/resources/userData.json"), UserData[].class);
         userData = new ArrayList<>(Arrays.asList(udataArray));
-        lastUserData = mapper.readValue(new File("src/main/resources/lastUserData.json"), UserData.class);
     }
     public static void loadLastUserData() throws IOException {
-        try{
-            ObjectMapper mapper = new ObjectMapper();
-            lastUserData = mapper.readValue(new File("src/main/resources/lastUserData.json"), UserData.class);
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        if(lastUserData == null){
-            throw new Error("No user has recently logged in. Run the program with the -l flag to login.");
+        File lastUserDataFile = new File("src/main/resources/lastUserData.json");
+        if (lastUserDataFile.exists() && lastUserDataFile.length() > 0) {
+            ObjectMapper lmapper = new ObjectMapper();
+            lastUserData = lmapper.readValue(lastUserDataFile, UserData.class);
+        } else {
+            System.out.println("No user has recently logged in. Please log in.");
         }
     }
+
 
     //prints list of users
     public static void printUserList(){
@@ -208,19 +254,6 @@ public class UserData {
         throw new Error("User not found");
     }
 
-//    public static UserData loadLastUserData() throws IOException {
-//        ObjectMapper mapper = new ObjectMapper();
-//        UserData[] udataArray = mapper.readValue(new File("src/main/resources/userData.json"), UserData[].class);
-//        userData = new ArrayList<>(Arrays.asList(udataArray));
-//        UserData udata;
-//        for(UserData u : udataArray){
-//            if(u.isLastUsed()){
-//                udata = u;
-//                return udata;
-//            }
-//        }
-//        throw new Error("No user data found");
-//    }
 }
 @Retention(java.lang.annotation.RetentionPolicy.SOURCE)
 @Target(ElementType.METHOD)

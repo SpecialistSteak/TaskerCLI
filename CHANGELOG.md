@@ -11,10 +11,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 #### Changed
 - Update readme.md
 - Performance fixes and optimizations
+- Reformatted code for better readability and modularity
 #### Fixed
 - Additional testing and bugfixes
 
-## 3.22 - 2023-01
+## 3.23 - 2023-01
+#### Added
+- Added proper support for logging in and logging out
+- Added date/time information upon creating a user
+#### Fixed
+- Fixed a bug where the application would crash when the user tried to add a task
+- Fixed a bug where the user could not log in
+- Fixed a bug where the lastUserData file could not be deleted
+
+### 3.22 - 2023-01
 #### Added
 - Added proper support for multiple users using UserData class
 - Support for multiple different task-lists

@@ -9,7 +9,7 @@ import java.util.Scanner;
 import static org.specialistSteak.UserData.*;
 
 @CommandLine.Command(
-    version = "3.22",
+    version = "3.23",
     mixinStandardHelpOptions = true,
     subcommands = {
             AddCommand.class,
@@ -132,7 +132,7 @@ public class TaskerCommand implements Runnable {
             @|yellow    #    #######       # #  #   #       #   #         #       #        #|@
             @|yellow    #    #     # #     # #   #  #       #    #        #     # #        #|@
             @|yellow    #    #     #  #####  #    # ####### #     #        #####  ####### ###|@
-            Version: 3.22                                    Author: SpecialistSteak
+            Version: 3.23                                    Author: SpecialistSteak
             Welcome to Tasker-CLI!    Type Tasker --help or --helpall to get started""")));
         }
     }

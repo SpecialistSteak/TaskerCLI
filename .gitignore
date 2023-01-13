@@ -4,9 +4,3 @@
 /src/test
 config.xml
 dependency-reduced-pom.xml\
-src/main/resources/lastUserData.json
-src/main/resources/userData.json
-src/main/resources/tasks.json
-userData.json
-lastUserData.json
-tasks.json
