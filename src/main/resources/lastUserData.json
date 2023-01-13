@@ -2,7 +2,7 @@
   "username" : "Jeff",
   "password" : null,
   "dateCreated" : "Fri Jan 13 17:53:31 UTC 2023",
-  "tasklistAddress" : "C:\\Users\\Luke\\Documents\\Code\\_TaskerCLI_\\src\\main\\resources\\Jeff_tasks.json",
+  "tasklistAddress" : "C:\\Users\\Example\\Documents\\Code\\_TaskerCLI_\\src\\main\\resources\\Jeff_tasks.json",
   "lastUsed" : true,
   "apikey" : "24ri923fi2"
 }
