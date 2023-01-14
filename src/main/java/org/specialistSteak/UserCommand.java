@@ -1,13 +1,15 @@
 package org.specialistSteak;
 
+import org.specialistSteak.dataType.UserData;
+import org.specialistSteak.utils.CleanString;
 import picocli.CommandLine;
 
-import java.io.Console;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Scanner;
 
-import static org.specialistSteak.UserData.*;
+import static org.specialistSteak.dataType.UserData.*;
+import static org.specialistSteak.utils.LengthCheckString.checkAPILength;
+import static org.specialistSteak.utils.LengthCheckString.checkLength;
 
 @CommandLine.Command(
         name = "user",
@@ -88,10 +90,16 @@ public class UserCommand implements Runnable {
             Scanner sc = new Scanner(System.in);
             System.out.println("Enter username: ");
             String username = sc.nextLine();
+            username = CleanString.cleanString(username);
+            username = checkLength(username);
             System.out.println("Enter API key: ");
             String apiKey = sc.nextLine();
+            apiKey = CleanString.cleanString(apiKey);
+            apiKey = checkAPILength(apiKey);
             System.out.println("Enter password (press 'enter' for no password): ");
             String password = sc.nextLine();
+            password = CleanString.cleanString(password);
+            password = checkLength(password);
             if(password.equals("")){
                 password = null;
             }
@@ -100,7 +108,10 @@ public class UserCommand implements Runnable {
             while (usernameExists) {
                 if(checkUserExist(newUser.getUsername())) {
                     System.out.println("User already exists, please enter a new username: ");
-                    newUser.setUsername(sc.nextLine());
+                    String newUname = sc.nextLine();
+                    password = CleanString.cleanString(newUname);
+                    password = checkLength(newUname);
+                    newUser.setUsername(newUname);
                 } else {
                     usernameExists = false;
                 }

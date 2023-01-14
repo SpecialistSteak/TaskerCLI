@@ -1,11 +1,14 @@
 package org.specialistSteak;
 
+import org.specialistSteak.dataType.Importance;
+import org.specialistSteak.dataType.Task;
 import picocli.CommandLine;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static org.specialistSteak.Task.*;
+import static org.specialistSteak.dataType.Completed.returnCompletedStatus;
+import static org.specialistSteak.dataType.Task.*;
 
 @CommandLine.Command(
         name = "print",
@@ -53,17 +56,18 @@ public class PrintCommand implements Runnable {
         if (filterBoolean) {
             ArrayList<Task> toRemove = new ArrayList<>();
             for (Task task : taskCopy) {
-                if (task.isCompleted()) {
+                if (returnCompletedStatus(task.isCompleted())) {
                     toRemove.add(task);
                 }
             }
             taskCopy.removeAll(toRemove);
         }
         //order to temp List if used
+
         if (orderBoolean) {
             for (int i = 0; i < taskCopy.size() - 1; i++) {
                 for (int j = i + 1; j < taskCopy.size(); j++) {
-                    if (taskCopy.get(i).getPriority() > taskCopy.get(j).getPriority()){
+                    if (Importance.importanceToInteger(taskCopy.get(i).getPriority()) > Importance.importanceToInteger(taskCopy.get(j).getPriority())) {
                         Task temp = taskCopy.get(i);
                         taskCopy.set(i, taskCopy.get(j));
                         taskCopy.set(j, temp);

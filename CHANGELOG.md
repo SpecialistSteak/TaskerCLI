@@ -15,7 +15,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 #### Fixed
 - Additional testing and bugfixes
 
-## 3.23 - 2023-01
+## 3.24 - 2023-01
+#### Added
+- More subcommand options to support different Completed and Importance values
+- Added support for converting Task object to Microsoft To-Do object
+- Added utils for validating strings
+- Added Importance enumerator
+- Added Completed enumerator
+- Added CompletedDate instance variable to Task object
+#### Changed
+- Changed priority from type int to type Importance
+- Organized code into packages
+#### Fixed
+- An error where the program would not tell the user if the file failed to load
+- An error where the program would throw an error upon printing
+######
+Note: This version is prone to bugs and may not work as intended. Please report any bugs you find to the GitHub repository.
+
+### 3.23 - 2023-01
 #### Added
 - Added proper support for logging in and logging out
 - Added date/time information upon creating a user

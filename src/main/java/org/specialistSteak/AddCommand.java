@@ -1,12 +1,18 @@
 package org.specialistSteak;
 
+import org.specialistSteak.dataType.AnsiColor;
+import org.specialistSteak.dataType.Completed;
+import org.specialistSteak.dataType.Importance;
+import org.specialistSteak.dataType.Task;
 import picocli.CommandLine;
 
 import java.io.IOException;
 
-import static org.specialistSteak.Task.saveTasks;
-import static org.specialistSteak.Task.loadTasks;
-import static org.specialistSteak.Task.tasks;
+import static org.specialistSteak.dataType.Completed.*;
+import static org.specialistSteak.dataType.Importance.low;
+import static org.specialistSteak.dataType.Task.saveTasks;
+import static org.specialistSteak.dataType.Task.loadTasks;
+import static org.specialistSteak.dataType.Task.tasks;
 
 @CommandLine.Command(
         name = "add",
@@ -14,10 +20,13 @@ import static org.specialistSteak.Task.tasks;
 )
 public class AddCommand implements Runnable {
     @CommandLine.Option(names = {"-p", "--priority"}, description = "Set new custom priority and exit.")
-    private Integer priorityInteger;
+    private Importance priorityImportance;
 
-    @CommandLine.Option(names = {"-c", "--complete"}, description = "Set new task to complete and exit.")
-    private boolean completeBoolean;
+    @CommandLine.Option(names = {"-c", "--complete"}, description = "Set new task as complete and exit.")
+    private boolean completedBoolean;
+
+    @CommandLine.Option(names = {"-cs", "--completestatus"}, description = "Set new task's completion status and exit.")
+    private Completed completeCompleted;
 
     @CommandLine.Option(names = {"-P", "--print"}, description = "Print list of tasks and exit.")
     private boolean printBoolean;
@@ -45,7 +54,12 @@ public class AddCommand implements Runnable {
         }
         //add a new task with the user input as the task
         try {
-            tasks.add(new Task(taskDescriptionString, (priorityInteger != null) ? priorityInteger : 0, completeBoolean, ansicolor));
+            tasks.add(new Task(taskDescriptionString,
+                    (priorityImportance != null) ? priorityImportance : low,
+                    (completeCompleted != null ? completeCompleted :
+                            (completedBoolean ? completed : notStarted)
+                    ),
+                    ansicolor));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

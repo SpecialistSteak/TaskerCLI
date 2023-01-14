@@ -6,10 +6,11 @@ import picocli.CommandLine;
 import java.io.IOException;
 import java.util.Scanner;
 
-import static org.specialistSteak.UserData.*;
+import static org.specialistSteak.utils.CleanString.cleanString;
+import static org.specialistSteak.dataType.UserData.*;
 
 @CommandLine.Command(
-    version = "3.23",
+    version = "3.24",
     mixinStandardHelpOptions = true,
     subcommands = {
             AddCommand.class,
@@ -38,6 +39,7 @@ public class TaskerCommand implements Runnable {
             System.out.println("Enter username: ");
             Scanner scan = new Scanner(System.in);
             uname = scan.nextLine();
+            cleanString(uname);
             try {
                 login(uname);
             } catch (IOException e) {
@@ -132,7 +134,7 @@ public class TaskerCommand implements Runnable {
             @|yellow    #    #######       # #  #   #       #   #         #       #        #|@
             @|yellow    #    #     # #     # #   #  #       #    #        #     # #        #|@
             @|yellow    #    #     #  #####  #    # ####### #     #        #####  ####### ###|@
-            Version: 3.23                                    Author: SpecialistSteak
+            Version: 3.24                                    Author: SpecialistSteak
             Welcome to Tasker-CLI!    Type Tasker --help or --helpall to get started""")));
         }
     }

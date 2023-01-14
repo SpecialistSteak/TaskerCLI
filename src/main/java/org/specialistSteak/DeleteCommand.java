@@ -1,11 +1,13 @@
 package org.specialistSteak;
 
+import org.specialistSteak.dataType.Task;
 import picocli.CommandLine;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static org.specialistSteak.Task.*;
+import static org.specialistSteak.dataType.Completed.returnCompletedStatus;
+import static org.specialistSteak.dataType.Task.*;
 
 @CommandLine.Command(
         name = "delete",
@@ -66,7 +68,7 @@ public class DeleteCommand implements Runnable {
             if (completedBoolean) {
                 ArrayList<Task> toRemove = new ArrayList<>();
                 for (Task task : tasks) {
-                    if (task.isCompleted()) {
+                    if (returnCompletedStatus(task.isCompleted())) {
                         toRemove.add(task);
                     }
                 }
@@ -77,7 +79,7 @@ public class DeleteCommand implements Runnable {
             if (incompletedBoolean) {
                 ArrayList<Task> toRemove = new ArrayList<>();
                 for (Task task : tasks) {
-                    if (!task.isCompleted()) {
+                    if (!returnCompletedStatus(task.isCompleted())) {
                         toRemove.add(task);
                     }
                 }
