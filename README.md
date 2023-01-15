@@ -1,9 +1,12 @@
 #
-<div style="text-align:center">
+<div style="display: flex; justify-content: center; align-items: center;">
   <img src="https://user-images.githubusercontent.com/102715674/209995213-5f5c3715-3a51-4c86-86cb-97c372a3ffb4.png" alt=""/>
-</div> 
-<div style="text-align:center">
-  <img src="https://img.shields.io/badge/Pico--CLI-Library-red?style=for-the-badge" alt="picocli-badge">&emsp;<img src="https://img.shields.io/badge/Java-Language-orange?style=for-the-badge" alt="java-badge">&emsp;<img src="https://img.shields.io/badge/Maven-Build_Tool-darkgreen?style=for-the-badge" alt="maven-badge">
+</div>
+
+<div style="display: flex; justify-content: center;">
+  <img src="https://img.shields.io/badge/Pico--CLI-Library-red?style=for-the-badge" alt="">&emsp;
+  <img src="https://img.shields.io/badge/Java-Language-orange?style=for-the-badge" alt="">&emsp;
+  <img src="https://img.shields.io/badge/Maven-Build_Tool-darkgreen?style=for-the-badge" alt="">
 </div>
 
 #
