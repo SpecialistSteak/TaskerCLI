@@ -1,22 +1,17 @@
-#
-<div style="display: flex; justify-content: center; align-items: center;">
+<p align="center">
   <img src="https://user-images.githubusercontent.com/102715674/209995213-5f5c3715-3a51-4c86-86cb-97c372a3ffb4.png" alt=""/>
-</div>
+</p> 
+<p dir="auto" align="center">
+  <img align="center" src="https://img.shields.io/badge/Pico--CLI-Library-red?style=for-the-badge" alt="">&emsp;<img align="center" src="https://img.shields.io/badge/Java-Language-orange?style=for-the-badge" alt="">&emsp;<img align="center" src="https://img.shields.io/badge/Maven-Build_Tool-darkgreen?style=for-the-badge" alt=""></p>
+<br>
 
-<div style="display: flex; justify-content: center;">
-  <img src="https://img.shields.io/badge/Pico--CLI-Library-red?style=for-the-badge" alt="">&emsp;
-  <img src="https://img.shields.io/badge/Java-Language-orange?style=for-the-badge" alt="">&emsp;
-  <img src="https://img.shields.io/badge/Maven-Build_Tool-darkgreen?style=for-the-badge" alt="">
-</div>
-
-#
 ### About
 Tasker is a command line tool designed for efficient task management. It allows users to add, set, print, and delete tasks through the command line. Tasker utilizes picocli for its interface, ensuring that it will have fast performance and adhere to standard git-style terminal command structure for simplicity. Type ```--help``` or ```--helpall``` for a list of commands.
 
 ### Installation
 
 ##### Option 1: Run the jar file
-  1. Download the jar file named "TaskerCLI_3.23.jar"
+  1. Download the jar file named "TaskerCLI_3.24.jar"
   2. Open your terminal and type ```java -jar /path/to/TaskerCLI_3.24.jar <command> <subcommand>```
   3. To make it more convenient, add the alias to your !/.bash_aliases: ```alias tasker="java -jar /path/to/TaskerCLI_3.24.jar"```
   - NOTE: proper support for using it without the .jar will be added in the future. Hang tight!
