@@ -74,7 +74,7 @@ Note: This version is prone to bugs and may not work as intended. Please report 
 - CHANGELOG.md added
 
 ### 3.11 - 2023-01
- #### Added
+#### Added
 - Introduced the ability to save date and time information upon creating or editing a task
 #### Changed
 - Edited readme
@@ -126,7 +126,7 @@ Note: This version is prone to bugs and may not work as intended. Please report 
 
 ### 0.0 - 2022-09: Initial release
 #### Added
-- Created task class with 
+- Created task class with
   - Name
   - Priority
   - Completed status
