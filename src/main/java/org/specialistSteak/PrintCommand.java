@@ -9,9 +9,11 @@ import java.util.ArrayList;
 
 import static org.specialistSteak.dataType.Completed.returnCompletedStatus;
 import static org.specialistSteak.dataType.Task.*;
+import static org.specialistSteak.utils.ErrorStringifer.errorMessager;
 
 @CommandLine.Command(
         name = "print",
+        description = "Has options related to printing tasks.",
         mixinStandardHelpOptions = true
 )
 public class PrintCommand implements Runnable {
@@ -36,7 +38,8 @@ public class PrintCommand implements Runnable {
             try {
                 saveTasks(tasks);
             } catch (IOException ex) {
-                throw new RuntimeException(ex);
+                errorMessager(ex);
+                System.exit(0);
             }
         }
         //try loading tasks, make file if it fails, if that fails, let user know
@@ -49,14 +52,15 @@ public class PrintCommand implements Runnable {
             try {
                 taskCopy = searchTasks(taskCopy, searchTermString);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                errorMessager(e);
+                System.exit(0);
             }
         }
         //filter out incomplete to temp List if used
         if (filterBoolean) {
             ArrayList<Task> toRemove = new ArrayList<>();
             for (Task task : taskCopy) {
-                if (returnCompletedStatus(task.isCompleted())) {
+                if (returnCompletedStatus(task.getIsCompleted())) {
                     toRemove.add(task);
                 }
             }
@@ -87,7 +91,8 @@ public class PrintCommand implements Runnable {
         try {
             saveTasks(tasks);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            errorMessager(e);
+            System.exit(0);
         }
         printTasks(taskCopy);
     }

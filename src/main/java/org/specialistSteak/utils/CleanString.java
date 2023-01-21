@@ -3,6 +3,11 @@ package org.specialistSteak.utils;
 import picocli.CommandLine;
 
 public class CleanString {
+    /**
+     * Clean a string (remove all escape characters).
+     * @param input the input to clean.
+     * @return the cleaned string.
+     */
     public static String cleanString(String input) {
         String original = input;
         input = input.replaceAll("\\\\","");

@@ -4,9 +4,6 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
-import java.lang.annotation.ElementType;
-import java.lang.annotation.Retention;
-import java.lang.annotation.Target;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,8 +12,9 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.Scanner;
 
-import static org.specialistSteak.utils.LengthCheckString.checkLength;
 import static org.specialistSteak.utils.CleanString.cleanString;
+import static org.specialistSteak.utils.ErrorStringifer.errorMessager;
+import static org.specialistSteak.utils.LengthCheckString.checkLength;
 
 public class UserData {
     private String APIKey;
@@ -29,12 +27,17 @@ public class UserData {
     public static UserData lastUserData;
     Scanner scanner = new Scanner(System.in);
 
-    //constructor
+    /**
+     * Constructor for UserData class.
+     * @param username the username of the user.
+     * @param pword the password of the user.
+     * @param isLastUsed whether the user is the last used user.
+     */
     @JsonCreator
-    public UserData(@JsonProperty("APIKey") String APIKey, @JsonProperty("username") String username,
+    public UserData(/*@JsonProperty("APIKey") String APIKey,*/ @JsonProperty("username") String username,
                     @JsonProperty("password") String pword, @JsonProperty("isLastUsed") boolean isLastUsed) {
         this.password = pword;
-        this.APIKey = APIKey;
+//        this.APIKey = APIKey;
         this.username = username;
         this.isLastUsed = isLastUsed;
         this.tasklistAddress = new File("src/main/resources/" + username + "_tasks.json");
@@ -48,46 +51,101 @@ public class UserData {
         this.dateCreated = new Date().toString();
     }
 
-    //getters
-    public String getAPIKey() {
-        return APIKey;
-    }
+//    public String getAPIKey() {
+//        return APIKey;
+//    }
+
+    /**
+     * Gets the username of the user.
+     * @return the username of the user.
+     */
     public String getUsername() {
         return username;
     }
+
+    /**
+     * Returns if the user is the last used user.
+     * @return the boolean value of isLastUsed.
+     */
     public boolean isLastUsed() {
         return isLastUsed;
     }
+
+    /**
+     * Gets the password of the user.
+     * @return the password of the user.
+     */
     public String getPassword() {
         return password;
     }
+
+    /**
+     * Gets the file address of the user's tasklist.
+     * @return the file address of the user's tasklist.
+     */
     public File getTasklistAddress() {
         return tasklistAddress;
     }
+
+    /**
+     * Gets the date the user was created.
+     * @return the date the user was created.
+     */
     public String getDateCreated(){
         return dateCreated;
     }
 
     //setters
-    public void setAPIKey(String APIKey) {
-        this.APIKey = APIKey;
-    }
+//    public void setAPIKey(String APIKey) {
+//        this.APIKey = APIKey;
+//    }
+
+    /**
+     * Sets the username of the user.
+     * @param username the username of the user.
+     */
     public void setUsername(String username) {
         this.username = username;
     }
+
+    /**
+     * Sets the password of the user.
+     * @param lastUsed the boolean value of isLastUsed.
+     */
     public void setLastUsed(boolean lastUsed) {
         isLastUsed = lastUsed;
     }
+
+    /**
+     * Sets the password of the user.
+     * @param password the password of the user.
+     */
     public void setPassword(String password) {
         this.password = password;
     }
+
+    /**
+     * Sets the file address of the user's tasklist.
+     * @param tasklistAddress the file address of the user's tasklist.
+     */
     public void setTasklistAddress(File tasklistAddress) {
         this.tasklistAddress = tasklistAddress;
     }
+
+    /**
+     * Sets the date the user was created.
+     * @param dateCreated the date the user was created.
+     */
     public void setDateCreated(String dateCreated) {
         this.dateCreated = dateCreated;
     }
 
+    /**
+     * Attempts to set the user as the last used user, and login to the user's account.
+     * @param username the username of the user.
+     * @throws IOException if the user's tasklist cannot be found.
+     * @throws IllegalArgumentException if the user's tasklist cannot be found.
+     */
     public static void login(String username) throws IOException {
         for (int i = 0; i < userData.size(); i++) {
             if (userData.get(i).getUsername().equals(username)) {
@@ -116,6 +174,10 @@ public class UserData {
         throw new IllegalArgumentException("Username not found.");
     }
 
+    /**
+     * Attempts to remove the user as the last used user, and logout of the user's account.
+     * @throws IOException if the user's tasklist cannot be found.
+     */
     public static void logout() throws IOException {
         File file = new File("src/main/resources/lastUserData.json");
         if (file.delete()) {
@@ -129,6 +191,11 @@ public class UserData {
         lastUserData = null;
     }
 
+    /**
+     * Checks if the user exists.
+     * @param username the username of the user.
+     * @return true if the user exists, false otherwise.
+     */
     public static boolean checkUserExist(String username) {
         for (UserData userDatum : userData) {
             if (userDatum.getUsername().equals(username)) {
@@ -138,7 +205,11 @@ public class UserData {
         return false;
     }
 
-    //sets all other users to not last used, and the new user to last used
+    /**
+     * sets all other users to not last used, and the new user to last used
+     * @param index the index of the user in the userData arraylist.
+     * @throws IOException if the user's tasklist cannot be found.
+     */
     public static void lastUsed(int index) throws IOException {
         lastUserData = userData.get(index);
         for(int i = 0; i < userData.size(); i++){
@@ -146,13 +217,18 @@ public class UserData {
         }
     }
 
-    public static void noLastUsed() throws IOException{
+    /**
+     * Sets all users to not last used.
+     */
+    public static void noLastUsed(){
         for (UserData userDatum : userData) {
             userDatum.setLastUsed(false);
         }
     }
 
-    //returns the last user's data
+    /**
+     * @return the userdata of the last used user.
+     */
     public static UserData getLastUsed(){
         for(UserData userDatum : userData) {
             if (userDatum.isLastUsed()) {
@@ -165,16 +241,22 @@ public class UserData {
         return lastUserData;
     }
 
+    /**
+     * adds a user to the userData arraylist.
+     * @param userData
+     */
     public static void addUserData(UserData userData) {
         UserData.userData.add(userData);
     }
 
-    //generates necessary files
+    /**
+     * Generates all necessary files for the user.
+     * This method is usually called to better handle errors, and to ensure there are no errors while starting the program.
+     */
     public static void fileGen(){
         try{
             File file = new File("src/main/resources/userData.json");
             File file2 = new File("src/main/resources/lastUserData.json");
-            File file3 = new File("src/main/resources/lastTaskData.json");
             if(!file.exists()){
                 if(file.createNewFile()){
                     System.out.println("File created successfully.");
@@ -189,34 +271,53 @@ public class UserData {
                     System.out.println("Failed to create file.");
                 }
             }
+            File dir = new File("src/main/resources");
+            if (!dir.exists()) {
+                if(dir.mkdir()){
+                    System.out.println("Directory created successfully.");
+                } else {
+                    System.out.println("Failed to create directory.");
+                }
+            }
         } catch(Exception e){
-            e.printStackTrace();
+            System.out.println("An error occurred while generating files.");
+            errorMessager(e);
         }
     }
 
-    //saves all user data to a file
+    /**
+     * Saves the user's data to the userData.json file.
+     * @param userData the user's data.
+     */
     public static void saveUserData(UserData[] userData) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
             mapper.writeValue(new File("src/main/resources/userData.json"), userData);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            errorMessager(e);
+            System.exit(0);
         }
     }
 
-    //saves the last user data to a file
+    /**
+     * Saves the last used user's data to the lastUserData.json file.
+     * @param userData the last used user's data.
+     */
     public static void saveLastUserData(UserData userData) {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
             mapper.writeValue(new File("src/main/resources/lastUserData.json"), userData);
         } catch(IOException e) {
-            throw new RuntimeException(e);
+            errorMessager(e);
+            System.exit(0);
         }
     }
 
-    //loads all user data
+    /**
+     * Loads all the users data from the userData.json file.
+     */
     public static void loadAllUserData() throws IOException {
         loadLastUserData(); //it won't work properly without this being called separately
         ObjectMapper mapper = new ObjectMapper();
@@ -225,45 +326,44 @@ public class UserData {
             userData = new ArrayList<>(Arrays.asList(udataArray));
         } catch (IOException ex) { //checks to see if the file works
             if (ex.getMessage().indexOf("cannot find the file") <= 0) {
-                if (ex.getMessage().indexOf("Permission denied") > 0){
-                    System.out.println("You may need to use sudo privileges to edit the file.");
-                }
-                else {
-                    System.out.println("Error saving/loading userData file: ");
-                    ex.printStackTrace();
-                }
+                errorMessager(ex);
             }
         }
     }
-    public static void loadLastUserData() throws IOException {
+
+    /**
+     * Loads the last used user's data from the lastUserData.json file.
+     */
+    public static void loadLastUserData() {
         File lastUserDataFile = new File("src/main/resources/lastUserData.json");
         if (lastUserDataFile.exists() && lastUserDataFile.length() > 0) {
             try{
                 ObjectMapper lmapper = new ObjectMapper();
                 lastUserData = lmapper.readValue(lastUserDataFile, UserData.class);
             } catch (IOException ex) { //checks to see if the file works
-                if (ex.getMessage().indexOf("cannot find the file") <= 0) {
-                    if (ex.getMessage().indexOf("Permission denied") > 0){
-                        System.out.println("You may need to use sudo privileges to edit the file.");
-                    }
-                    else {
-                        System.out.println("Error saving/loading lastUserData file: ");
-                        ex.printStackTrace();
-                    }
-                }
+                errorMessager(ex);
             }
         } else {
             System.out.println("No user has recently logged in. Please log in.");
+//            System.out.println("Rerun the program as `tasker.ps1 user -nc`.");
         }
     }
 
-    //prints list of users
+    /**
+     * Prints all the users in the userData arraylist.
+     */
     public static void printUserList(){
         for(int i = 0; i < userData.size(); i++){
             System.out.println(i + ": " + userData.get(i).getUsername());
         }
     }
 
+    /**
+     * Loads a user with a username matching the given username.
+     * @param uname the username of the user to be loaded.
+     * @return the user's data.
+     * @throws IOException if the user's tasklist cannot be found.
+     */
     @Deprecated //not the best way to do this
     public static Object loadUserDataFromName(String uname) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
@@ -280,9 +380,4 @@ public class UserData {
         userData = new ArrayList<>(Arrays.asList(udataArray));
         throw new Error("User not found");
     }
-}
-@Retention(java.lang.annotation.RetentionPolicy.SOURCE)
-@Target(ElementType.METHOD)
-@interface Incomplete {
-    public String key() default "Method is not finished";
 }

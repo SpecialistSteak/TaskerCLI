@@ -6,16 +6,40 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ## Upcoming changes:
 #### Added
 - Added support for communicating with Microsoft To-Do
-- Added support to streamline GraalVM packaging
-- Support for installation
+- Added support to streamline GraalVM packaging/support for installation
 #### Changed
 - Update readme.md
 - Performance fixes and optimizations
-- Reformatted code for better readability and modularity
 #### Fixed
 - Additional testing and bugfixes
 
-## 3.24 - 2023-01
+## 3.25 - 2023-01
+#### Added
+- Added JavaDoc
+- Added JavaDoc command line option
+- A sh script to install the program
+- A unix script to run the program
+- A .ps1 script to install the program
+- A .ps1 script to run the program
+- Additional support for the new GraalVM packaging
+- Added more error handling related methods
+- Added a 'Dev Mode' to the code for easier debugging
+#### Changed
+- Updated README.md
+- Added more graceful error handling
+- Updated dependencies
+- Beautified the code
+#### Removed
+- Removed unused dependencies
+- Removed unused code
+#### Fixed
+- Fixed a bug where the program would crash upon trying to log in
+- Fixed a bug where the program would crash upon trying to print the tasklist
+- Fixed a bug where Completed would always be null
+- Fixed a bug where the isCompleted method was improperly named and would not be saved to the .json file
+Note: Sorry for the late update! This was a large bug-fixing and reformatting update, so it took me a little longer than usual.
+
+### 3.24 - 2023-01
 #### Added
 - More subcommand options to support different Completed and Importance values
 - Added support for converting Task object to Microsoft To-Do object
@@ -40,6 +64,7 @@ Note: This version is prone to bugs and may not work as intended. Please report 
 - Fixed a bug where the application would crash when the user tried to add a task
 - Fixed a bug where the user could not log in
 - Fixed a bug where the lastUserData file could not be deleted
+- Fixed a logic error where the program would try to make the files in the root directory of the filesystem
 
 ### 3.22 - 2023-01
 #### Added

@@ -8,7 +8,8 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import static org.specialistSteak.dataType.UserData.*;
-import static org.specialistSteak.utils.LengthCheckString.checkAPILength;
+//import static org.specialistSteak.utils.LengthCheckString.checkAPILength;
+import static org.specialistSteak.utils.ErrorStringifer.errorMessager;
 import static org.specialistSteak.utils.LengthCheckString.checkLength;
 
 @CommandLine.Command(
@@ -37,7 +38,9 @@ public class UserCommand implements Runnable {
     private boolean printCurrent;
 
     @CommandLine.Option(names = {"-l", "--login"}, description = "Login to a user.")
-    private String login;
+    private boolean login;
+    @CommandLine.Option(names = {"-lp", "--login-print"}, description = "Login to a user.")
+    private boolean loginPrint;
 
     @CommandLine.Option(names = {"-lo", "--logout"}, description = "Logout of a user.")
     private boolean logout;
@@ -48,65 +51,74 @@ public class UserCommand implements Runnable {
             loadAllUserData();
         } catch (Exception e) {
             System.out.println("Error loading user data. Generating files...");
-            try{
+            try {
                 fileGen();
             } catch (Exception ex) {
-                System.out.println("Error generating files. Printing stack trace...");
-                e.printStackTrace();
-                ex.printStackTrace();
+                System.out.println("Error generating files.");
+                errorMessager(e);
+                errorMessager(ex);
             }
         }
-        if(login != null){
+        if (login) {
+            if (loginPrint) {
+                printUserList();
+            }
+            Scanner scan = new Scanner(System.in);
+            System.out.println("Enter username: ");
+            String uname = scan.nextLine();
             try {
-                login(login);
+                login(uname);
+                System.out.println("Logged in as " + uname);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                errorMessager(e);
+                System.exit(0);
             }
         }
-        if(logout) {
+        if (logout) {
             if (lastUserData != null) {
                 System.out.println("Logging out...");
                 try {
                     logout();
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    errorMessager(e);
+                    System.exit(0);
                 }
             } else {
                 System.out.println("User not logged in, logout failed.");
             }
         }
-        if(delete != null){
+        if (delete != null) {
             userData.remove(delete.intValue());
         }
-        if(changeUsername != null) {
-            for(UserData user : userData){
-                if(user.isLastUsed()){
+        if (changeUsername != null) {
+            for (UserData user : userData) {
+                if (user.isLastUsed()) {
                     user.setUsername(changeUsername);
                     lastUserData.setUsername(changeUsername);
                 }
             }
         }
-        if(newUser || newCurrent){
+        if (newUser || newCurrent) {
             Scanner sc = new Scanner(System.in);
             System.out.println("Enter username: ");
             String username = sc.nextLine();
             username = CleanString.cleanString(username);
             username = checkLength(username);
-            System.out.println("Enter API key: ");
-            String apiKey = sc.nextLine();
-            apiKey = CleanString.cleanString(apiKey);
-            apiKey = checkAPILength(apiKey);
+//            System.out.println("Enter API key: ");
+//            String apiKey = sc.nextLine();
+//            apiKey = CleanString.cleanString(apiKey);
+//            apiKey = checkAPILength(apiKey);
             System.out.println("Enter password (press 'enter' for no password): ");
             String password = sc.nextLine();
             password = CleanString.cleanString(password);
             password = checkLength(password);
-            if(password.equals("")){
+            if (password.equals("")) {
                 password = null;
             }
-            UserData newUser = new UserData(apiKey, username, password, newCurrent);
+            UserData newUser = new UserData(/*apiKey,*/ username, password, newCurrent);
             boolean usernameExists = true;
             while (usernameExists) {
-                if(checkUserExist(newUser.getUsername())) {
+                if (checkUserExist(newUser.getUsername())) {
                     System.out.println("User already exists, please enter a new username: ");
                     String newUname = sc.nextLine();
                     password = CleanString.cleanString(newUname);
@@ -121,22 +133,24 @@ public class UserCommand implements Runnable {
                 try {
                     lastUsed(userData.size() - 1);
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    errorMessager(e);
+                    System.exit(0);
                 }
             }
+            System.out.println("User added successfully.");
         }
         saveUserData(userData.toArray(UserData[]::new));
         //the '&& !logout' is to make sure that the logout() method works correctly and isn't rewritten by the saveLastUserData() method
-        if(getLastUsed() != null && !logout){
+        if (getLastUsed() != null && !logout) {
             saveLastUserData(getLastUsed());
         }
-        if(current){
+        if (current) {
             System.out.println("Current user: " + lastUserData.getUsername() + "\n");
         }
-        if(print){
+        if (print) {
             printUserList();
         }
-        if(printCurrent){
+        if (printCurrent) {
             System.out.println(lastUserData);
         }
     }

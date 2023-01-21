@@ -7,17 +7,28 @@
 #
 
 ### About
-Tasker is a command line tool designed for efficient task management. It allows users to add, set, print, and delete tasks through the command line. Tasker utilizes picocli for its interface, ensuring that it will have fast performance and adhere to standard git-style terminal command structure for simplicity. Type ```--help``` or ```--helpall``` for a list of commands.
+<p>Tasker is a robust command line tool designed for efficient and descriptive task management. It allows users to add, set, print, and delete tasks through the command line, as well as change a variety of other attributes. Tasker utilizes picocli for its interface, ensuring that it will have fast performance and adhere to standard git-style terminal command structure for simplicity. Type <code>--help</code> or <code>--helpall</code> for a list of commands.</p>
 
 ### Installation
 
-##### Option 1: Run the jar file
-  1. Download the jar file named "TaskerCLI_3.24.jar"
-  2. Open your terminal and type ```java -jar /path/to/TaskerCLI_3.24.jar <command> <subcommand>```
-  3. To make it more convenient, add the alias to your !/.bash_aliases: ```alias tasker="java -jar /path/to/TaskerCLI_3.24.jar"```
-  - NOTE: proper support for using it without the .jar will be added in the future. Hang tight!
+##### Option 1:
+##### "Install" the JAR file (Linux)
+  1. Download `install.sh` from /Install/Linux_JAR
+  2. Run `install.sh` without sudo
+  3. Run `tasker` in the terminal (or `tasker --help` for a list of commands)
+- If this doesn't work, you may need to make sure the folder is added to PATH, or added to your ~/.bashrc file as an alias 
+  - You can do this by running `echo "alias tasker='java -jar /home/$USER/.Tasker/tasker'" >> ~/.bashrc` in the terminal
 
-##### Option 2: Compile the native image
+#### "Install" the JAR file (Windows)
+  1. Download `install.bat` from /Install/Windows_JAR
+  2. Run `install.bat` without admin privileges
+  3. Run `tasker` in the terminal (or `tasker --help` for a list of commands)
+- If this doesn't work, you may need to make sure the folder is added to PATH 
+  - You can do this by running `setx PATH "%PATH%;C:\Users\%USERNAME%\.Tasker"` in the terminal
+<hr>
+
+##### Option 2: Compile the native image 
+##### SUPPORT COMING SOON!!!
   1. Download it from <a href="https://github.com/SpecialistSteak/TaskerCLI/archive/refs/heads/master.zip">here</a>
   2. Unzip and open with the IDE of your choice
   3. Follow these instructions to create the native image for your device: <a href="https://www.javacodegeeks.com/2018/11/picocli-graalvm-fast-command-apps.html">here</a>

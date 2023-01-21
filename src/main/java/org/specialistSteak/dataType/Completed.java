@@ -7,27 +7,24 @@ public enum Completed {
     waitingOnOthers,
     deferred;
 
-    public static Completed getCompleted(String input) {
-        return switch (input) {
-            case "completed" -> completed;
-            case "notStarted" -> notStarted;
-            case "inProgress" -> inProgress;
-            case "waitingOnOthers" -> waitingOnOthers;
-            case "deferred" -> deferred;
-            default -> null;
-        };
-    }
-
+    /**
+     * Get the completion status as a string.
+     * @return the completion status as a string
+     */
     public String toString() {
         return switch (this) {
             case completed -> "Completed";
-            case notStarted -> "Not Started";
             case inProgress -> "In Progress";
             case waitingOnOthers -> "Waiting On Others";
             case deferred -> "Deferred";
+            default -> "Not Started";
         };
     }
 
+    /**
+     * @param input the input to check.
+     * @return if the input is completed or incomplete.
+     */
     public static Boolean returnCompletedStatus(Completed input) {
         return input == completed;
     }

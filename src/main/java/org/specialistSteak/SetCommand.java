@@ -11,9 +11,11 @@ import java.util.Date;
 
 import static org.specialistSteak.dataType.Completed.*;
 import static org.specialistSteak.dataType.Task.*;
+import static org.specialistSteak.utils.ErrorStringifer.errorMessager;
 
 @CommandLine.Command(
         name = "set",
+        description = "Has options related to setting new task values.",
         mixinStandardHelpOptions = true
 )
 public class SetCommand implements Runnable {
@@ -49,29 +51,27 @@ public class SetCommand implements Runnable {
     public void run() {
         try {
             loadTasks();
-        }
-        catch (IOException e){
+        } catch (IOException e) {
             try {
                 saveTasks(tasks);
             } catch (IOException ex) {
-                throw new RuntimeException(ex);
+                errorMessager(ex);
             }
         }
         //try loading tasks, make file if it fails, if that fails, let user know
 
         //prelim check
-        if(tasks.size() == 0){
+        if (tasks.size() == 0) {
             System.out.println("Try adding some tasks first.");
-        }
-        else {
+        } else {
             //concise way to check what has been used in command and set it if it's used
             if (descriptionString != null || priorityImportance != null || completeBoolean != null || ansiColor != null) {
                 Task task = tasks.get(setIndex);
                 task.setDescription(descriptionString != null ? descriptionString : task.getDescription());
                 task.setPriority(priorityImportance != null ? priorityImportance : task.getPriority());
-                task.setCompleted(completeBoolean != null ? completedStatusCompleted : task.isCompleted());
+                task.setIsCompleted(completeBoolean != null ? completedStatusCompleted : task.getIsCompleted());
                 task.setAnsiColor(ansiColor != null ? ansiColor : task.getAnsiColor());
-                if(returnCompletedStatus(task.isCompleted())){
+                if (returnCompletedStatus(task.getIsCompleted())) {
                     task.setDateCompleted(new Date().toString());
                 }
                 tasks.set(setIndex, task);
@@ -79,7 +79,7 @@ public class SetCommand implements Runnable {
                         (descriptionString != null) ? descriptionString : tasks.get(setIndex).getDescription(),
                         (priorityImportance != null) ? priorityImportance : tasks.get(setIndex).getPriority(),
                         (completeBoolean != null) ?
-                                (completeBoolean ? "Yes" : "No") : (tasks.get(setIndex).isCompleted().toString()),
+                                (completeBoolean ? "Yes" : "No") : (tasks.get(setIndex).getIsCompleted().toString()),
                         (ansiColor != null) ? ansiColor : tasks.get(setIndex).getAnsiColor());
             }
         }
@@ -94,7 +94,7 @@ public class SetCommand implements Runnable {
             System.out.println("All tasks have been set to a priority of " + priorityAllImportance + ".");
         }
 
-        if(ansiAllColor != null){
+        if (ansiAllColor != null) {
             for (int i = 0; i < tasks.size(); i++) {
                 Task tempTask = tasks.get(i);
                 //set method updates field and sets edit date
@@ -109,7 +109,7 @@ public class SetCommand implements Runnable {
             for (int i = 0; i < tasks.size(); i++) {
                 Task tempTask = tasks.get(i);
                 //set method updates field and sets edit date
-                tempTask.setCompleted(inProgress);
+                tempTask.setIsCompleted(inProgress);
                 tasks.set(i, tempTask);
             }
             System.out.println("All tasks have been set to incomplete.");
@@ -120,7 +120,7 @@ public class SetCommand implements Runnable {
             for (int i = 0; i < tasks.size(); i++) {
                 Task tempTask = tasks.get(i);
                 //set method updates field and sets edit date
-                tempTask.setCompleted(completed);
+                tempTask.setIsCompleted(completed);
                 tasks.set(i, tempTask);
             }
             System.out.println("All tasks have been set to complete.");
@@ -130,7 +130,8 @@ public class SetCommand implements Runnable {
         try {
             saveTasks(tasks);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            errorMessager(e);
+            System.exit(0);
         }
 
         //if print is used, print tasks

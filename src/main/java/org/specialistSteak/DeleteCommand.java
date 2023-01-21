@@ -8,9 +8,11 @@ import java.util.ArrayList;
 
 import static org.specialistSteak.dataType.Completed.returnCompletedStatus;
 import static org.specialistSteak.dataType.Task.*;
+import static org.specialistSteak.utils.ErrorStringifer.errorMessager;
 
 @CommandLine.Command(
         name = "delete",
+        description = "Has options related to deleting tasks.",
         mixinStandardHelpOptions = true
 )
 public class DeleteCommand implements Runnable {
@@ -42,7 +44,8 @@ public class DeleteCommand implements Runnable {
             try {
                 saveTasks(tasks);
             } catch (IOException ex) {
-                throw new RuntimeException(ex);
+                errorMessager(ex);
+                System.exit(0);
             }
         }
         //Prelim check
@@ -55,7 +58,8 @@ public class DeleteCommand implements Runnable {
                 try {
                     tasks.removeAll(searchTasks(tasks, searchTermString));
                 } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    errorMessager(e);
+                    System.exit(0);
                 }
                 System.out.println("All tasks containing the search term have been deleted.");
             }
@@ -68,7 +72,7 @@ public class DeleteCommand implements Runnable {
             if (completedBoolean) {
                 ArrayList<Task> toRemove = new ArrayList<>();
                 for (Task task : tasks) {
-                    if (returnCompletedStatus(task.isCompleted())) {
+                    if (returnCompletedStatus(task.getIsCompleted())) {
                         toRemove.add(task);
                     }
                 }
@@ -79,7 +83,7 @@ public class DeleteCommand implements Runnable {
             if (incompletedBoolean) {
                 ArrayList<Task> toRemove = new ArrayList<>();
                 for (Task task : tasks) {
-                    if (!returnCompletedStatus(task.isCompleted())) {
+                    if (!returnCompletedStatus(task.getIsCompleted())) {
                         toRemove.add(task);
                     }
                 }
@@ -96,7 +100,8 @@ public class DeleteCommand implements Runnable {
             try {
                 saveTasks(tasks);
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                errorMessager(e);
+                System.exit(0);
             }
             //print if option is used
             if (printBoolean) {

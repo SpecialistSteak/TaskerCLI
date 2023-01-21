@@ -13,9 +13,11 @@ import static org.specialistSteak.dataType.Importance.low;
 import static org.specialistSteak.dataType.Task.saveTasks;
 import static org.specialistSteak.dataType.Task.loadTasks;
 import static org.specialistSteak.dataType.Task.tasks;
+import static org.specialistSteak.utils.ErrorStringifer.errorMessager;
 
 @CommandLine.Command(
         name = "add",
+        description = "Has options related to creating new tasks.",
         mixinStandardHelpOptions = true
 )
 public class AddCommand implements Runnable {
@@ -32,10 +34,16 @@ public class AddCommand implements Runnable {
     private boolean printBoolean;
 
     @CommandLine.Option(names = {"-a", "--ansi"}, description = "Set new custom ansi color and exit. Supported values: RED, YELLOW, GREEN, BLUE, WHITE, BLACK", defaultValue = "DEFAULT")
-    private AnsiColor ansicolor;
+    private AnsiColor ansiColor;
 
     @CommandLine.Parameters
     private String taskDescriptionString;
+
+    private Completed complete(){
+        if(completedBoolean) return completed;
+        if(completeCompleted != null) return completeCompleted;
+        return notStarted;
+    }
 
     @Override
     public void run() {
@@ -46,22 +54,22 @@ public class AddCommand implements Runnable {
             try {
                 saveTasks(tasks);
             } catch (IOException ex) {
-                throw new RuntimeException(ex);
+                errorMessager(ex);
+                System.exit(0);
             }
         }
-        if(ansicolor == null) {
-            ansicolor = AnsiColor.DEFAULT;
+        if(ansiColor == null) {
+            ansiColor = AnsiColor.DEFAULT;
         }
         //add a new task with the user input as the task
         try {
             tasks.add(new Task(taskDescriptionString,
                     (priorityImportance != null) ? priorityImportance : low,
-                    (completeCompleted != null ? completeCompleted :
-                            (completedBoolean ? completed : notStarted)
-                    ),
-                    ansicolor));
+                    completeCompleted != null ? completeCompleted : notStarted,
+                    ansiColor));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            errorMessager(e);
+            System.exit(0);
         }
         System.out.println("Task added successfully.");
 
@@ -69,7 +77,8 @@ public class AddCommand implements Runnable {
         try {
             saveTasks(tasks);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            errorMessager(e);
+            System.exit(0);
         }
         //print if option is used
         if (printBoolean) {

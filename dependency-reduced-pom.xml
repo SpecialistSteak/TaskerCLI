@@ -4,7 +4,7 @@
   <groupId>org.specialistSteak</groupId>
   <artifactId>_TaskerCLI_</artifactId>
   <name>_TaskerCLI_</name>
-  <version>3.24</version>
+  <version>3.25</version>
   <url>https://maven.apache.org</url>
   <build>
     <plugins>

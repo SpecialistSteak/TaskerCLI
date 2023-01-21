@@ -4,7 +4,7 @@
 
     <groupId>org.specialistSteak</groupId>
     <artifactId>_TaskerCLI_</artifactId>
-    <version>3.24</version>
+    <version>3.25</version>
     <packaging>jar</packaging>
 
     <name>_TaskerCLI_</name>
@@ -24,17 +24,17 @@
             <version>2.4.0</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.microsoft.graph</groupId>
-            <artifactId>microsoft-graph</artifactId>
-            <version>5.42.0</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.microsoft.graph</groupId>-->
+<!--            <artifactId>microsoft-graph</artifactId>-->
+<!--            <version>5.42.0</version>-->
+<!--        </dependency>-->
 
-        <dependency>
-            <groupId>com.azure</groupId>
-            <artifactId>azure-identity</artifactId>
-            <version>1.7.3</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>com.azure</groupId>-->
+<!--            <artifactId>azure-identity</artifactId>-->
+<!--            <version>1.7.3</version>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>info.picocli</groupId>
@@ -65,8 +65,40 @@
     </dependencies>
 
     <build>
-
         <plugins>
+<!--            <plugin>-->
+<!--                <groupId>org.skife.maven</groupId>-->
+<!--                <artifactId>really-executable-jar-maven-plugin</artifactId>-->
+<!--                <version>2.0.0</version>-->
+<!--                <configuration>-->
+<!--                    <flags>-Xmx2G</flags>-->
+<!--                    <programFile>task-manager</programFile>-->
+<!--                </configuration>-->
+<!--                <executions>-->
+<!--                    <execution>-->
+<!--                        <phase>package</phase>-->
+<!--                        <goals>-->
+<!--                            <goal>really-executable-jar</goal>-->
+<!--                        </goals>-->
+<!--                    </execution>-->
+<!--                </executions>-->
+<!--            </plugin>-->
+
+
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-jar-plugin</artifactId>-->
+<!--                <version>3.3.0</version>-->
+<!--                <configuration>-->
+<!--                    <archive>-->
+<!--                        <manifest>-->
+<!--                            <addClasspath>true</addClasspath>-->
+<!--                            <mainClass>org.specialistSteak.TaskerCommand</mainClass>-->
+<!--                        </manifest>-->
+<!--                    </archive>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
@@ -88,6 +120,21 @@
                     </execution>
                 </executions>
             </plugin>
+
+<!--            <plugin>-->
+<!--                <groupId>org.codehaus.mojo</groupId>-->
+<!--                <artifactId>appassembler-maven-plugin</artifactId>-->
+<!--                <version>1.10</version>-->
+<!--                <configuration>-->
+<!--                    <programs>-->
+<!--                        <program>-->
+<!--                            <mainClass>org.specialistSteak.TaskerCommand</mainClass>-->
+<!--                            <id>app</id>-->
+<!--                        </program>-->
+<!--                    </programs>-->
+<!--                </configuration>-->
+<!--            </plugin>-->
+
         </plugins>
 
     </build>
