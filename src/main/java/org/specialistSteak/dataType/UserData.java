@@ -23,6 +23,8 @@ public class UserData {
     private String password;
     private String dateCreated;
     private File tasklistAddress;
+    public static final String SystemUsername = System.getProperty("user.name");
+
     public static ArrayList <UserData> userData = new ArrayList<>();
     public static UserData lastUserData;
     Scanner scanner = new Scanner(System.in);
@@ -40,7 +42,7 @@ public class UserData {
 //        this.APIKey = APIKey;
         this.username = username;
         this.isLastUsed = isLastUsed;
-        this.tasklistAddress = new File("src/main/resources/" + username + "_tasks.json");
+        this.tasklistAddress = new File("/home/" + SystemUsername + "/.Tasker/" + "src/main/resources/" + username + "_tasks.json");
 
         while(checkUserExist(this.username)) {
             System.out.println("User already exists. Please enter a new username: ");
@@ -179,7 +181,7 @@ public class UserData {
      * @throws IOException if the user's tasklist cannot be found.
      */
     public static void logout() throws IOException {
-        File file = new File("src/main/resources/lastUserData.json");
+        File file = new File("/home/" + SystemUsername + "/.Tasker/" + "src/main/resources/lastUserData.json");
         if (file.delete()) {
             System.out.println("File deleted successfully.");
         } else {
@@ -255,8 +257,8 @@ public class UserData {
      */
     public static void fileGen(){
         try{
-            File file = new File("src/main/resources/userData.json");
-            File file2 = new File("src/main/resources/lastUserData.json");
+            File file = new File("/home/" + SystemUsername + "/.Tasker/" + "src/main/resources/lastUserData.json");
+            File file2 = new File("/home/" + SystemUsername + "/.Tasker/" + "src/main/resources/userData.json");
             if(!file.exists()){
                 if(file.createNewFile()){
                     System.out.println("File created successfully.");
@@ -293,7 +295,7 @@ public class UserData {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
-            mapper.writeValue(new File("src/main/resources/userData.json"), userData);
+            mapper.writeValue(new File("/home/" + SystemUsername + "/.Tasker/" + "src/main/resources/userData.json"), userData);
         } catch (IOException e) {
             errorMessager(e);
             System.exit(0);
@@ -308,7 +310,7 @@ public class UserData {
         ObjectMapper mapper = new ObjectMapper();
         mapper.enable(SerializationFeature.INDENT_OUTPUT);
         try {
-            mapper.writeValue(new File("src/main/resources/lastUserData.json"), userData);
+            mapper.writeValue(new File("/home/" + SystemUsername + "/.Tasker/" + "src/main/resources/lastUserData.json"), userData);
         } catch(IOException e) {
             errorMessager(e);
             System.exit(0);
@@ -322,7 +324,7 @@ public class UserData {
         loadLastUserData(); //it won't work properly without this being called separately
         ObjectMapper mapper = new ObjectMapper();
         try{
-            UserData[] udataArray = mapper.readValue(new File("src/main/resources/userData.json"), UserData[].class);
+            UserData[] udataArray = mapper.readValue(new File("/home/" + SystemUsername + "/.Tasker/" + "src/main/resources/userData.json"), UserData[].class);
             userData = new ArrayList<>(Arrays.asList(udataArray));
         } catch (IOException ex) { //checks to see if the file works
             if (ex.getMessage().indexOf("cannot find the file") <= 0) {
@@ -335,7 +337,7 @@ public class UserData {
      * Loads the last used user's data from the lastUserData.json file.
      */
     public static void loadLastUserData() {
-        File lastUserDataFile = new File("src/main/resources/lastUserData.json");
+        File lastUserDataFile = new File("/home/" + SystemUsername + "/.Tasker/" + "src/main/resources/lastUserData.json");
         if (lastUserDataFile.exists() && lastUserDataFile.length() > 0) {
             try{
                 ObjectMapper lmapper = new ObjectMapper();
@@ -367,7 +369,7 @@ public class UserData {
     @Deprecated //not the best way to do this
     public static Object loadUserDataFromName(String uname) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
-        UserData[] udataArray = mapper.readValue(new File("src/main/resources/userData.json"), UserData[].class);
+        UserData[] udataArray = mapper.readValue(new File("/home/" + SystemUsername + "/.Tasker/" + "src/main/resources/userData.json"), UserData[].class);
         UserData udata;
         for(UserData userData : udataArray){
             if(userData.getUsername().equals(uname)){
