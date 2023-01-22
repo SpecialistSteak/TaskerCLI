@@ -1,3 +1,5 @@
 #!/bin/bash
 
-java -Duser.dir=/home/"$USER"/.Tasker -jar /home/"$USER"/.Tasker/TaskerCLI.jar "$@"
+CurrentDir=$(dirname "$(readlink -f "$0")")
+java -jar /home/"$USER"/.Tasker/TaskerCLI.jar "$@"
+cd "$CurrentDir" || exit
