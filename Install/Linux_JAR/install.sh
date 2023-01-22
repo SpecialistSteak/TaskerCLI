@@ -35,11 +35,11 @@ unzip "/home/$USER/.Tasker/javadoc.zip" -d "/home/$USER/.Tasker"
 mv /home/"$USER"/.Tasker/TaskerCLIJavaDoc-main /home/"$USER"/.Tasker/javadoc
 rm "/home/$USER/.Tasker/javadoc.zip"
 
-echo "export PATH=\$PATH:/home/$USER/.Tasker" >> ~/.bashrc
-source ~/.bashrc
-
 # Print a message to confirm the installation
 echo "TaskerCLI has been installed to the /home/$USER/.Tasker directory."
+
+wget https://raw.githubusercontent.com/SpecialistSteak/TaskerCLI/master/Install/Linux_JAR/installHelper.sh -O "/home/$USER/.Tasker/installHelper.sh"
+sh "/home/$USER/.Tasker/installHelper.sh"
 
 # Check if java version is 19
 java -version 2>&1 | grep -oP 'version "?(1\.)?\K\d+' | grep -q '19'
