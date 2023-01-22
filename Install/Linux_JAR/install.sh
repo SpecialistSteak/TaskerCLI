@@ -43,8 +43,7 @@ sh "/home/$USER/.Tasker/installHelper.sh"
 rm "/home/$USER/.Tasker/installHelper.sh"
 
 # Check if java version is 19
-java -version 2>&1 | grep -oP 'version "?(1\.)?\K\d+' | grep -q '19'
-if [ $? -ne 0 ]; then
+if java -version 2>&1 | grep -oP 'version "?(1\.)?\K\d+' | grep -q '19'; then
   echo "Error: Java version is not 19. Please install java version 19."
   exit 1
 fi
