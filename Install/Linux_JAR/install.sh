@@ -23,7 +23,7 @@ else
 fi
 
 # Download the TaskerCLI jar files
-wget https://github.com/SpecialistSteak/TaskerCLI/blob/master/TaskerCLI.jar -O "/home/$USER/.Tasker/TaskerCLI.jar"
+wget https://raw.githubusercontent.com/SpecialistSteak/TaskerCLI/master/TaskerCLI.jar -O "/home/$USER/.Tasker/TaskerCLI.jar"
 wget https://raw.githubusercontent.com/SpecialistSteak/TaskerCLI/master/Install/Linux_JAR/tasker -O "/home/$USER/.Tasker/tasker"
 chmod +x "/home/$USER/.Tasker/tasker"
 
@@ -35,7 +35,8 @@ unzip "/home/$USER/.Tasker/javadoc.zip" -d "/home/$USER/.Tasker"
 mv /home/"$USER"/.Tasker/TaskerCLIJavaDoc-main /home/"$USER"/.Tasker/javadoc
 rm "/home/$USER/.Tasker/javadoc.zip"
 
-export PATH=$PATH:/home/$USER/.Tasker/tasker.ps1
+echo "export PATH=\$PATH:/home/$USER/.Tasker" >> ~/.bashrc
+source ~/.bashrc
 
 # Print a message to confirm the installation
 echo "TaskerCLI has been installed to the /home/$USER/.Tasker directory."
