@@ -21,7 +21,7 @@ Note: Installation support (aside from a runnable jar) will likely not come to M
 - If this doesn't work, you may need to make sure the folder is added to PATH, or added to your ~/.bashrc file as an alias 
   - You can do this by running `echo "alias tasker='java -jar /home/$USER/.Tasker/tasker'" >> ~/.bashrc` in the terminal
 
-#### "Install" the JAR file (Windows)
+##### "Install" the JAR file (Windows)
   1. Download `install.bat` from /Install/Windows_JAR
   2. Run `install.bat` without admin privileges
   3. Run `tasker` in the terminal (or `tasker --help` for a list of commands)
