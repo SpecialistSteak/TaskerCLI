@@ -40,6 +40,7 @@ echo "TaskerCLI has been installed to the /home/$USER/.Tasker directory."
 
 wget https://raw.githubusercontent.com/SpecialistSteak/TaskerCLI/master/Install/Linux_JAR/installHelper.sh -O "/home/$USER/.Tasker/installHelper.sh"
 sh "/home/$USER/.Tasker/installHelper.sh"
+rm "/home/$USER/.Tasker/installHelper.sh"
 
 # Check if java version is 19
 java -version 2>&1 | grep -oP 'version "?(1\.)?\K\d+' | grep -q '19'
