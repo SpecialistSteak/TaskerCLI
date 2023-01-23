@@ -4,7 +4,7 @@ public class ErrorStringifer extends Exception {
     /**
      * A switch to turn on and off 'Dev mode'.
      */
-    public static boolean devSwitch = true;
+    public static boolean devSwitch = false;
 
     /**
      * Converts the exception to a string and prints it in a user-friendly format.
