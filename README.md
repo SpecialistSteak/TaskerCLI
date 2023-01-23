@@ -11,7 +11,7 @@
 
 ### Installation
 
-Note: Installation support (aside from a runnable jar) will likely not come to Mac as I don't know how to use MacOS, and couldn't write a script for it.
+Note: Installation support (aside from a runnable jar) will likely not come to Mac as I don't have any knowledge of MacOS or own a Mac to test it on.
 
 ##### Option 1:
 ##### "Install" the JAR file (Linux)
@@ -21,10 +21,10 @@ Note: Installation support (aside from a runnable jar) will likely not come to M
 - If this doesn't work, you may need to make sure the folder is added to PATH, or added to your ~/.bashrc file as an alias 
   - You can do this by running `echo "alias tasker='java -jar /home/$USER/.Tasker/tasker'" >> ~/.bashrc` in the terminal
 
-#### "Install" the JAR file (Windows)
-  1. Download `install.bat` from /Install/Windows_JAR
-  2. Run `install.bat` without admin privileges
-  3. Run `tasker` in the terminal (or `tasker --help` for a list of commands)
+##### "Install" the JAR file (Windows)
+  1. Download `install.ps1` from /Install/Windows_JAR
+  2. Run `install.ps1` without admin privileges
+  3. Run `.\tasker` in the terminal (or `.\tasker --help` for a list of commands)
 - If this doesn't work, you may need to make sure the folder is added to PATH 
   - You can do this by running `setx PATH "%PATH%;C:\Users\%USERNAME%\.Tasker"` in the terminal
 <hr>
