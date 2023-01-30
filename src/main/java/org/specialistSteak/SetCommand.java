@@ -13,6 +13,8 @@ import static org.specialistSteak.dataType.Completed.*;
 import static org.specialistSteak.dataType.Task.*;
 import static org.specialistSteak.utils.ErrorStringifer.errorMessager;
 
+//TODO: URGENT setting a task as complete or incomplete IS NOT WORKING
+
 @CommandLine.Command(
         name = "set",
         description = "Has options related to setting new task values.",

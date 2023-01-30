@@ -11,6 +11,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Update readme.md
 - Performance fixes and optimizations
 #### Fixed
+- **Fixed a bug where trying to set a new completion status would not work**
 - Additional testing and bugfixes
 
 ## 3.25 - 2023-01
@@ -37,7 +38,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Fixed a bug where the program would crash upon trying to print the tasklist
 - Fixed a bug where Completed would always be null
 - Fixed a bug where the isCompleted method was improperly named and would not be saved to the .json file
-Note: Sorry for the late update! This was a large bug-fixing and reformatting update, so it took me a little longer than usual.
+- Fixed a bug where the user could not input a multi-word String ex. "do homework"
 
 ### 3.24 - 2023-01
 #### Added

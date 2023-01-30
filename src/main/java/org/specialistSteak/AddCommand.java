@@ -49,40 +49,45 @@ public class AddCommand implements Runnable {
     public void run() {
         //try loading tasks, make file if it fails, if that fails, let user know
         try {
-            loadTasks();
-        } catch (IOException e) {
             try {
-                saveTasks(tasks);
-            } catch (IOException ex) {
-                errorMessager(ex);
+                loadTasks();
+            } catch (IOException e) {
+                try {
+                    saveTasks(tasks);
+                } catch (IOException ex) {
+                    errorMessager(ex);
+                    System.exit(0);
+                }
+            }
+            if (ansiColor == null) {
+                ansiColor = AnsiColor.DEFAULT;
+            }
+            //add a new task with the user input as the task
+            try {
+                tasks.add(new Task(taskDescriptionString,
+                        (priorityImportance != null) ? priorityImportance : low,
+                        completeCompleted != null ? completeCompleted : notStarted,
+                        ansiColor));
+            } catch (IOException e) {
+                errorMessager(e);
                 System.exit(0);
             }
-        }
-        if(ansiColor == null) {
-            ansiColor = AnsiColor.DEFAULT;
-        }
-        //add a new task with the user input as the task
-        try {
-            tasks.add(new Task(taskDescriptionString,
-                    (priorityImportance != null) ? priorityImportance : low,
-                    completeCompleted != null ? completeCompleted : notStarted,
-                    ansiColor));
-        } catch (IOException e) {
-            errorMessager(e);
-            System.exit(0);
-        }
-        System.out.println("Task added successfully.");
+            System.out.println("Task added successfully.");
 
-        //Try to save to file, catch error
-        try {
-            saveTasks(tasks);
-        } catch (IOException e) {
-            errorMessager(e);
+            //Try to save to file, catch error
+            try {
+                saveTasks(tasks);
+            } catch (IOException e) {
+                errorMessager(e);
+                System.exit(0);
+            }
+            //print if option is used
+            if (printBoolean) {
+                Task.printTasks();
+            }
+        } catch (Exception e) {
+            System.out.println("Error running add command.");
             System.exit(0);
-        }
-        //print if option is used
-        if (printBoolean) {
-            Task.printTasks();
         }
     }
 }

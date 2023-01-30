@@ -24,22 +24,22 @@
             <version>2.4.0</version>
         </dependency>
 
-<!--        <dependency>-->
-<!--            <groupId>com.microsoft.graph</groupId>-->
-<!--            <artifactId>microsoft-graph</artifactId>-->
-<!--            <version>5.42.0</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.microsoft.graph</groupId>-->
+        <!--            <artifactId>microsoft-graph</artifactId>-->
+        <!--            <version>5.42.0</version>-->
+        <!--        </dependency>-->
 
-<!--        <dependency>-->
-<!--            <groupId>com.azure</groupId>-->
-<!--            <artifactId>azure-identity</artifactId>-->
-<!--            <version>1.7.3</version>-->
-<!--        </dependency>-->
+        <!--        <dependency>-->
+        <!--            <groupId>com.azure</groupId>-->
+        <!--            <artifactId>azure-identity</artifactId>-->
+        <!--            <version>1.7.3</version>-->
+        <!--        </dependency>-->
 
         <dependency>
             <groupId>info.picocli</groupId>
             <artifactId>picocli-codegen</artifactId>
-            <version>4.7.0</version>
+            <version>4.7.1</version>
             <scope>provided</scope>
         </dependency>
 
@@ -53,51 +53,26 @@
         <dependency>
             <groupId>info.picocli</groupId>
             <artifactId>picocli</artifactId>
-            <version>4.7.0</version>
+            <version>4.7.1</version>
         </dependency>
 
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.14.1</version>
+            <version>2.14.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>3.0.0-M8</version>
+            <type>maven-plugin</type>
         </dependency>
 
     </dependencies>
 
     <build>
         <plugins>
-<!--            <plugin>-->
-<!--                <groupId>org.skife.maven</groupId>-->
-<!--                <artifactId>really-executable-jar-maven-plugin</artifactId>-->
-<!--                <version>2.0.0</version>-->
-<!--                <configuration>-->
-<!--                    <flags>-Xmx2G</flags>-->
-<!--                    <programFile>task-manager</programFile>-->
-<!--                </configuration>-->
-<!--                <executions>-->
-<!--                    <execution>-->
-<!--                        <phase>package</phase>-->
-<!--                        <goals>-->
-<!--                            <goal>really-executable-jar</goal>-->
-<!--                        </goals>-->
-<!--                    </execution>-->
-<!--                </executions>-->
-<!--            </plugin>-->
-
-
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-jar-plugin</artifactId>-->
-<!--                <version>3.3.0</version>-->
-<!--                <configuration>-->
-<!--                    <archive>-->
-<!--                        <manifest>-->
-<!--                            <addClasspath>true</addClasspath>-->
-<!--                            <mainClass>org.specialistSteak.TaskerCommand</mainClass>-->
-<!--                        </manifest>-->
-<!--                    </archive>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -120,21 +95,6 @@
                     </execution>
                 </executions>
             </plugin>
-
-<!--            <plugin>-->
-<!--                <groupId>org.codehaus.mojo</groupId>-->
-<!--                <artifactId>appassembler-maven-plugin</artifactId>-->
-<!--                <version>1.10</version>-->
-<!--                <configuration>-->
-<!--                    <programs>-->
-<!--                        <program>-->
-<!--                            <mainClass>org.specialistSteak.TaskerCommand</mainClass>-->
-<!--                            <id>app</id>-->
-<!--                        </program>-->
-<!--                    </programs>-->
-<!--                </configuration>-->
-<!--            </plugin>-->
-
         </plugins>
 
     </build>

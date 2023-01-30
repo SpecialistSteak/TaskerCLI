@@ -33,10 +33,11 @@ public class Task {
     /**
      * Constructor for Task class. Contains data such as description, priority, and completion status.
      * Also contains other "metadata" such as owner, last edited date, and added date.
+     *
      * @param description The description of the task.
-     * @param priority The priority of the task.
+     * @param priority    The priority of the task.
      * @param isCompleted If the task is completed.
-     * @param ansiColor The color of the task.
+     * @param ansiColor   The color of the task.
      * @throws IOException if the file is not found.
      */
     @JsonCreator
@@ -52,7 +53,7 @@ public class Task {
         this.isCompleted = isCompleted;
         loadLastUserData();
         this.owner = lastUserData.getUsername();
-        if(Completed.returnCompletedStatus(isCompleted)) {
+        if (Completed.returnCompletedStatus(isCompleted)) {
             this.dateCompleted = new Date().toString();
         } else {
             this.dateCompleted = null;
@@ -61,6 +62,7 @@ public class Task {
 
     /**
      * Set the added date of the task.
+     *
      * @param addedDate the date the task was added.
      */
     public void setAddedDate(String addedDate) {
@@ -70,12 +72,13 @@ public class Task {
     /**
      * Update the last edited date of the task.
      */
-    public void updateLastEditedDate(){
+    public void updateLastEditedDate() {
         this.lastEditedDate = new Date().toString();
     }
 
     /**
      * Set the date the task last edited.
+     *
      * @param lastEditedDate the last edited date of the task to set.
      */
     public void setLastEditedDate(String lastEditedDate) {
@@ -84,6 +87,7 @@ public class Task {
 
     /**
      * Set the owner of the task.
+     *
      * @param owner the owner of the task to set.
      */
     public void setOwner(String owner) {
@@ -92,6 +96,7 @@ public class Task {
 
     /**
      * Get the last edited date of the task.
+     *
      * @return the last edited date of the task.
      */
     public String getLastEditedDate() {
@@ -100,6 +105,7 @@ public class Task {
 
     /**
      * Get the added date of the task.
+     *
      * @return the added date of the task.
      */
     public String getAddedDate() {
@@ -108,6 +114,7 @@ public class Task {
 
     /**
      * Get the completion date of the task.
+     *
      * @return the completion date of the task.
      */
     public String getDateCompleted() {
@@ -116,6 +123,7 @@ public class Task {
 
     /**
      * Get the description of the task.
+     *
      * @return the description of the task.
      */
     public String getDescription() {
@@ -124,6 +132,7 @@ public class Task {
 
     /**
      * Get the priority of the task.
+     *
      * @return the priority of the task.
      */
     public Importance getPriority() {
@@ -132,6 +141,7 @@ public class Task {
 
     /**
      * Get the completion status of the task.
+     *
      * @return the completion status of the task.
      */
     public Completed getIsCompleted() {
@@ -140,6 +150,7 @@ public class Task {
 
     /**
      * Get the owner of the task.
+     *
      * @return the owner of the task.
      */
     public AnsiColor getAnsiColor() {
@@ -148,6 +159,7 @@ public class Task {
 
     /**
      * Get the owner of the task.
+     *
      * @return the owner of the task.
      */
     public String getOwner() {
@@ -156,6 +168,7 @@ public class Task {
 
     /**
      * Set the description of the task.
+     *
      * @param dateCompleted the date the task was completed.
      */
     public void setDateCompleted(String dateCompleted) {
@@ -164,15 +177,17 @@ public class Task {
 
     /**
      * Set the description of the task and update the last edited date.
+     *
      * @param description the description of the task to set.
      */
-    public void setDescription(String description){
+    public void setDescription(String description) {
         this.description = description;
         this.lastEditedDate = new Date().toString();
     }
 
     /**
      * Set the priority of the task and update the last edited date.
+     *
      * @param priority the priority of the task to set.
      */
     public void setPriority(Importance priority) {
@@ -182,11 +197,12 @@ public class Task {
 
     /**
      * Set the completion status of the task and update the date completed.
+     *
      * @param isCompleted the completion status of the task to set.
      */
     public void setIsCompleted(Completed isCompleted) {
         this.isCompleted = isCompleted;
-        if(returnCompletedStatus(isCompleted)) {
+        if (returnCompletedStatus(isCompleted)) {
             this.dateCompleted = new Date().toString();
         }
         this.lastEditedDate = new Date().toString();
@@ -194,6 +210,7 @@ public class Task {
 
     /**
      * Set the color of the task and update the last edited date.
+     *
      * @param ansiColor the color of the task to set.
      */
     public void setAnsiColor(AnsiColor ansiColor) {
@@ -203,6 +220,7 @@ public class Task {
 
     /**
      * Get the task as a string. Note that this is not the same as the description, and is for testing purposes.
+     *
      * @return the task as a string.
      */
     public String toString() {
@@ -213,9 +231,10 @@ public class Task {
 
     /**
      * Prints all the tasks in a formatted way.
+     *
      * @param tasks the tasks to print.
      */
-    public static void printTasks(ArrayList<Task> tasks){
+    public static void printTasks(ArrayList<Task> tasks) {
         // Print the table header
         System.out.println("| Index | Description        | Priority     | Completed Status |");
         System.out.println("|-------|--------------------|--------------|------------------|");
@@ -223,12 +242,12 @@ public class Task {
         // Print the tasks
         for (int i = 0; i < tasks.size(); i++) {
             Task task = tasks.get(i);
-            if(!(tasks.get(i).getAnsiColor() == AnsiColor.DEFAULT)){
+            if (!(tasks.get(i).getAnsiColor() == AnsiColor.DEFAULT)) {
                 System.out.printf(
-                        "| %-5d | %-18s | %-10s | %-16s |\n",
+                        "| %-5d | %-18s | %-12s | %-16s |\n",
                         i,
-                        CommandLine.Help.Ansi.AUTO.string(ansiEscape(task , task.getDescription())),
-                        CommandLine.Help.Ansi.AUTO.string(ansiEscape(task, task.getPriority() != null?
+                        CommandLine.Help.Ansi.AUTO.string(ansiEscape(task, task.getDescription())),
+                        CommandLine.Help.Ansi.AUTO.string(ansiEscape(task, task.getPriority() != null ?
                                 importanceToString(task.getPriority()) : "None")),
                         CommandLine.Help.Ansi.AUTO.string(ansiEscape(task, task.isCompleted != null ?
                                 task.getIsCompleted().toString() : "Not Started"))
@@ -238,7 +257,7 @@ public class Task {
                         "| %-5d | %-18s | %-10s | %-16s |\n",
                         i,
                         task.getDescription(),
-                        task.getPriority() != null ?  importanceToString(task.getPriority()) : "None",
+                        task.getPriority() != null ? importanceToString(task.getPriority()) : "None",
                         task.getIsCompleted() != null ? task.getIsCompleted().toString() : "Not Started");
             }
         }
@@ -247,7 +266,7 @@ public class Task {
     /**
      * Prints all the tasks in a formatted way, based off of the permanent ArrayList.
      */
-    public static void printTasks(){
+    public static void printTasks() {
         // Print the table header
         System.out.println("| Index | Description        | Priority   | Completed Status |");
         System.out.println("|-------|--------------------|------------|------------------|");
@@ -255,12 +274,12 @@ public class Task {
         // Print the tasks
         for (int i = 0; i < Task.tasks.size(); i++) {
             Task task = Task.tasks.get(i);
-            if(!(Task.tasks.get(i).getAnsiColor() == AnsiColor.DEFAULT)){
+            if (!(Task.tasks.get(i).getAnsiColor() == AnsiColor.DEFAULT)) {
                 System.out.printf(
-                    "| %-5d | %-18s | %-10s | %-16s |\n",
-                    i,
-                    CommandLine.Help.Ansi.AUTO.string(ansiEscape(task , task.getDescription())),
-                        CommandLine.Help.Ansi.AUTO.string(ansiEscape(task, task.getPriority() != null?
+                        "| %-5d | %-18s | %-12s | %-16s |\n",
+                        i,
+                        CommandLine.Help.Ansi.AUTO.string(ansiEscape(task, task.getDescription())),
+                        CommandLine.Help.Ansi.AUTO.string(ansiEscape(task, task.getPriority() != null ?
                                 importanceToString(task.getPriority()) : "None")),
                         CommandLine.Help.Ansi.AUTO.string(ansiEscape(task, task.isCompleted != null ?
                                 task.getIsCompleted().toString() : "Not Started"))
@@ -270,7 +289,7 @@ public class Task {
                         "| %-5d | %-18s | %-10s | %-16s |\n",
                         i,
                         task.getDescription(),
-                        task.getPriority() != null ?  importanceToString(task.getPriority()) : "None",
+                        task.getPriority() != null ? importanceToString(task.getPriority()) : "None",
                         task.getIsCompleted() != null ? task.getIsCompleted().toString() : "Not Started");
             }
         }
@@ -278,7 +297,8 @@ public class Task {
 
     /**
      * Searches for a task based on the description.
-     * @param tasks the tasks to search through.
+     *
+     * @param tasks      the tasks to search through.
      * @param searchTerm the term to search for.
      * @return the task/s that matches the search term.
      * @throws IOException if the file is not found.
@@ -295,6 +315,7 @@ public class Task {
 
     /**
      * Saves the tasks to a formatted json file.
+     *
      * @param tasks the tasks to save to the file.
      * @throws IOException if the file is not found.
      */
@@ -311,6 +332,7 @@ public class Task {
 
     /**
      * Loads the tasks from a formatted json file.
+     *
      * @throws IOException if the file is not found.
      */
     public static void loadTasks() throws IOException {
@@ -318,7 +340,7 @@ public class Task {
         ObjectMapper mapper = new ObjectMapper();
         Task[] tasklist = new Task[0];
         File tasklistAddress = new File("");
-        try{
+        try {
             tasklistAddress = lastUserData.getTasklistAddress();
         } catch (NullPointerException ex) {
             errorMessager(ex);
@@ -326,14 +348,14 @@ public class Task {
         try {
             tasklist = mapper.readValue(new FileReader(tasklistAddress), Task[].class);
         } catch (IOException ex) { //checks to see if the file works
-            if (ex.getMessage().contains("Permission denied")){
+            if (ex.getMessage().contains("Permission denied")) {
                 System.out.println("You may need to use sudo privileges to edit the file.");
             }
-            if(ex.getMessage().indexOf("find the file") > 0){
+            if (ex.getMessage().indexOf("find the file") > 0) {
                 System.out.println("Error locating the file.");
                 System.out.println("Attempting to generate a new file.");
                 File file = new File(lastUserData.getTasklistAddress().toURI());
-                try{
+                try {
                     if (file.createNewFile()) {
                         System.out.println("File created successfully.");
                     } else {
@@ -346,45 +368,5 @@ public class Task {
             }
         }
         Task.tasks = new ArrayList<>(Arrays.asList(tasklist));
-    }
-
-    /**
-     * Saves the tasks to a formatted text file. The format is as follows: String|int|boolean|AnsiColor.
-     * @deprecated because of the new json save system which is more effective.
-     * @param tasks the tasks to save to the file.
-     * @throws IOException if the file is not found.
-     */
-    @Deprecated
-    public static void saveTasksToTxtFile(ArrayList<Task> tasks) throws IOException {
-        BufferedWriter writer = new BufferedWriter(new FileWriter("tasks.txt"));
-        for (Task task : tasks) {
-            String line = String.format("%s|%s|%s|%s", task.getDescription(), task.getPriority(), task.getIsCompleted(), task.getAnsiColor());
-            writer.write(line);
-            writer.newLine();
-        }
-        writer.close();
-    }
-
-    /**
-     * Loads the tasks from a formatted text file. The format is as follows: String|int|boolean|AnsiColor.
-     * @deprecated because of the new json save system which is more effective.
-     * @throws IOException if the file is not found.
-     */
-    @Deprecated
-    public static void loadTasksFromTxtFile() throws IOException {
-        ArrayList<Task> tasks = new ArrayList<>();
-
-        BufferedReader reader = new BufferedReader(new FileReader("tasks.txt"));
-        String line;
-        while ((line = reader.readLine()) != null) {
-            String[] parts = line.split("\\|"); //split at | in file
-            String description = parts[0];
-            Importance priority = Importance.valueOf(parts[1]);
-            Completed isCompleted = Completed.valueOf(parts[2]);
-            AnsiColor ansiColor = AnsiColor.valueOf(parts[3]);
-            tasks.add(new Task(description, priority, isCompleted, ansiColor));
-        }
-        reader.close();
-        Task.tasks = tasks;
     }
 }
