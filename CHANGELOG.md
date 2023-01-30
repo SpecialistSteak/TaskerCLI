@@ -30,6 +30,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Added more graceful error handling
 - Updated dependencies
 - Beautified the code
+- Removed stack trace from error messages unless in Dev Mode by adding a try-catch block to the main method
 #### Removed
 - Removed unused dependencies
 - Removed unused code
