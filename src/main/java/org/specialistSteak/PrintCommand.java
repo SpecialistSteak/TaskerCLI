@@ -33,67 +33,72 @@ public class PrintCommand implements Runnable {
     @Override
     public void run() {
         try {
-            loadTasks();
-        } catch (IOException e) {
+            try {
+                loadTasks();
+            } catch (IOException e) {
+                try {
+                    saveTasks(tasks);
+                } catch (IOException ex) {
+                    errorMessager(ex);
+                    System.exit(0);
+                }
+            }
+            //try loading tasks, make file if it fails, if that fails, let user know
+
+            ArrayList<Task> taskCopy = new ArrayList<>(tasks);
+            //make an array for the copy of tasks (to allow for -P option)
+
+            //if search was used, search tasks
+            if (searchTermString != null) {
+                try {
+                    taskCopy = searchTasks(taskCopy, searchTermString);
+                } catch (IOException e) {
+                    errorMessager(e);
+                    System.exit(0);
+                }
+            }
+            //filter out incomplete to temp List if used
+            if (filterBoolean) {
+                ArrayList<Task> toRemove = new ArrayList<>();
+                for (Task task : taskCopy) {
+                    if (returnCompletedStatus(task.getIsCompleted())) {
+                        toRemove.add(task);
+                    }
+                }
+                taskCopy.removeAll(toRemove);
+            }
+            //order to temp List if used
+
+            if (orderBoolean) {
+                for (int i = 0; i < taskCopy.size() - 1; i++) {
+                    for (int j = i + 1; j < taskCopy.size(); j++) {
+                        if (Importance.importanceToInteger(taskCopy.get(i).getPriority()) > Importance.importanceToInteger(taskCopy.get(j).getPriority())) {
+                            Task temp = taskCopy.get(i);
+                            taskCopy.set(i, taskCopy.get(j));
+                            taskCopy.set(j, temp);
+                        }
+                    }
+                }
+            }
+
+            //set old task List to new task List
+            if (isPermanent) {
+                tasks.clear();
+                tasks.addAll(taskCopy);
+                System.out.println("All changes have been permanently implemented.");
+            }
+
+            //try to save tasks, catch error
             try {
                 saveTasks(tasks);
-            } catch (IOException ex) {
-                errorMessager(ex);
-                System.exit(0);
-            }
-        }
-        //try loading tasks, make file if it fails, if that fails, let user know
-
-        ArrayList<Task> taskCopy = new ArrayList<>(tasks);
-        //make an array for the copy of tasks (to allow for -P option)
-
-        //if search was used, search tasks
-        if (searchTermString != null) {
-            try {
-                taskCopy = searchTasks(taskCopy, searchTermString);
             } catch (IOException e) {
                 errorMessager(e);
                 System.exit(0);
             }
-        }
-        //filter out incomplete to temp List if used
-        if (filterBoolean) {
-            ArrayList<Task> toRemove = new ArrayList<>();
-            for (Task task : taskCopy) {
-                if (returnCompletedStatus(task.getIsCompleted())) {
-                    toRemove.add(task);
-                }
-            }
-            taskCopy.removeAll(toRemove);
-        }
-        //order to temp List if used
-
-        if (orderBoolean) {
-            for (int i = 0; i < taskCopy.size() - 1; i++) {
-                for (int j = i + 1; j < taskCopy.size(); j++) {
-                    if (Importance.importanceToInteger(taskCopy.get(i).getPriority()) > Importance.importanceToInteger(taskCopy.get(j).getPriority())) {
-                        Task temp = taskCopy.get(i);
-                        taskCopy.set(i, taskCopy.get(j));
-                        taskCopy.set(j, temp);
-                    }
-                }
-            }
-        }
-
-        //set old task List to new task List
-        if (isPermanent) {
-            tasks.clear();
-            tasks.addAll(taskCopy);
-            System.out.println("All changes have been permanently implemented.");
-        }
-
-        //try to save tasks, catch error
-        try {
-            saveTasks(tasks);
-        } catch (IOException e) {
+            printTasks(taskCopy);
+        } catch (Exception e) {
             errorMessager(e);
-            System.exit(0);
+            System.exit(1);
         }
-        printTasks(taskCopy);
     }
 }

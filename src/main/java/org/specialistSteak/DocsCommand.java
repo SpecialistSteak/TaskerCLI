@@ -2,7 +2,7 @@ package org.specialistSteak;
 
 import picocli.CommandLine;
 
-import java.awt.Desktop;
+import java.awt.*;
 import java.io.File;
 
 import static org.specialistSteak.utils.ErrorStringifer.errorMessager;
@@ -17,17 +17,21 @@ public class DocsCommand implements Runnable {
     public void run() {
         System.out.println("Opening documentation...");
         try {
-            File file = new File("javadoc/index.html");
-            if(!Desktop.isDesktopSupported()) {
-                System.out.println("Error: Desktop not supported");
-                return;
+            try {
+                File file = new File("javadoc/index.html");
+                if (!Desktop.isDesktopSupported()) {
+                    System.out.println("Error: Desktop not supported");
+                    return;
+                }
+                Desktop desktop = Desktop.getDesktop();
+                if (file.exists()) desktop.open(file);
+            } catch (Exception e) {
+                System.out.println("Error loading documentation.");
+                errorMessager(e);
             }
-            Desktop desktop = Desktop.getDesktop();
-            if(file.exists()) desktop.open(file);
-        }
-        catch(Exception e) {
-            System.out.println("Error loading documentation.");
+        } catch (Exception e) {
             errorMessager(e);
+            System.exit(1);
         }
     }
 }

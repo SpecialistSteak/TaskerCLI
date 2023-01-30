@@ -8,11 +8,10 @@ import picocli.CommandLine;
 
 import java.io.IOException;
 
-import static org.specialistSteak.dataType.Completed.*;
+import static org.specialistSteak.dataType.Completed.completed;
+import static org.specialistSteak.dataType.Completed.notStarted;
 import static org.specialistSteak.dataType.Importance.low;
-import static org.specialistSteak.dataType.Task.saveTasks;
-import static org.specialistSteak.dataType.Task.loadTasks;
-import static org.specialistSteak.dataType.Task.tasks;
+import static org.specialistSteak.dataType.Task.*;
 import static org.specialistSteak.utils.ErrorStringifer.errorMessager;
 
 @CommandLine.Command(
@@ -39,9 +38,9 @@ public class AddCommand implements Runnable {
     @CommandLine.Parameters
     private String taskDescriptionString;
 
-    private Completed complete(){
-        if(completedBoolean) return completed;
-        if(completeCompleted != null) return completeCompleted;
+    private Completed complete() {
+        if (completedBoolean) return completed;
+        if (completeCompleted != null) return completeCompleted;
         return notStarted;
     }
 
@@ -86,8 +85,8 @@ public class AddCommand implements Runnable {
                 Task.printTasks();
             }
         } catch (Exception e) {
-            System.out.println("Error running add command.");
-            System.exit(0);
+            errorMessager(e);
+            System.exit(1);
         }
     }
 }

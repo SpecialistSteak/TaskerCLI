@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.util.Scanner;
 
 import static org.specialistSteak.dataType.UserData.*;
-//import static org.specialistSteak.utils.LengthCheckString.checkAPILength;
 import static org.specialistSteak.utils.ErrorStringifer.errorMessager;
 import static org.specialistSteak.utils.LengthCheckString.checkLength;
 
@@ -48,110 +47,115 @@ public class UserCommand implements Runnable {
     @Override
     public void run() {
         try {
-            loadAllUserData();
-        } catch (Exception e) {
-            System.out.println("Error loading user data. Generating files...");
             try {
-                fileGen();
-            } catch (Exception ex) {
-                System.out.println("Error generating files.");
-                errorMessager(e);
-                errorMessager(ex);
-            }
-        }
-        if (login) {
-            if (loginPrint) {
-                printUserList();
-            }
-            Scanner scan = new Scanner(System.in);
-            System.out.println("Enter username: ");
-            String uname = scan.nextLine();
-            try {
-                login(uname);
-                System.out.println("Logged in as " + uname);
-            } catch (IOException e) {
-                errorMessager(e);
-                System.exit(0);
-            }
-        }
-        if (logout) {
-            if (lastUserData != null) {
-                System.out.println("Logging out...");
+                loadAllUserData();
+            } catch (Exception e) {
+                System.out.println("Error loading user data. Generating files...");
                 try {
-                    logout();
+                    fileGen();
+                } catch (Exception ex) {
+                    System.out.println("Error generating files.");
+                    errorMessager(e);
+                    errorMessager(ex);
+                }
+            }
+            if (login) {
+                if (loginPrint) {
+                    printUserList();
+                }
+                Scanner scan = new Scanner(System.in);
+                System.out.println("Enter username: ");
+                String uname = scan.nextLine();
+                try {
+                    login(uname);
+                    System.out.println("Logged in as " + uname);
                 } catch (IOException e) {
                     errorMessager(e);
                     System.exit(0);
                 }
-            } else {
-                System.out.println("User not logged in, logout failed.");
             }
-        }
-        if (delete != null) {
-            userData.remove(delete.intValue());
-        }
-        if (changeUsername != null) {
-            for (UserData user : userData) {
-                if (user.isLastUsed()) {
-                    user.setUsername(changeUsername);
-                    lastUserData.setUsername(changeUsername);
+            if (logout) {
+                if (lastUserData != null) {
+                    System.out.println("Logging out...");
+                    try {
+                        logout();
+                    } catch (IOException e) {
+                        errorMessager(e);
+                        System.exit(0);
+                    }
+                } else {
+                    System.out.println("User not logged in, logout failed.");
                 }
             }
-        }
-        if (newUser || newCurrent) {
-            Scanner sc = new Scanner(System.in);
-            System.out.println("Enter username: ");
-            String username = sc.nextLine();
-            username = CleanString.cleanString(username);
-            username = checkLength(username);
+            if (delete != null) {
+                userData.remove(delete.intValue());
+            }
+            if (changeUsername != null) {
+                for (UserData user : userData) {
+                    if (user.isLastUsed()) {
+                        user.setUsername(changeUsername);
+                        lastUserData.setUsername(changeUsername);
+                    }
+                }
+            }
+            if (newUser || newCurrent) {
+                Scanner sc = new Scanner(System.in);
+                System.out.println("Enter username: ");
+                String username = sc.nextLine();
+                username = CleanString.cleanString(username);
+                username = checkLength(username);
 //            System.out.println("Enter API key: ");
 //            String apiKey = sc.nextLine();
 //            apiKey = CleanString.cleanString(apiKey);
 //            apiKey = checkAPILength(apiKey);
-            System.out.println("Enter password (press 'enter' for no password): ");
-            String password = sc.nextLine();
-            password = CleanString.cleanString(password);
-            password = checkLength(password);
-            if (password.equals("")) {
-                password = null;
-            }
-            UserData newUser = new UserData(/*apiKey,*/ username, password, newCurrent);
-            boolean usernameExists = true;
-            while (usernameExists) {
-                if (checkUserExist(newUser.getUsername())) {
-                    System.out.println("User already exists, please enter a new username: ");
-                    String newUname = sc.nextLine();
-                    password = CleanString.cleanString(newUname);
-                    password = checkLength(newUname);
-                    newUser.setUsername(newUname);
-                } else {
-                    usernameExists = false;
+                System.out.println("Enter password (press 'enter' for no password): ");
+                String password = sc.nextLine();
+                password = CleanString.cleanString(password);
+                password = checkLength(password);
+                if (password.equals("")) {
+                    password = null;
                 }
-            }
-            addUserData(newUser);
-            if (newCurrent) {
-                try {
-                    lastUsed(userData.size() - 1);
-                } catch (IOException e) {
-                    errorMessager(e);
-                    System.exit(0);
+                UserData newUser = new UserData(/*apiKey,*/ username, password, newCurrent);
+                boolean usernameExists = true;
+                while (usernameExists) {
+                    if (checkUserExist(newUser.getUsername())) {
+                        System.out.println("User already exists, please enter a new username: ");
+                        String newUname = sc.nextLine();
+                        password = CleanString.cleanString(newUname);
+                        password = checkLength(newUname);
+                        newUser.setUsername(newUname);
+                    } else {
+                        usernameExists = false;
+                    }
                 }
+                addUserData(newUser);
+                if (newCurrent) {
+                    try {
+                        lastUsed(userData.size() - 1);
+                    } catch (IOException e) {
+                        errorMessager(e);
+                        System.exit(0);
+                    }
+                }
+                System.out.println("User added successfully.");
             }
-            System.out.println("User added successfully.");
-        }
-        saveUserData(userData.toArray(UserData[]::new));
-        //the '&& !logout' is to make sure that the logout() method works correctly and isn't rewritten by the saveLastUserData() method
-        if (getLastUsed() != null && !logout) {
-            saveLastUserData(getLastUsed());
-        }
-        if (current) {
-            System.out.println("Current user: " + lastUserData.getUsername() + "\n");
-        }
-        if (print) {
-            printUserList();
-        }
-        if (printCurrent) {
-            System.out.println(lastUserData);
+            saveUserData(userData.toArray(UserData[]::new));
+            //the '&& !logout' is to make sure that the logout() method works correctly and isn't rewritten by the saveLastUserData() method
+            if (getLastUsed() != null && !logout) {
+                saveLastUserData(getLastUsed());
+            }
+            if (current) {
+                System.out.println("Current user: " + lastUserData.getUsername() + "\n");
+            }
+            if (print) {
+                printUserList();
+            }
+            if (printCurrent) {
+                System.out.println(lastUserData);
+            }
+        } catch (Exception e) {
+            errorMessager(e);
+            System.exit(1);
         }
     }
 }

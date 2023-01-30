@@ -52,93 +52,98 @@ public class SetCommand implements Runnable {
     @Override
     public void run() {
         try {
-            loadTasks();
-        } catch (IOException e) {
+            try {
+                loadTasks();
+            } catch (IOException e) {
+                try {
+                    saveTasks(tasks);
+                } catch (IOException ex) {
+                    errorMessager(ex);
+                }
+            }
+            //try loading tasks, make file if it fails, if that fails, let user know
+
+            //prelim check
+            if (tasks.size() == 0) {
+                System.out.println("Try adding some tasks first.");
+            } else {
+                //concise way to check what has been used in command and set it if it's used
+                if (descriptionString != null || priorityImportance != null || completeBoolean != null || ansiColor != null) {
+                    Task task = tasks.get(setIndex);
+                    task.setDescription(descriptionString != null ? descriptionString : task.getDescription());
+                    task.setPriority(priorityImportance != null ? priorityImportance : task.getPriority());
+                    task.setIsCompleted(completeBoolean != null ? completedStatusCompleted : task.getIsCompleted());
+                    task.setAnsiColor(ansiColor != null ? ansiColor : task.getAnsiColor());
+                    if (returnCompletedStatus(task.getIsCompleted())) {
+                        task.setDateCompleted(new Date().toString());
+                    }
+                    tasks.set(setIndex, task);
+                    System.out.printf("Task at index %d has been set to '%s', %s, %b, %s\n", setIndex,
+                            (descriptionString != null) ? descriptionString : tasks.get(setIndex).getDescription(),
+                            (priorityImportance != null) ? priorityImportance : tasks.get(setIndex).getPriority(),
+                            (completeBoolean != null) ?
+                                    (completeBoolean ? "Yes" : "No") : (tasks.get(setIndex).getIsCompleted().toString()),
+                            (ansiColor != null) ? ansiColor : tasks.get(setIndex).getAnsiColor());
+                }
+            }
+
+            //loop and set all priorities
+            if (priorityAllImportance != null) {
+                for (int i = 0; i < tasks.size(); i++) {
+                    Task tempTask = tasks.get(i);
+                    tempTask.setPriority(priorityAllImportance);
+                    tasks.set(i, tempTask);
+                }
+                System.out.println("All tasks have been set to a priority of " + priorityAllImportance + ".");
+            }
+
+            if (ansiAllColor != null) {
+                for (int i = 0; i < tasks.size(); i++) {
+                    Task tempTask = tasks.get(i);
+                    //set method updates field and sets edit date
+                    tempTask.setAnsiColor(ansiAllColor);
+                    tasks.set(i, tempTask);
+                }
+                System.out.println("All tasks have been set to an ansi color of " + ansiAllColor + ".");
+            }
+
+            //loop and set all incomplete
+            if (incompleteAllBoolean) {
+                for (int i = 0; i < tasks.size(); i++) {
+                    Task tempTask = tasks.get(i);
+                    //set method updates field and sets edit date
+                    tempTask.setIsCompleted(inProgress);
+                    tasks.set(i, tempTask);
+                }
+                System.out.println("All tasks have been set to incomplete.");
+            }
+
+            //loop and set all as complete
+            if (completeAllBoolean) {
+                for (int i = 0; i < tasks.size(); i++) {
+                    Task tempTask = tasks.get(i);
+                    //set method updates field and sets edit date
+                    tempTask.setIsCompleted(completed);
+                    tasks.set(i, tempTask);
+                }
+                System.out.println("All tasks have been set to complete.");
+            }
+
+            //try to save to file
             try {
                 saveTasks(tasks);
-            } catch (IOException ex) {
-                errorMessager(ex);
+            } catch (IOException e) {
+                errorMessager(e);
+                System.exit(0);
             }
-        }
-        //try loading tasks, make file if it fails, if that fails, let user know
 
-        //prelim check
-        if (tasks.size() == 0) {
-            System.out.println("Try adding some tasks first.");
-        } else {
-            //concise way to check what has been used in command and set it if it's used
-            if (descriptionString != null || priorityImportance != null || completeBoolean != null || ansiColor != null) {
-                Task task = tasks.get(setIndex);
-                task.setDescription(descriptionString != null ? descriptionString : task.getDescription());
-                task.setPriority(priorityImportance != null ? priorityImportance : task.getPriority());
-                task.setIsCompleted(completeBoolean != null ? completedStatusCompleted : task.getIsCompleted());
-                task.setAnsiColor(ansiColor != null ? ansiColor : task.getAnsiColor());
-                if (returnCompletedStatus(task.getIsCompleted())) {
-                    task.setDateCompleted(new Date().toString());
-                }
-                tasks.set(setIndex, task);
-                System.out.printf("Task at index %d has been set to '%s', %s, %b, %s\n", setIndex,
-                        (descriptionString != null) ? descriptionString : tasks.get(setIndex).getDescription(),
-                        (priorityImportance != null) ? priorityImportance : tasks.get(setIndex).getPriority(),
-                        (completeBoolean != null) ?
-                                (completeBoolean ? "Yes" : "No") : (tasks.get(setIndex).getIsCompleted().toString()),
-                        (ansiColor != null) ? ansiColor : tasks.get(setIndex).getAnsiColor());
+            //if print is used, print tasks
+            if (printBoolean) {
+                Task.printTasks();
             }
-        }
-
-        //loop and set all priorities
-        if (priorityAllImportance != null) {
-            for (int i = 0; i < tasks.size(); i++) {
-                Task tempTask = tasks.get(i);
-                tempTask.setPriority(priorityAllImportance);
-                tasks.set(i, tempTask);
-            }
-            System.out.println("All tasks have been set to a priority of " + priorityAllImportance + ".");
-        }
-
-        if (ansiAllColor != null) {
-            for (int i = 0; i < tasks.size(); i++) {
-                Task tempTask = tasks.get(i);
-                //set method updates field and sets edit date
-                tempTask.setAnsiColor(ansiAllColor);
-                tasks.set(i, tempTask);
-            }
-            System.out.println("All tasks have been set to an ansi color of " + ansiAllColor + ".");
-        }
-
-        //loop and set all incomplete
-        if (incompleteAllBoolean) {
-            for (int i = 0; i < tasks.size(); i++) {
-                Task tempTask = tasks.get(i);
-                //set method updates field and sets edit date
-                tempTask.setIsCompleted(inProgress);
-                tasks.set(i, tempTask);
-            }
-            System.out.println("All tasks have been set to incomplete.");
-        }
-
-        //loop and set all as complete
-        if (completeAllBoolean) {
-            for (int i = 0; i < tasks.size(); i++) {
-                Task tempTask = tasks.get(i);
-                //set method updates field and sets edit date
-                tempTask.setIsCompleted(completed);
-                tasks.set(i, tempTask);
-            }
-            System.out.println("All tasks have been set to complete.");
-        }
-
-        //try to save to file
-        try {
-            saveTasks(tasks);
-        } catch (IOException e) {
+        } catch (Exception e) {
             errorMessager(e);
-            System.exit(0);
-        }
-
-        //if print is used, print tasks
-        if (printBoolean) {
-            Task.printTasks();
+            System.exit(1);
         }
     }
 }

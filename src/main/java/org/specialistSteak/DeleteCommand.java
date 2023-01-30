@@ -36,77 +36,80 @@ public class DeleteCommand implements Runnable {
 
     @Override
     public void run() {
-        //try loading tasks, make file if it fails, if that fails, let user know
         try {
-            loadTasks();
-        }
-        catch (IOException e){
+            //try loading tasks, make file if it fails, if that fails, let user know
             try {
-                saveTasks(tasks);
-            } catch (IOException ex) {
-                errorMessager(ex);
-                System.exit(0);
-            }
-        }
-        //Prelim check
-        if(tasks.size() == 0){
-            System.out.println("Try adding some tasks first.");
-        }
-        else {
-            //Delete searched tasks if search is used
-            if (searchTermString != null) {
+                loadTasks();
+            } catch (IOException e) {
                 try {
-                    tasks.removeAll(searchTasks(tasks, searchTermString));
+                    saveTasks(tasks);
+                } catch (IOException ex) {
+                    errorMessager(ex);
+                    System.exit(0);
+                }
+            }
+            //Prelim check
+            if (tasks.size() == 0) {
+                System.out.println("Try adding some tasks first.");
+            } else {
+                //Delete searched tasks if search is used
+                if (searchTermString != null) {
+                    try {
+                        tasks.removeAll(searchTasks(tasks, searchTermString));
+                    } catch (IOException e) {
+                        errorMessager(e);
+                        System.exit(0);
+                    }
+                    System.out.println("All tasks containing the search term have been deleted.");
+                }
+                //delete task at index if index is used
+                if (indexInteger != null) {
+                    tasks.remove(indexInteger.intValue());
+                    System.out.printf("Task at index %d has been deleted\n", indexInteger);
+                }
+                //delete all completed tasks if completed bool is used
+                if (completedBoolean) {
+                    ArrayList<Task> toRemove = new ArrayList<>();
+                    for (Task task : tasks) {
+                        if (returnCompletedStatus(task.getIsCompleted())) {
+                            toRemove.add(task);
+                        }
+                    }
+                    tasks.removeAll(toRemove);
+                    System.out.println("All complete tasks successfully deleted.");
+                }
+                //delete all incompleted tasks if completed bool is used
+                if (incompletedBoolean) {
+                    ArrayList<Task> toRemove = new ArrayList<>();
+                    for (Task task : tasks) {
+                        if (!returnCompletedStatus(task.getIsCompleted())) {
+                            toRemove.add(task);
+                        }
+                    }
+                    tasks.removeAll(toRemove);
+                    System.out.println("All incomplete tasks successfully deleted.");
+                }
+                //Remove all tasks if all option is used
+                if (allBoolean) {
+                    tasks.clear();
+                    System.out.println("All tasks successfully deleted.");
+                }
+
+                //Try to save tasks, catch error
+                try {
+                    saveTasks(tasks);
                 } catch (IOException e) {
                     errorMessager(e);
                     System.exit(0);
                 }
-                System.out.println("All tasks containing the search term have been deleted.");
-            }
-            //delete task at index if index is used
-            if (indexInteger != null) {
-                tasks.remove(indexInteger.intValue());
-                System.out.printf("Task at index %d has been deleted\n", indexInteger);
-            }
-            //delete all completed tasks if completed bool is used
-            if (completedBoolean) {
-                ArrayList<Task> toRemove = new ArrayList<>();
-                for (Task task : tasks) {
-                    if (returnCompletedStatus(task.getIsCompleted())) {
-                        toRemove.add(task);
-                    }
+                //print if option is used
+                if (printBoolean) {
+                    Task.printTasks();
                 }
-                tasks.removeAll(toRemove);
-                System.out.println("All complete tasks successfully deleted.");
             }
-            //delete all incompleted tasks if completed bool is used
-            if (incompletedBoolean) {
-                ArrayList<Task> toRemove = new ArrayList<>();
-                for (Task task : tasks) {
-                    if (!returnCompletedStatus(task.getIsCompleted())) {
-                        toRemove.add(task);
-                    }
-                }
-                tasks.removeAll(toRemove);
-                System.out.println("All incomplete tasks successfully deleted.");
-            }
-            //Remove all tasks if all option is used
-            if (allBoolean) {
-                tasks.clear();
-                System.out.println("All tasks successfully deleted.");
-            }
-
-            //Try to save tasks, catch error
-            try {
-                saveTasks(tasks);
-            } catch (IOException e) {
-                errorMessager(e);
-                System.exit(0);
-            }
-            //print if option is used
-            if (printBoolean) {
-                Task.printTasks();
-            }
+        } catch (Exception e) {
+            errorMessager(e);
+            System.exit(1);
         }
     }
 }
