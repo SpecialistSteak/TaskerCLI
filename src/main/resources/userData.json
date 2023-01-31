@@ -3,5 +3,11 @@
   "password" : null,
   "dateCreated" : "Sat Jan 21 16:29:46 IST 2023",
   "tasklistAddress" : "C:\\Users\\Luke\\Documents\\Code\\_TaskerCLI_\\src\\main\\resources\\jeffo_tasks.json",
+  "lastUsed" : false
+}, {
+  "username" : "orewasex",
+  "password" : null,
+  "dateCreated" : "Tue Jan 31 20:14:30 IST 2023",
+  "tasklistAddress" : "C:\\Users\\Luke\\Documents\\Code\\_TaskerCLI_\\src\\main\\resources\\orewasex_tasks.json",
   "lastUsed" : true
 } ]

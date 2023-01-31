@@ -27,11 +27,22 @@ Rename-Item "C:\Users\$env:USERNAME\.Tasker\TaskerCLIJavaDoc-main" "C:\Users\$en
 Remove-Item "C:\Users\$env:USERNAME\.Tasker\javadoc.zip"
 
 Write-Output "Done. Adding .Tasker to PATH..."
-# Save tasker.ps1 to path
-$env:Path += ";C:\Users\$env:USERNAME\.Tasker"
 
-Write-Output "Done. Creating shortcuts..."
-doskey tasker=C:/WINDOWS/System32/WindowsPowerShell/v1.0/powershell.exe -File C:/Users/Luke/Documents/Code/_TaskerCLI_/Install/Windows_JAR/tasker.ps1
+# Get the path as a variable
+$newPath = "C:\Users\$env:USERNAME\.Tasker"
+
+# Get the current value of the user's PATH environment variable
+$currentPath = [Environment]::GetEnvironmentVariable("Path", "User")
+
+# Append the new folder to the user's PATH environment variable
+$newPath = "$currentPath;$newPath"
+
+# Check if the new value of the user's PATH environment variable has changed
+if ($newPath -ne $currentPath) {
+    # Set the new value of the user's PATH environment variable
+    [Environment]::SetEnvironmentVariable("Path", $newPath, "User")
+}
+Write-Output ".Tasker has been added to your PATH."
 
 # Print a message to confirm the installation
 Write-Output "Done! TaskerCLI has been installed to the C:\Users\$env:USERNAME\.Tasker directory."

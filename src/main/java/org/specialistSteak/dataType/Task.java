@@ -256,7 +256,7 @@ public class Task {
                 );
             } else {
                 System.out.printf(
-                        "| %-5d | %-18s | %-10s | %-16s |\n",
+                        "| %-5d | %-18s | %-12s | %-16s |\n",
                         i,
                         task.getDescription(),
                         task.getPriority() != null ? importanceToString(task.getPriority()) : "None",

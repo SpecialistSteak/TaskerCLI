@@ -9,11 +9,13 @@ import picocli.CommandLine;
 import java.io.IOException;
 import java.util.Date;
 
-import static org.specialistSteak.dataType.Completed.*;
-import static org.specialistSteak.dataType.Task.*;
+import static org.specialistSteak.dataType.Completed.completed;
+import static org.specialistSteak.dataType.Completed.inProgress;
+import static org.specialistSteak.dataType.Completed.returnCompletedStatus;
+import static org.specialistSteak.dataType.Task.loadTasks;
+import static org.specialistSteak.dataType.Task.saveTasks;
+import static org.specialistSteak.dataType.Task.tasks;
 import static org.specialistSteak.utils.ErrorStringifer.errorMessager;
-
-//TODO: URGENT setting a task as complete or incomplete IS NOT WORKING
 
 @CommandLine.Command(name = "set", description = "Has options related to setting new task values.", mixinStandardHelpOptions = true)
 public class SetCommand implements Runnable {
@@ -62,10 +64,11 @@ public class SetCommand implements Runnable {
                 System.out.println("Try adding some tasks first.");
             } else {
                 //concise way to check what has been used in command and set it if it's used
-                if (descriptionString != null || priorityImportance != null || ansiColor != null) {
+                if (setIndex >= 0 && setIndex < tasks.size()) {
                     Task task = tasks.get(setIndex);
                     task.setDescription(descriptionString != null ? descriptionString : task.getDescription());
                     task.setPriority(priorityImportance != null ? priorityImportance : task.getPriority());
+
                     if (completedStatusCompleted != null) {
                         task.setIsCompleted(completedStatusCompleted);
                     } else if (completeBoolean != null) {
@@ -73,6 +76,7 @@ public class SetCommand implements Runnable {
                     } else {
                         task.setIsCompleted(task.getIsCompleted());
                     }
+
                     task.setAnsiColor(ansiColor != null ? ansiColor : task.getAnsiColor());
                     if (returnCompletedStatus(task.getIsCompleted())) {
                         task.setDateCompleted(new Date().toString());
