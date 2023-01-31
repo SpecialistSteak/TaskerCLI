@@ -79,7 +79,7 @@ public class MSToDoConverter {
             date = inputFormat.parse(inputDate);
         } catch (ParseException e) {
             System.out.println("Error parsing date");
-            System.exit(0);
+            System.exit(1);
             errorMessager(e);
         }
         return outputFormat.format(date);

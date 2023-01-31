@@ -14,12 +14,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - **Fixed a bug where trying to set a new completion status would not work**
 - Additional testing and bugfixes
 
+3.26 - 2023-02
+#### Fixed
+- Fixed a bug where Completed would always be null
+- Fixed a bug where the isCompleted method was improperly named and would not be saved to the .json file
+- Fixed a bug where the user could not input a multi-word String ex. "do homework"
+
+
 ## 3.25 - 2023-01
 #### Added
 - Added JavaDoc
 - Added JavaDoc command line option
 - A sh script to install the program
-- A unix script to run the program
+- A linux script to run the program
 - A .ps1 script to install the program
 - A .ps1 script to run the program
 - Additional support for the new GraalVM packaging
@@ -37,9 +44,6 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 #### Fixed
 - Fixed a bug where the program would crash upon trying to log in
 - Fixed a bug where the program would crash upon trying to print the tasklist
-- Fixed a bug where Completed would always be null
-- Fixed a bug where the isCompleted method was improperly named and would not be saved to the .json file
-- Fixed a bug where the user could not input a multi-word String ex. "do homework"
 
 ### 3.24 - 2023-01
 #### Added

@@ -53,18 +53,4 @@ public enum AnsiColor {
         }
         return "@|" + task.getAnsiColor().getColor() + " " + value + " |@";
     }
-
-    /**
-     * @param color the color to get the color of.
-     * @return a boolean if the color is a valid color.
-     */
-    @Deprecated
-    public static boolean isValidAnsiColor(String color) {
-        for (AnsiColor c : AnsiColor.values()) {
-            if (c.name().equalsIgnoreCase(color)) {
-                return true;
-            }
-        }
-        return false;
-    }
 }

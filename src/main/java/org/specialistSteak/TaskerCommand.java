@@ -11,7 +11,7 @@ import static org.specialistSteak.dataType.UserData.*;
 import static org.specialistSteak.utils.ErrorStringifer.errorMessager;
 
 @CommandLine.Command(
-    version = "3.25",
+    version = "3.26",
     mixinStandardHelpOptions = true,
     subcommands = {
             AddCommand.class,
@@ -46,7 +46,7 @@ public class TaskerCommand implements Runnable {
                 login(uname);
             } catch (IOException e) {
                 errorMessager(e);
-                System.exit(0);
+                System.exit(1);
             }
         }
         if(helpAll){
@@ -152,7 +152,7 @@ public class TaskerCommand implements Runnable {
             @|yellow    #    #######       # #  #   #       #   #         #       #        #|@
             @|yellow    #    #     # #     # #   #  #       #    #        #     # #        #|@
             @|yellow    #    #     #  #####  #    # ####### #     #        #####  ####### ###|@
-            Version: 3.25                                    Author: SpecialistSteak
+            Version: 3.26                                    Author: SpecialistSteak
             Welcome to Tasker-CLI!    Type Tasker --help or --helpall to get started""")));
         }
     }

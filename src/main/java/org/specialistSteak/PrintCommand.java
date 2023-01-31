@@ -40,7 +40,7 @@ public class PrintCommand implements Runnable {
                     saveTasks(tasks);
                 } catch (IOException ex) {
                     errorMessager(ex);
-                    System.exit(0);
+                    System.exit(1);
                 }
             }
             //try loading tasks, make file if it fails, if that fails, let user know
@@ -54,7 +54,7 @@ public class PrintCommand implements Runnable {
                     taskCopy = searchTasks(taskCopy, searchTermString);
                 } catch (IOException e) {
                     errorMessager(e);
-                    System.exit(0);
+                    System.exit(1);
                 }
             }
             //filter out incomplete to temp List if used
@@ -93,12 +93,12 @@ public class PrintCommand implements Runnable {
                 saveTasks(tasks);
             } catch (IOException e) {
                 errorMessager(e);
-                System.exit(0);
+                System.exit(1);
             }
             printTasks(taskCopy);
         } catch (Exception e) {
             errorMessager(e);
-            System.exit(1);
+            System.exit(70);
         }
     }
 }

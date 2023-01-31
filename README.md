@@ -24,7 +24,7 @@ Note: Installation support (aside from a runnable jar) will likely not come to M
 ##### "Install" the JAR file (Windows)
   1. Download `install.ps1` from /Install/Windows_JAR
   2. Run `install.ps1` without admin privileges
-  3. Run `.\tasker` in the terminal (or `.\tasker --help` for a list of commands)
+  3. Run `.\tasker.ps1` in the terminal (or `.\tasker --help` for a list of commands)
 - If this doesn't work, you may need to make sure the folder is added to PATH 
   - You can do this by running `setx PATH "%PATH%;C:\Users\%USERNAME%\.Tasker"` in the terminal
 <hr>

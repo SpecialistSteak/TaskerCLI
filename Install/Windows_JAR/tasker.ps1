@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/usr/bin/env pwsh
 
-$CURRENT_DIR = (Get-Location).Path
-Set-Location "C:\Users\$env:USERNAME\.Tasker"
-java -jar "C:\Users\$env:USERNAME\.Tasker\TaskerCLI.jar" $args
-Set-Location $CURRENT_DIR
+$CurrentDir = Split-Path -Parent $MyInvocation.MyCommand.Definition
+$task = $args[0..($args.Count-1)] -join " "
+& java -jar "$env:USERPROFILE\.Tasker\TaskerCLI.jar" $task
+Set-Location $CurrentDir

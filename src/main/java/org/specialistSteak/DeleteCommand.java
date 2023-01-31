@@ -45,7 +45,7 @@ public class DeleteCommand implements Runnable {
                     saveTasks(tasks);
                 } catch (IOException ex) {
                     errorMessager(ex);
-                    System.exit(0);
+                    System.exit(1);
                 }
             }
             //Prelim check
@@ -58,7 +58,7 @@ public class DeleteCommand implements Runnable {
                         tasks.removeAll(searchTasks(tasks, searchTermString));
                     } catch (IOException e) {
                         errorMessager(e);
-                        System.exit(0);
+                        System.exit(1);
                     }
                     System.out.println("All tasks containing the search term have been deleted.");
                 }
@@ -100,7 +100,7 @@ public class DeleteCommand implements Runnable {
                     saveTasks(tasks);
                 } catch (IOException e) {
                     errorMessager(e);
-                    System.exit(0);
+                    System.exit(1);
                 }
                 //print if option is used
                 if (printBoolean) {
@@ -109,7 +109,7 @@ public class DeleteCommand implements Runnable {
             }
         } catch (Exception e) {
             errorMessager(e);
-            System.exit(1);
+            System.exit(70);
         }
     }
 }

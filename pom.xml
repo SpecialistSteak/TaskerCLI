@@ -4,7 +4,7 @@
 
     <groupId>org.specialistSteak</groupId>
     <artifactId>_TaskerCLI_</artifactId>
-    <version>3.25</version>
+    <version>3.26</version>
     <packaging>jar</packaging>
 
     <name>_TaskerCLI_</name>

@@ -15,11 +15,7 @@ import static org.specialistSteak.utils.ErrorStringifer.errorMessager;
 
 //TODO: URGENT setting a task as complete or incomplete IS NOT WORKING
 
-@CommandLine.Command(
-        name = "set",
-        description = "Has options related to setting new task values.",
-        mixinStandardHelpOptions = true
-)
+@CommandLine.Command(name = "set", description = "Has options related to setting new task values.", mixinStandardHelpOptions = true)
 public class SetCommand implements Runnable {
 
     @CommandLine.Option(names = {"-d", "--description"}, description = "Set custom description and exit.")
@@ -30,10 +26,8 @@ public class SetCommand implements Runnable {
     private Importance priorityImportance;
     @CommandLine.Option(names = {"-c", "--complete"}, description = "Set task to complete and exit.")
     private Boolean completeBoolean;
-
     @CommandLine.Option(names = {"-cs", "--completedstatus"}, description = "Set task's completed status and exit.")
     private Completed completedStatusCompleted;
-
     @CommandLine.Option(names = {"-PA", "--priorityall"}, description = "Set priority of all tasks and exit.")
     private Importance priorityAllImportance;
     @CommandLine.Option(names = {"-CA", "--completeall"}, description = "Set all tasks to complete and exit.")
@@ -68,22 +62,24 @@ public class SetCommand implements Runnable {
                 System.out.println("Try adding some tasks first.");
             } else {
                 //concise way to check what has been used in command and set it if it's used
-                if (descriptionString != null || priorityImportance != null || completeBoolean != null || ansiColor != null) {
+                if (descriptionString != null || priorityImportance != null || ansiColor != null) {
                     Task task = tasks.get(setIndex);
                     task.setDescription(descriptionString != null ? descriptionString : task.getDescription());
                     task.setPriority(priorityImportance != null ? priorityImportance : task.getPriority());
-                    task.setIsCompleted(completeBoolean != null ? completedStatusCompleted : task.getIsCompleted());
+                    if (completedStatusCompleted != null) {
+                        task.setIsCompleted(completedStatusCompleted);
+                    } else if (completeBoolean != null) {
+                        task.setIsCompleted(completed);
+                    } else {
+                        task.setIsCompleted(task.getIsCompleted());
+                    }
                     task.setAnsiColor(ansiColor != null ? ansiColor : task.getAnsiColor());
                     if (returnCompletedStatus(task.getIsCompleted())) {
                         task.setDateCompleted(new Date().toString());
                     }
+
                     tasks.set(setIndex, task);
-                    System.out.printf("Task at index %d has been set to '%s', %s, %b, %s\n", setIndex,
-                            (descriptionString != null) ? descriptionString : tasks.get(setIndex).getDescription(),
-                            (priorityImportance != null) ? priorityImportance : tasks.get(setIndex).getPriority(),
-                            (completeBoolean != null) ?
-                                    (completeBoolean ? "Yes" : "No") : (tasks.get(setIndex).getIsCompleted().toString()),
-                            (ansiColor != null) ? ansiColor : tasks.get(setIndex).getAnsiColor());
+                    System.out.printf("Task at index %d has been set to: | '%s' | %s | %s | %s |\n", setIndex, task.getDescription(), task.getPriority(), task.getIsCompleted(), task.getAnsiColor());
                 }
             }
 
@@ -134,7 +130,7 @@ public class SetCommand implements Runnable {
                 saveTasks(tasks);
             } catch (IOException e) {
                 errorMessager(e);
-                System.exit(0);
+                System.exit(1);
             }
 
             //if print is used, print tasks
@@ -143,7 +139,7 @@ public class SetCommand implements Runnable {
             }
         } catch (Exception e) {
             errorMessager(e);
-            System.exit(1);
+            System.exit(70);
         }
     }
 }

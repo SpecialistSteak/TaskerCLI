@@ -55,7 +55,7 @@ public class AddCommand implements Runnable {
                     saveTasks(tasks);
                 } catch (IOException ex) {
                     errorMessager(ex);
-                    System.exit(0);
+                    System.exit(1);
                 }
             }
             if (ansiColor == null) {
@@ -69,7 +69,7 @@ public class AddCommand implements Runnable {
                         ansiColor));
             } catch (IOException e) {
                 errorMessager(e);
-                System.exit(0);
+                System.exit(1);
             }
             System.out.println("Task added successfully.");
 
@@ -78,7 +78,7 @@ public class AddCommand implements Runnable {
                 saveTasks(tasks);
             } catch (IOException e) {
                 errorMessager(e);
-                System.exit(0);
+                System.exit(1);
             }
             //print if option is used
             if (printBoolean) {
@@ -86,7 +86,7 @@ public class AddCommand implements Runnable {
             }
         } catch (Exception e) {
             errorMessager(e);
-            System.exit(1);
+            System.exit(70);
         }
     }
 }

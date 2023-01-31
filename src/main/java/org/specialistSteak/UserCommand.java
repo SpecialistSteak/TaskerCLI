@@ -11,11 +11,7 @@ import static org.specialistSteak.dataType.UserData.*;
 import static org.specialistSteak.utils.ErrorStringifer.errorMessager;
 import static org.specialistSteak.utils.LengthCheckString.checkLength;
 
-@CommandLine.Command(
-        name = "user",
-        description = "Has options related to user data.",
-        mixinStandardHelpOptions = true
-)
+@CommandLine.Command(name = "user", description = "Has options related to user data.", mixinStandardHelpOptions = true)
 public class UserCommand implements Runnable {
     @CommandLine.Option(names = {"-d", "--delete"}, description = "Delete a user.")
     private Integer delete;
@@ -71,7 +67,7 @@ public class UserCommand implements Runnable {
                     System.out.println("Logged in as " + uname);
                 } catch (IOException e) {
                     errorMessager(e);
-                    System.exit(0);
+                    System.exit(1);
                 }
             }
             if (logout) {
@@ -81,7 +77,7 @@ public class UserCommand implements Runnable {
                         logout();
                     } catch (IOException e) {
                         errorMessager(e);
-                        System.exit(0);
+                        System.exit(1);
                     }
                 } else {
                     System.out.println("User not logged in, logout failed.");
@@ -134,7 +130,7 @@ public class UserCommand implements Runnable {
                         lastUsed(userData.size() - 1);
                     } catch (IOException e) {
                         errorMessager(e);
-                        System.exit(0);
+                        System.exit(1);
                     }
                 }
                 System.out.println("User added successfully.");
@@ -155,7 +151,7 @@ public class UserCommand implements Runnable {
             }
         } catch (Exception e) {
             errorMessager(e);
-            System.exit(1);
+            System.exit(70);
         }
     }
 }

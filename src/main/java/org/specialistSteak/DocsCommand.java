@@ -31,7 +31,7 @@ public class DocsCommand implements Runnable {
             }
         } catch (Exception e) {
             errorMessager(e);
-            System.exit(1);
+            System.exit(70);
         }
     }
 }
