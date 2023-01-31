@@ -12,10 +12,10 @@ Write-Output "Downloading TaskerCLI.jar..."
 Invoke-WebRequest https://raw.githubusercontent.com/SpecialistSteak/TaskerCLI/master/TaskerCLI.jar -OutFile "C:\Users\$env:username\.Tasker\TaskerCLI.jar"
 
 Write-Output "Done. Downloading tasker.ps1..."
-Invoke-WebRequest https://raw.githubusercontent.com/SpecialistSteak/TaskerCLI/master/Install/Windows_JAR/tasker.ps1 -OutFile "C:\Users\$env:username\.Tasker\tasker.bat"
+Invoke-WebRequest https://raw.githubusercontent.com/SpecialistSteak/TaskerCLI/master/Install/Windows_JAR/tasker.ps1 -OutFile "C:\Users\$env:username\.Tasker\tasker.ps1"
 
 Write-Output "Done. Downloading uninstall.ps1..."
-Invoke-WebRequest https://raw.githubusercontent.com/SpecialistSteak/TaskerCLI/master/Install/Windows_JAR/uninstall.ps1 -OutFile "C:\Users\$env:username\.Tasker\uninstall.bat"
+Invoke-WebRequest https://raw.githubusercontent.com/SpecialistSteak/TaskerCLI/master/Install/Windows_JAR/uninstall.ps1 -OutFile "C:\Users\$env:username\.Tasker\uninstall.ps1"
 
 Write-Output "Done. Downloading javadoc.zip..."
 Invoke-WebRequest https://github.com/SpecialistSteak/TaskerCLIJavaDoc/archive/refs/heads/main.zip -OutFile "C:\Users\$env:username\.Tasker\javadoc.zip"
