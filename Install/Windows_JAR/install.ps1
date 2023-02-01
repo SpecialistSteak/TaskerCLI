@@ -11,8 +11,8 @@ New-Item -ItemType directory "C:\Users\$env:USERNAME\.Tasker\src\main\resources"
 Write-Output "Downloading TaskerCLI.jar..."
 Invoke-WebRequest https://raw.githubusercontent.com/SpecialistSteak/TaskerCLI/master/TaskerCLI.jar -OutFile "C:\Users\$env:username\.Tasker\TaskerCLI.jar"
 
-Write-Output "Done. Downloading tasker.ps1..."
-Invoke-WebRequest https://raw.githubusercontent.com/SpecialistSteak/TaskerCLI/master/Install/Windows_JAR/tasker.ps1 -OutFile "C:\Users\$env:username\.Tasker\tasker.ps1"
+Write-Output "Done. Downloading tasker.bat..."
+Invoke-WebRequest https://raw.githubusercontent.com/SpecialistSteak/TaskerCLI/master/Install/Windows_JAR/tasker.bat -OutFile "C:\Users\$env:username\.Tasker\tasker.bat"
 
 Write-Output "Done. Downloading uninstall.ps1..."
 Invoke-WebRequest https://raw.githubusercontent.com/SpecialistSteak/TaskerCLI/master/Install/Windows_JAR/uninstall.ps1 -OutFile "C:\Users\$env:username\.Tasker\uninstall.ps1"
