@@ -7,7 +7,7 @@
 #
 
 ### About
-<p>Tasker is a robust command line tool designed for efficient and descriptive task management. It allows users to add, set, print, and delete tasks through the command line, as well as change a variety of other attributes. Tasker utilizes picocli for its interface, ensuring that it will have fast performance and adhere to standard git-style terminal command structure for simplicity. Type <code>--help</code> or <code>--helpall</code> for a list of commands.</p>
+<p>Tasker is a robust command line tool designed for efficient and descriptive task management. It allows users to add, set, print, and delete tasks through the command line, as well as change a variety of other attributes. To get started with using Tasker, type <code>--help</code> or <code>--helpall</code> for a list of commands.</p>
 
 ### Installation
 
@@ -24,7 +24,8 @@ Note: Installation support (aside from a runnable jar) will likely not come to M
 ##### "Install" the JAR file (Windows)
   1. Download `install.ps1` from /Install/Windows_JAR
   2. Run `install.ps1` without admin privileges
-  3. Run `tasker.bat` in the terminal (or `tasker.bat --help` for a list of commands)
+  3. Run `tasker` in the terminal (or `tasker --help` for a list of commands)
+     (You may need to write `tasker.bat` instead of `tasker` depending on your system)
 <hr>
 
 ##### Option 2: Compile the native image 

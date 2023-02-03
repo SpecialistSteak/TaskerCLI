@@ -24,13 +24,13 @@ public class SetCommand implements Runnable {
     private String descriptionString;
     @CommandLine.Option(names = {"-a", "--ansi"}, description = "Set new custom ansi color and exit. Supported values: RED, YELLOW, GREEN, BLUE, WHITE, BLACK")
     private AnsiColor ansiColor;
-    @CommandLine.Option(names = {"-p", "--priority"}, description = "Set custom priority and exit.")
+    @CommandLine.Option(names = {"-p", "--priority"}, description = "Set custom priority and exit. Supported values: LOW, MEDIUM, HIGH")
     private Importance priorityImportance;
     @CommandLine.Option(names = {"-c", "--complete"}, description = "Set task to complete and exit.")
     private Boolean completeBoolean;
-    @CommandLine.Option(names = {"-cs", "--completedstatus"}, description = "Set task's completed status and exit.")
+    @CommandLine.Option(names = {"-cs", "--completedstatus"}, description = "Set task's completed status and exit. Supported values: completed, notStarted, inProgress, waitingOnOthers, deferred")
     private Completed completedStatusCompleted;
-    @CommandLine.Option(names = {"-PA", "--priorityall"}, description = "Set priority of all tasks and exit.")
+    @CommandLine.Option(names = {"-PA", "--priorityall"}, description = "Set priority of all tasks and exit. Supported values: LOW, MEDIUM, HIGH")
     private Importance priorityAllImportance;
     @CommandLine.Option(names = {"-CA", "--completeall"}, description = "Set all tasks to complete and exit.")
     private boolean completeAllBoolean;

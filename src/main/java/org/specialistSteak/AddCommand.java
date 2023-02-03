@@ -20,13 +20,13 @@ import static org.specialistSteak.utils.ErrorStringifer.errorMessager;
         mixinStandardHelpOptions = true
 )
 public class AddCommand implements Runnable {
-    @CommandLine.Option(names = {"-p", "--priority"}, description = "Set new custom priority and exit.")
+    @CommandLine.Option(names = {"-p", "--priority"}, description = "Set new custom priority and exit. Supported values: LOW, MEDIUM, HIGH", defaultValue = "LOW")
     private Importance priorityImportance;
 
     @CommandLine.Option(names = {"-c", "--complete"}, description = "Set new task as complete and exit.")
     private boolean completedBoolean;
 
-    @CommandLine.Option(names = {"-cs", "--completestatus"}, description = "Set new task's completion status and exit.")
+    @CommandLine.Option(names = {"-cs", "--completestatus"}, description = "Set new task's completion status and exit. Supported values: completed, notStarted, inProgress, waitingOnOthers, deferred", defaultValue = "notStarted")
     private Completed completeCompleted;
 
     @CommandLine.Option(names = {"-P", "--print"}, description = "Print list of tasks and exit.")
