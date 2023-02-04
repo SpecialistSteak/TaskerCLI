@@ -17,8 +17,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
     "
   - "╭─cat@virtualbox /home/cat/.Tasker  ‹system›
      ╰─$ java -jar TaskerCLI.jar add "do homework"
-    "
     Invalid value for option '--priority': expected one of [low, normal, high] (case-sensitive) but was 'LOW'"
+    "
 - Additional testing and bugfixes
 
 3.26 - 2023-02
