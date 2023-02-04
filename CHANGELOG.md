@@ -11,11 +11,19 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 - Update readme.md
 - Performance fixes and optimizations
 #### Fixed
-- **Fixed a bug where trying to set a new completion status would not work**
+- Fixed an issue with the linux script where it doesn't seem to be working now
+  - "[cat@virtualbox ~]$ tasker
+    Unmatched argument at index 0: ''
+    "
+  - "╭─cat@virtualbox /home/cat/.Tasker  ‹system›
+     ╰─$ java -jar TaskerCLI.jar add "do homework"
+    "
+    Invalid value for option '--priority': expected one of [low, normal, high] (case-sensitive) but was 'LOW'"
 - Additional testing and bugfixes
 
 3.26 - 2023-02
 #### Fixed
+- Fixed windows script to work properly
 - Fixed a bug where Completed would always be null
 - Fixed a bug where the isCompleted method was improperly named and would not be saved to the .json file
 - Fixed a bug where the user could not input a multi-word String ex. "do homework"
