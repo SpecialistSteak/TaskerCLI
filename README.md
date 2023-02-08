@@ -11,7 +11,7 @@
 
 ### Installation
 
-Note: Installation support (aside from a runnable jar) will likely not come to Mac as I don't have any knowledge of MacOS or own a Mac to test it on.
+Note: Installation support (aside from a runnable jar) will likely not come to Mac as do not own a Mac to test it on.
 
 ##### Option 1:
 ##### "Install" the JAR file (Linux)
